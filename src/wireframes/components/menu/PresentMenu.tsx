@@ -30,7 +30,6 @@ export const PresentMenu = React.memo(() => {
 
         // Parse str -> json
         let corrected = json.replace(/'/g, '"');
-        console.log(corrected);
         let jsonObj: {[index: string]: string} = JSON.parse(corrected);      
 
         // Modify appearance if there are specifications
@@ -103,12 +102,6 @@ export const PresentMenu = React.memo(() => {
                     frame: frame,
                 })
             })
-                .then((response) => {
-                    return response.json();
-                })
-                .then((data) => {
-                    console.log(data);
-                })
                 .catch((err) => {
                     messageApi.error(`${err}`);
                 });

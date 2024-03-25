@@ -10,12 +10,13 @@ import { useDispatch } from 'react-redux';
 import { IDHelper } from '@app/core';
 import { useEventCallback } from '@app/core';
 import { texts } from '@app/texts';
-import { getDiagramId, getSelectedGroups, getSelectedItems, groupItems, ungroupItems, useStore } from '@app/wireframes/model';
+import { getDiagram, getSelectedGroups, getSelectedItems, groupItems, ungroupItems, useStore } from '@app/wireframes/model';
 import { UIAction } from './shared';
 
 export function useGrouping() {
     const dispatch = useDispatch();
-    const selectedDiagramId = useStore(getDiagramId);
+    const selectedDiagram = useStore(getDiagram);
+    const selectedDiagramId = selectedDiagram?.id;
     const selectedGroups = useStore(getSelectedGroups);
     const selectedItems = useStore(getSelectedItems);
     const canGroup = selectedItems.length > 1;
@@ -23,7 +24,7 @@ export function useGrouping() {
 
     const doGroup = useEventCallback(() => {
         if (selectedDiagramId) {
-            dispatch(groupItems(selectedDiagramId, selectedItems, IDHelper.nextId('Group')));
+            dispatch(groupItems(selectedDiagramId, selectedItems, IDHelper.nextId(selectedDiagram, 'Group').id));
         }
     });
 

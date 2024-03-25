@@ -5,12 +5,20 @@
  * Copyright (c) Sebastian Stehle. All rights reserved.
 */
 
+import { Diagram } from '@app/wireframes/model';
+
 export module IDHelper {
-    let CURRENT_ID: { [renderer: string]: any } = {};
+    export function nextId(diagram: Diagram, renderer: string) {
+        // Set count = 1 if no occurance for this renderer is registered
+        let count = 1 + (diagram.nextIds.get(renderer) || 0);
+
+        while (diagram.items.has(`${renderer}${count}`)) {
+            count++;
+        }
     
-    export function nextId(renderer: string) {
-        CURRENT_ID[renderer] = (renderer in CURRENT_ID) ? CURRENT_ID[renderer] + 1 : 1;
-        
-        return `${renderer}${CURRENT_ID[renderer]}`;
+        const newDiagram = diagram.updateNextId(renderer, count);
+        const id = `${renderer}${count}`;
+    
+        return { id, count, newDiagram };
     }
 }

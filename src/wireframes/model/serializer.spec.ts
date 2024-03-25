@@ -53,13 +53,12 @@ describe('Serializer', () => {
     });
 
     it('should compute new ids', () => {
-        const original =
-            DiagramItemSet.createFromDiagram([groupId],
-                createDiagram('1'));
+        const diagram = createDiagram('1');
+        const original = DiagramItemSet.createFromDiagram([groupId], diagram);
 
         const serialized = Serializer.serializeSet(original);
 
-        const updated = JSON.parse(Serializer.generateNewIds(JSON.stringify(serialized)));
+        const updated = JSON.parse(Serializer.generateNewIds(diagram, JSON.stringify(serialized)));
 
         let i = 0;
         for (const visual of serialized.visuals) {

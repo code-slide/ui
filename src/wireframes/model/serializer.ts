@@ -16,31 +16,29 @@ import { Transform } from './transform';
 type IdMap = { [id: string]: string };
 
 export module Serializer {
-    export function tryGenerateNewIds(json: string): string {
+    export function tryGenerateNewIds(diagram: Diagram, json: string): string {
         try {
-            return generateNewIds(json);
+            return generateNewIds(diagram, json);
         } catch {
             return json;
         }
     }
 
-    export function generateNewIds(json: string): string {
+    export function generateNewIds(diagram: Diagram, json: string): string {
         const input = JSON.parse(json);
 
         const idMap: IdMap = {};
 
         for (const jsonShape of input.visuals) {
             const oldId = jsonShape.id;
-
-            jsonShape.id = IDHelper.nextId(jsonShape.renderer);
-
+            const renderer = jsonShape.renderer;
+            jsonShape.id = IDHelper.nextId(diagram, renderer).id;
             idMap[oldId] = jsonShape.id;
         }
 
         for (const jsonGroup of input.groups) {
             const oldId = jsonGroup.id;
-
-            jsonGroup.id = IDHelper.nextId('Group');
+            jsonGroup.id = IDHelper.nextId(diagram, 'Group').id;
 
             idMap[oldId] = jsonGroup.id;
         }

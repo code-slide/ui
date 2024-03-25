@@ -50,7 +50,7 @@ export const renameItems =
 
 export const pasteItems =
     createAction('items/paste', (diagram: DiagramRef, json: string, offsetByX = 0, offsetByY = 0) => {
-        return { payload: createDiagramAction(diagram, { json: Serializer.tryGenerateNewIds(json), offsetByX, offsetByY }) };
+        return { payload: createDiagramAction(diagram, { json: json, offsetByX, offsetByY }) };
     });
 
 export function buildItems(builder: ActionReducerMapBuilder<EditorState>) {
@@ -102,15 +102,15 @@ export function buildItems(builder: ActionReducerMapBuilder<EditorState>) {
                 if (!shape) return diagram;
 
                 // Dublicate item with assigning new id
-                const newId = (diagram.items.has(id)) ? IDHelper.nextId(shape.renderer) : id;
+                let { id: defaultId, newDiagram } = IDHelper.nextId(diagram, shape.renderer);
                 const newProps = {
-                    id: newId,
+                    id: id || defaultId,
                     renderer: shape.renderer,
                     appearance: shape.appearance,
                     transform: shape.transform,
                 };
                 const newShape = DiagramItem.createShape(newProps);
-                const newDiagram = diagram.addShape(newShape).selectItems([newId]);
+                newDiagram = newDiagram.addShape(newShape).selectItems([id]);
 
                 // Remove old item
                 const set = DiagramItemSet.createFromDiagram([itemId], newDiagram);
@@ -130,7 +130,9 @@ export function buildItems(builder: ActionReducerMapBuilder<EditorState>) {
             const { diagramId, json, offsetByX, offsetByY } = action.payload;
 
             return state.updateDiagram(diagramId, diagram => {
-                const set = Serializer.deserializeSet(JSON.parse(json));
+                const set = Serializer.deserializeSet(
+                    JSON.parse(Serializer.tryGenerateNewIds(diagram, json)),
+                );
 
                 diagram = diagram.addItems(set);
 
@@ -148,9 +150,11 @@ export function buildItems(builder: ActionReducerMapBuilder<EditorState>) {
         })
         .addCase(addShape, (state, action) => {
             const { diagramId, appearance, id, position, renderer, size } = action.payload;
-            const newId = id || IDHelper.nextId(renderer);
 
             return state.updateDiagram(diagramId, diagram => {
+                const { id: defaultID, newDiagram } = IDHelper.nextId(diagram, renderer);
+                const defaultId = id || defaultID;
+                
                 const rendererInstance = RendererService.get(renderer);
 
                 const { size: defaultSize, appearance: defaultAppearance, ...other } = rendererInstance.createDefaultShape();
@@ -158,7 +162,7 @@ export function buildItems(builder: ActionReducerMapBuilder<EditorState>) {
                 const initialSize = size || defaultSize;
                 const initialProps = {
                     ...other,
-                    id: newId,
+                    id: defaultId,
                     transform: new Transform(
                         new Vec2(
                             (position?.x || 0) + 0.5 * initialSize.x, 
@@ -172,7 +176,7 @@ export function buildItems(builder: ActionReducerMapBuilder<EditorState>) {
 
                 const shape = DiagramItem.createShape(initialProps);
 
-                return diagram.addShape(shape).selectItems([newId]);
+                return newDiagram.addShape(shape).selectItems([defaultId]);
             });
         });
 }

@@ -11,6 +11,7 @@ import { DiagramItemSet } from './diagram-item-set';
 
 type Items = ImmutableMap<DiagramItem>;
 type ItemIds = ImmutableList<string>;
+type NextIds = Map<string, number>;
 
 type UpdateProps = {
     // The list of items.
@@ -21,6 +22,9 @@ type UpdateProps = {
 
     // The selected ids.
     selectedIds: ImmutableSet;
+
+    // The map of renderers' next id.
+    nextIds: NextIds;
 };
 
 type Props = {
@@ -32,6 +36,9 @@ type Props = {
 
     // The list of items.
     items: Items;
+
+    // The map of renderers' next id.
+    nextIds: NextIds;
 
     // The root ids.
     rootIds: ItemIds;
@@ -58,6 +65,9 @@ export type InitialDiagramProps = {
 
     // The list of items.
     items?: { [id: string]: DiagramItem } | Items;
+
+    // The map of renderers' next id.
+    nextIds?: { [renderer: string]: number } | NextIds;
 
     // The rootIds ids.
     rootIds?: ReadonlyArray<string> | ItemIds;
@@ -91,6 +101,10 @@ export class Diagram extends Record<Props> {
         return this.get('rootIds');
     }
 
+    public get nextIds() {
+        return this.get('nextIds');
+    }
+
     public get selectedIds() {
         return this.get('selectedIds');
     }
@@ -118,6 +132,7 @@ export class Diagram extends Record<Props> {
             id: id || MathHelper.nextId(),
             items: ImmutableMap.of(items),
             master,
+            nextIds: new Map<string, number>,
             rootIds: ImmutableList.of(rootIds),
             selectedIds: ImmutableSet.empty(),
             title,
@@ -184,6 +199,12 @@ export class Diagram extends Record<Props> {
             if (update.items !== this.items) {
                 update.itemIds = update.itemIds.add(shape.id);
             }
+        });
+    }
+
+    public updateNextId(renderer: string, newCount: number) {
+        return this.mutate([], update => {
+            update.nextIds.set(renderer, newCount);
         });
     }
 
@@ -323,6 +344,7 @@ export class Diagram extends Record<Props> {
                 items: this.items,
                 itemIds: resultParent.childIds,
                 selectedIds: this.selectedIds, 
+                nextIds: this.nextIds,
             };
 
             updater(update, resultItems);
@@ -337,6 +359,7 @@ export class Diagram extends Record<Props> {
                 items: this.items,
                 itemIds: this.rootIds,
                 selectedIds: this.selectedIds, 
+                nextIds: this.nextIds,
             };
 
             updater(update, resultItems);

@@ -6,13 +6,13 @@
 */
 
 import { ActionReducerMapBuilder, createAction } from '@reduxjs/toolkit';
-import { Color, IDHelper, Vec2 } from '@app/core';
+import { Color, MathHelper, Vec2 } from '@app/core';
 import { Diagram, EditorState } from './../internal';
 import { createDiagramAction, DiagramRef } from './utils';
 
 export const addDiagram =
     createAction('diagram/add', (diagramId?: string, index?: number) => {
-        return { payload: createDiagramAction(diagramId || IDHelper.nextId('Diagram'), { index }) };
+        return { payload: createDiagramAction(diagramId || MathHelper.nextId(), { index }) };
     });
 
 export const selectDiagram =
@@ -53,6 +53,11 @@ export const changeScript =
 export const changeFrames =
     createAction('diagram/frames', (diagram: DiagramRef, frames: string[][]) => {
         return { payload: createDiagramAction(diagram, { frames }) };
+    });
+
+export const updateNextId =
+    createAction('diagram/updateNextId', (diagram: DiagramRef, renderer: string, count: number) => {
+        return { payload: createDiagramAction(diagram, { renderer, count }) };
     });
 
 export const changeName =
@@ -121,6 +126,11 @@ export function buildDiagrams(builder: ActionReducerMapBuilder<EditorState>) {
             const { color } = action.payload;
 
             return state.changeColor(Color.fromString(color));
+        })
+        .addCase(updateNextId, (state, action) => {
+            const { diagramId, renderer, count } = action.payload;
+
+            return state.updateDiagram(diagramId, diagram => diagram.updateNextId(renderer, count));
         })
         .addCase(duplicateDiagram, (state, action) => {
             const { diagramId, index } = action.payload;
