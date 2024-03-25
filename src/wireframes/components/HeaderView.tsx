@@ -73,10 +73,15 @@ export const HeaderView = React.memo(() => {
 });
 
 const CustomTitle = React.memo(({ token }: { token?: string | null }) => {
+    // Get editor's name
     const editor = useStore(getEditor);
-    const title = token && token.length > 0 ?
-        `${editor.name}` :
-        `${editor.name} (${texts.common.unsaved})`;
+    let name = editor.name;
+    React.useEffect(() => {
+        name = editor.name;
+    }, [editor.name])
+
+    // Get title
+    const title = token && token.length > 0 ? `${name}` : `${name} (${texts.common.unsaved})`;
 
     return (
         <Title text={title} />

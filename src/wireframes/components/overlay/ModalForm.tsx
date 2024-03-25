@@ -30,6 +30,12 @@ type ModalFormProps = {
 export const ModalForm: React.FC<ModalFormProps> = (props: ModalFormProps) => {
     const { title, open, okText, cancelText, formItems, initValue, onCreate, onCancel } = props;
     const [form] = Form.useForm();
+
+    React.useEffect(() => {
+        form.setFieldsValue(!initValue ? {} : { [initValue[0]]: initValue[1] })
+        }, [form, initValue])
+
+    console.log(initValue);
     return (
         <Modal
             open={open}

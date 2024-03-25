@@ -1,7 +1,7 @@
 import { changeName, getEditor, useStore } from '@app/wireframes/model';
 import { Button, Dropdown, Form, Input } from 'antd';
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLoading } from '../actions';
 import { texts } from '@app/texts/en';
 import { useDispatch } from 'react-redux';
@@ -13,12 +13,17 @@ export const FileMenu = () => {
     const dispatch = useDispatch();
     const forLoading = useLoading();
     const editor = useStore(getEditor);
-    const [label, setLabel] = useState(editor.name);
     const [isRename, setIsRename] = useState(false);
 
+    // Get editor's name
+    let name = editor.name;
+    useEffect(() => {
+        name = editor.name;
+    }, [editor.name])
+
+    // Change name onClick
     const handleRenameOk = (values: any) => {
         dispatch(changeName(values.new_name));
-        setLabel(values.new_name);
         setIsRename(false);
     };
 
@@ -61,7 +66,7 @@ export const FileMenu = () => {
     ];
 
     const menuEvt: MenuProps['onClick'] = ({key}) => {
-        if (key == 'Rename') {
+        if (key == texts.common.rename) {
             setIsRename(true);
         } else if (key == forLoading.newDiagram.label) {
             dispatch(forLoading.newDiagram.onAction);
@@ -81,7 +86,7 @@ export const FileMenu = () => {
                 menu={{ items: menu, onClick: menuEvt }}
                 trigger={['click']}>
                 <Button type="text" size='middle'>
-                    <h4>{(label.length < 25) ? label : `${label.substring(0, 25)}...`}</h4>
+                    <h4>{(name.length < 25) ? name : `${name.substring(0, 25)}...`}</h4>
                 </Button>
             </Dropdown>
             <ModalForm
@@ -90,6 +95,7 @@ export const FileMenu = () => {
                 okText='Rename'
                 onCancel={() => setIsRename(false)}
                 onCreate={handleRenameOk} 
+                initValue={['new_name', name]}
                 formItems={
                     <>
                         <div style={{ height: 20 }} />
