@@ -1,0 +1,70 @@
+@import 'mixins';
+@import 'vars';
+
+$size: 24px;
+
+.color-picker {
+    &-circle {
+        &,
+        & button {
+            border-radius: 50%;
+            padding: 2px !important;
+        }
+    }
+
+    &-button {
+        .mono-tone {
+            fill: black !important;
+        }
+    }
+
+    &-colors {
+        @include clearfix;
+        max-width: 210px;
+        min-width: 210px;
+    }
+
+    &-color {
+        & {            // @include circle($size);
+            align-items: center;
+            background: $color-white;
+            border: 2px solid $color-border;
+            border-radius: $size;
+            display: inline-flex;
+            justify-content: center;
+            margin: 1px;
+        }
+
+        &.rect {
+            background: transparent;
+            border-color: transparent;
+            border-radius: 0;
+            float: none;
+        }
+
+        &-inner {
+            @include circle($size - 8px);
+            margin: 1px;
+        }
+    }
+
+    &-tabs {
+        margin-top: -10px;
+        max-height: 400px;
+        min-height: 400px;
+    }
+}
+
+.sketch-picker {
+    background: 'none' !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+span {
+    &.color-picker-button {
+        padding: 0 !important;
+    }
+}

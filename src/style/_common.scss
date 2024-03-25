@@ -1,0 +1,404 @@
+@import 'mixins';
+@import 'vars';
+
+#root-layout {
+    height: 100%;
+}
+
+body {
+    overflow: hidden;
+
+    &.sb-main-padded {
+        overflow: inherit;
+    }
+}
+
+* {
+    @include scrollbars(8px, darken($color-border, 15%), transparent);
+}
+
+.hidden {
+    display: none;
+}
+
+.no-select {
+    user-select: none;
+}
+
+.no-border-radius {
+    border-radius: 0;
+}
+
+.header-left {
+    @include fixed(null, null, null, 13px);
+}
+
+.header-toolbar {
+    &-left,
+    &-right {
+        background-color: transparent !important;
+        padding: 0 !important;
+        border: 0 !important;
+        height: fit-content;
+    }
+
+    &-left {
+        margin: 10px 13px 10px 10px;
+    }
+
+    &-right {
+        margin: 10px 0;
+    }
+}
+
+.header-cta-right {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2px;
+    margin-right: 13px;
+    background-color: $color-theme-blue-lightest;
+
+    h4 {
+        margin-bottom: 0;
+    }
+}
+
+.editor-content {
+    margin: 10px 13px 10px 10px;
+}
+
+.header-cta-right:hover {
+    background-color: $color-border;
+}
+
+.ant-layout {
+    &-header {
+        border-bottom: 1px solid $color-border;
+        background-color: white;
+        padding-left: 100px;
+        padding-right: 0;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        text-align: center;
+        z-index: 1000;
+
+        @media (max-width: 1000px) {
+            text-align: left;
+        }
+    }
+}
+
+#root-layout > .ant-layout {
+    height: 100%;
+}
+
+svg {
+    &:focus {
+        outline: none;
+    }
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #ddd;
+    margin: 30px 0;
+}
+
+//
+// Typography
+//
+ul {
+    &.blank {
+        list-style: none;
+    }
+}
+
+.section {
+    padding-bottom: 10px;
+}
+
+tspan {
+    background-color: #0f0;
+}
+
+//
+// Sidebars
+//
+.sidebar {
+    &-left,
+    &-right {
+        background: transparent !important;
+        border: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    &-left {
+        border-radius: 20px;
+        margin: 10px 5px 10px 13px;
+    }
+
+    &-right {
+        margin: 0 13px 10px 5px;
+    }
+
+    &-shape {
+        & {
+            background: $color-theme-blue-lightest !important;
+            display: flex;
+            flex-flow: column;
+            height: fit-content;
+            border-radius: 20px;
+            margin: 0 10px;
+        }
+
+        .ant-layout-sider-children,
+        .ant-tabs,
+        .ant-tabs-content,
+        .ant-tabs-tabpane,
+        .tab-panel {
+            display: flex;
+            flex-flow: column;
+        }
+
+        .ant-tabs-tabpane {
+            min-height: 100%;
+        }
+
+        .ant-tabs-tabpane {
+            flex-shrink: 1 !important;
+        }
+
+        .item {
+            background: $color-theme-blue-lightest;
+            border: 0;
+            border-radius: 0;
+            height: 42px;
+            padding: 0;
+        }
+
+        .item:first-of-type {
+            border-radius: 20px 20px 0 0;
+            padding: 10px 0 0;
+        }
+
+        .item:last-of-type {
+            border-radius: 0 0 20px 20px;
+            padding: 0 0 10px;
+        }
+
+        .item:hover {
+            background: $color-theme-secondary !important;
+        }
+    }
+}
+
+.force-color {
+    color: rgba(0, 0, 0, 85%) !important;
+
+    &:hover {
+        color: rgba(0, 0, 0, 85%) !important;
+    }
+
+    &:hover {
+        background-color: #eee;
+    }
+
+    .ant-menu-title-content {
+        color: rgba(0, 0, 0, 85%) !important;
+    }
+
+    &.ant-menu-item-disabled {
+        color: rgba(0, 0, 0, 25%) !important;
+
+        .ant-menu-title-content {
+            color: rgba(0, 0, 0, 25%) !important;
+        }
+    }
+}
+
+.ant-menu-item-disabled {
+    .force-color {
+        color: rgba(0, 0, 0, 25%) rgba(0, 0, 0, 85%);
+    }
+}
+
+.context-menu {
+    border: 1px solid $color-border;
+}
+
+.ant-menu {
+    box-shadow: none;
+
+    &.ant-menu-root,
+    &.ant-menu-submenu {
+        border: 1px solid $color-border;
+        border-radius: 2px;
+
+        .ant-menu-item-selected {
+            background: none;
+        }
+    }
+}
+
+.ant-btn-group {
+    .ant-tooltip-disabled-compatible-wrapper {
+        display: flex !important;
+    }
+}
+
+.ant-input-number-affix-wrapper {
+    width: 100%;
+}
+
+.ant-input-number-prefix {
+    color: $color-text;
+    font-family: monospace;
+    font-weight: bolder;
+    margin-right: .5rem;
+}
+
+//
+// > Properties
+//
+.property {
+    & {
+        margin-bottom: .5rem;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    &-label {
+        padding-right: .5rem;
+        padding-top: .25rem;
+    }
+
+    &-value {
+        .ant-select {
+            max-width: 100%;
+            min-width: 100%;
+        }
+
+        .ant-checkbox-wrapper {
+            margin-top: .25rem;
+        }
+    }
+}
+
+.properties-subsection {
+    & {
+        margin-bottom: 1rem;
+    }
+
+    &:last-child {
+        margin: 0;
+    }
+}
+
+//
+// > Menu Items
+//
+header {
+    .ant-btn-group {
+        margin-left: 15px !important;
+        margin-right: 15px !important;
+    }
+}
+
+.menu {
+    &-separator {
+        background: $color-border-dark;
+        display: inline-block;
+        height: 1rem;
+        margin-left: .5rem;
+        margin-right: .5rem;
+        width: 1px;
+    }
+
+    &-item,
+    &-item > button {
+        & {
+            background: transparent !important;
+            border: 0;
+            border-radius: 0;
+            opacity: .8;
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &:disabled {
+            opacity: .4;
+        }
+    }
+}
+
+//
+// > Trees
+//
+.tree-item {
+    &-header-container {
+        width: 100%;
+    }
+
+    &-header {
+        align-items: center;
+        cursor: default;
+        direction: ltr;
+        display: flex;
+        padding: 5px;
+        border: 2px;
+        border-radius: 2px;
+        color: $color-white;
+    }
+
+    &.selected {
+        background-color: $color-theme-blue;
+        border: 0;
+        border-radius: 2px;
+        color: $color-white;
+    }
+
+    &-title {
+        @include truncate;
+        margin-left: 10px;
+    }
+}
+
+//
+// > Print
+//
+
+.print-mode {
+    display: none;
+}
+
+@media print {
+    .screen-mode {
+        display: none;
+    }
+
+    .print-mode {
+        display: block;
+    }
+
+    .print-diagram {
+        page-break-after: always;
+    }
+
+    .ant-message {
+        display: none;
+    }
+
+    .ant-dropdown {
+        display: none;
+    }
+
+    #crowd-shortcut {
+        display: none;
+    }
+}

@@ -1,0 +1,69 @@
+@import 'mixins';
+@import 'vars';
+
+.animation-view {
+    display: block;
+    flex-direction: column;
+    width: 100%;
+    min-width: 600px;
+    background-color: $color-white;
+}
+
+.title-editor {
+    width: 100%;
+    padding: .5em 1em;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    >h4 {
+        margin: 0;
+    }
+}
+
+.code-editor {
+    display: inline-flex;
+    gap: 10px;
+    width: 100%;
+    padding: .75em 1em;
+    background-color: $color-white;
+    font-family: 'Source Code Pro', ui-monospace, monospace;
+    font-size: 14px;
+    line-height: 21px;
+    overflow: auto;
+    overscroll-behavior-y: none;
+    border-radius: 20px;
+    margin: 0;
+    height: calc(100% - 58px);
+
+    >.line-numbers,
+    textarea {
+        height: 2000px;
+    }
+
+    >textarea {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        outline: none;
+        color: $color-text;
+        background-color: $color-white;
+        border: 0;
+        resize: none;
+    }
+
+    >.line-numbers {
+        text-align: right;
+    }
+
+    >.line-numbers span {
+        counter-increment: linenumber;
+    }
+
+    >.line-numbers span::before {
+        content: counter(linenumber);
+        display: block;
+        color: $color-text-decent;
+    }
+}

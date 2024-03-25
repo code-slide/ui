@@ -1,0 +1,65 @@
+@import 'mixins';
+@import 'vars';
+
+.pages {
+    &-container {
+        display: flex;
+        gap: 10px;
+        padding: 15px 15px 23px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        border-top: 1px solid $color-border-dark;
+    }
+
+    &-list {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    &-action {
+        visibility: hidden;
+        float: right;
+        right: 4px;
+    }
+
+    &-index {
+        position: relative;
+        left: 10px;
+        top: -25px;
+        width: fit-content;
+    }
+
+    &-thumbnail:hover .pages-action {
+        visibility: visible;
+    }
+
+    &-thumbnail:hover .pages-card {
+        border-width: 2px;
+        border-color: $color-border-dark;
+    }
+
+    &-thumbnail.selected .pages-card {
+        border-width: 2px;
+        border-color: $color-theme-blue;
+    }
+
+    &-add #pages-cover {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $color-border;
+    }
+
+    &-add #pages-cover:hover {
+        background-color: $color-border-dark;
+    }
+}
+
+.action {
+    &-item {
+        .anticon {
+            width: 15px;
+        }
+    }
+}

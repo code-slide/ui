@@ -1,0 +1,16 @@
+@import 'mixins';
+@import 'vars';
+
+.editor {
+    &-view {
+        border: 0;
+        border-radius: 0;
+        height: 100%;
+        overflow-x: auto;
+        overflow-y: auto;
+    }
+
+    &-diagram {
+        margin: auto;
+    }
+}

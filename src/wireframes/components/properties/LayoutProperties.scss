@@ -1,0 +1,11 @@
+@import 'mixins';
+@import 'vars';
+
+.layout-properties {
+    button {
+        margin-right: 3px;
+        padding-left: 0;
+        padding-right: 0;
+        width: 32px;
+    }
+}

@@ -1,0 +1,33 @@
+@import 'mixins';
+@import 'vars';
+
+.menu {
+    &-shape {
+        gap: 8px;
+    }
+
+    &-table {
+        background-color: white !important;
+        display: flex;
+        flex-flow: row;
+        flex-wrap: wrap;
+        gap: 4px;
+        padding: 4px 0;
+    }
+
+    &-table-text {
+        text-align: center;
+        margin: 0;
+    }
+
+    &-cell {
+        border: 1px $color-border-dark solid;
+        border-radius: 2px;
+        background-color: $color-white;
+    }
+
+    &-cell:hover,
+    &-cell.active {
+        background-color: $color-border;
+    }
+}
