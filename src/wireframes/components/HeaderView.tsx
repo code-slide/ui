@@ -7,7 +7,6 @@
 
 import * as React from 'react';
 import { Title } from '@app/core';
-import { texts } from '@app/texts';
 import { getEditor, useStore } from '@app/wireframes/model';
 import { useLoading } from './actions';
 import { ArrangeMenu, FileMenu, PresentMenu } from './menu';
@@ -16,12 +15,11 @@ import './styles/HeaderView.scss'
 export const HeaderView = React.memo(() => {
     const forLoading = useLoading();
     const editor = useStore(s => s.editor);
-    const tokenToRead = useStore(s => s.loading.tokenToRead);
     const tokenToWrite = useStore(s => s.loading.tokenToWrite);
     const saveTimer = React.useRef<any>();
-    const saveAction = React.useRef(forLoading.saveDiagram);
+    const saveAction = React.useRef(forLoading.downloadDiagram);
 
-    saveAction.current = forLoading.saveDiagram;
+    saveAction.current = forLoading.downloadDiagram;
 
     React.useEffect(() => {
         function clearTimer() {
@@ -57,12 +55,9 @@ export const HeaderView = React.memo(() => {
     return (
         <>
             <div className='header-left'>
-                <CustomTitle token={tokenToRead} />
+                <CustomTitle />
                 <ArrangeMenu />
-
                 <FileMenu />
-                <span className='menu-separator' />
-                <p style={{ display: 'inline-block', width: '80px'}}>{tokenToWrite ?? 'Unsaved'}</p>
             </div>
 
             <span style={{ float: 'right' }}>
@@ -72,7 +67,7 @@ export const HeaderView = React.memo(() => {
     );
 });
 
-const CustomTitle = React.memo(({ token }: { token?: string | null }) => {
+const CustomTitle = React.memo(() => {
     // Get editor's name
     const editor = useStore(getEditor);
     let name = editor.name;
@@ -80,10 +75,7 @@ const CustomTitle = React.memo(({ token }: { token?: string | null }) => {
         name = editor.name;
     }, [editor.name])
 
-    // Get title
-    const title = token && token.length > 0 ? `${name}` : `${name} (${texts.common.unsaved})`;
-
     return (
-        <Title text={title} />
+        <Title text={name} />
     );
 });

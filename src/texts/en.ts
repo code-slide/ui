@@ -78,7 +78,7 @@ export const texts = {
         removeTooltip: 'Delete selected items',
         saveDiagram: 'Download',
         saveDiagramToFileTooltip: 'Export',
-        saveDiagramTooltip: 'Download',
+        downloadDiagramTooltip: 'Download',
         savingDiagram: 'Saving presentation...',
         savingDiagramDone: 'Saving presentation completed successfully.',
         savingDiagramFailed: 'Saving presentation failed with internal error.',

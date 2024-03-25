@@ -10,8 +10,8 @@ import { push } from 'connected-react-router';
 import { saveAs } from 'file-saver';
 import { AnyAction, Reducer } from 'redux';
 import { texts } from '@app/texts';
-import { EditorState, EditorStateInStore, LoadingState, LoadingStateInStore, saveRecentDiagrams, Serializer, UndoableState } from './../internal';
-import { getDiagram, postDiagram, putDiagram } from './api';
+import { EditorState, EditorStateInStore, LoadingState, Serializer, UndoableState } from './../internal';
+import { getDiagram } from './api';
 import { addDiagram, selectDiagram } from './diagrams';
 import { selectItems } from './items';
 import { migrateOldAction } from './obsolete';
@@ -41,7 +41,7 @@ export const loadDiagramInternal =
         return { payload: { stored, requestId } };
     });
 
-export const saveDiagramToFile = 
+export const downloadDiagramToFile = 
     createAsyncThunk('diagram/save/file', async (_, thunkAPI) => {
         const state = thunkAPI.getState() as EditorStateInStore;
 
@@ -51,30 +51,10 @@ export const saveDiagramToFile =
         saveAs(bodyBlob, 'diagram.json');
     });
 
-export const saveDiagramToServer =
-    createAsyncThunk('diagram/save/server', async (args: { navigate?: boolean; operationId?: string }, thunkAPI) => {
-        const state = thunkAPI.getState() as LoadingStateInStore & EditorStateInStore;
-
-        const tokenToWrite = state.loading.tokenToWrite;
-        const tokenToRead = state.loading.tokenToRead;
-
-        if (tokenToRead && tokenToWrite) {
-            await putDiagram(tokenToRead, tokenToWrite, getSaveState(state));
-
-            return { tokenToRead, tokenToWrite, update: true, navigate: args.navigate };
-        } else {
-            const { readToken, writeToken } = await postDiagram(getSaveState(state));
-
-            return { tokenToRead: readToken, tokenToWrite: writeToken, navigate: args.navigate };
-        }
-    });
-
 export function loadingMiddleware(): Middleware {
     const middleware: Middleware = store => next => action => {        
         if (loadDiagramFromServer.pending.match(action) ||  loadDiagramFromFile.pending.match(action)) {
             store.dispatch(showToast(texts.common.loadingDiagram, 'loading', action.meta.requestId));
-        } else if ( saveDiagramToServer.pending.match(action) || saveDiagramToFile.pending.match(action)) {
-            store.dispatch(showToast(texts.common.savingDiagram, 'loading', action.meta.requestId));
         }
 
         try {
@@ -96,22 +76,8 @@ export function loadingMiddleware(): Middleware {
                 store.dispatch(showToast(texts.common.loadingDiagramFailed, 'error', action.meta.requestId));
             } else if (loadDiagramInternal.match(action)) {
                 store.dispatch(showToast(texts.common.loadingDiagramDone, 'success', action.payload.requestId));
-            } else if (saveDiagramToServer.fulfilled.match(action)) {
-                if (action.meta.arg.navigate) {
-                    store.dispatch(push(action.payload.tokenToRead));
-                }
-
-                saveRecentDiagrams((store.getState() as LoadingStateInStore).loading.recentDiagrams);
-
-                const content = action.payload.update ? 
-                    texts.common.savingDiagramDone :
-                    texts.common.savingDiagramDoneUrl(`${window.location.protocol}//${window.location.host}/${action.payload.tokenToRead}`);
-
-                store.dispatch(showToast(content, 'success', action.meta.requestId, 1000));
-            } else if (saveDiagramToFile.fulfilled.match(action)) {
+            } else if (downloadDiagramToFile.fulfilled.match(action)) {
                 store.dispatch(showToast(texts.common.savingDiagramDone, 'success', action.meta.requestId));
-            } else if (saveDiagramToServer.rejected.match(action) || saveDiagramToFile.rejected.match(action)) {
-                store.dispatch(showToast(texts.common.savingDiagramFailed, 'error', action.meta.requestId));
             }
 
             return result;
@@ -145,20 +111,6 @@ export function loading(initialState: LoadingState) {
             state.isLoading = false;
             state.tokenToRead = action.payload?.tokenToRead;
             state.tokenToWrite = action.payload?.tokenToWrite;
-        })
-        .addCase(saveDiagramToServer.pending, (state) => {
-            state.isLoading = true;
-        })
-        .addCase(saveDiagramToServer.rejected, (state) => {
-            state.isLoading = false;
-        })
-        .addCase(saveDiagramToServer.fulfilled, (state, action) => {
-            const { tokenToRead, tokenToWrite } = action.payload;
-
-            state.isLoading = false;
-            state.tokenToRead = tokenToRead;
-            state.tokenToWrite = tokenToWrite;
-            state.recentDiagrams[tokenToRead] = { date: new Date().getTime(), tokenToWrite };
         }));
 }
 

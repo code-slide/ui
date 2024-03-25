@@ -9,7 +9,7 @@ import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { useEventCallback, useOpenFile } from '@app/core';
 import { texts } from '@app/texts';
-import { getDiagrams, loadDiagramFromFile, newDiagram, saveDiagramToFile, saveDiagramToServer, useStore } from '@app/wireframes/model';
+import { downloadDiagramToFile, getDiagrams, loadDiagramFromFile, newDiagram, useStore } from '@app/wireframes/model';
 import { UIAction } from './shared';
 
 export function useLoading() {
@@ -34,12 +34,11 @@ export function useLoading() {
         dispatch(newDiagram(true));
     });
 
-    const doSave = useEventCallback(() => {
-        dispatch(saveDiagramToServer({ navigate: true }));
+    const doDownload = useEventCallback(() => {
+        dispatch(downloadDiagramToFile());
     });
 
     const doSaveToFile = useEventCallback(() => {
-        dispatch(saveDiagramToFile());
     });
 
     const newDiagramAction: UIAction = React.useMemo(() => ({
@@ -51,14 +50,14 @@ export function useLoading() {
         onAction: doNew,
     }), [doNew]);
 
-    const saveDiagram: UIAction = React.useMemo(() => ({
+    const downloadDiagram: UIAction = React.useMemo(() => ({
         disabled: !canSave,
         icon: 'icon-floppy-o',
-        label: texts.common.saveDiagramTooltip,
+        label: texts.common.downloadDiagramTooltip,
         shortcut: 'MOD + S',
-        tooltip: texts.common.saveDiagramTooltip,
-        onAction: doSave,
-    }), [doSave, canSave]);
+        tooltip: texts.common.downloadDiagramTooltip,
+        onAction: doDownload,
+    }), [doDownload, canSave]);
 
     const saveDiagramToFileAction: UIAction = React.useMemo(() => ({
         disabled: !canSave,
@@ -76,5 +75,5 @@ export function useLoading() {
         onAction: openHandler,
     }), [openHandler]);
 
-    return { newDiagram: newDiagramAction, openDiagramAction, saveDiagram, saveDiagramToFile: saveDiagramToFileAction };
+    return { newDiagram: newDiagramAction, openDiagramAction, downloadDiagram, saveDiagramToFile: saveDiagramToFileAction };
 }

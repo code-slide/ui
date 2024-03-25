@@ -50,18 +50,18 @@ export const FileMenu = () => {
             disabled: false,
         },
         {
-            key: forLoading.saveDiagram.label,
-            label: forLoading.saveDiagram.label,
-            icon: <MenuIcon icon={forLoading.saveDiagram.icon} />,
+            key: forLoading.downloadDiagram.label,
+            label: forLoading.downloadDiagram.label,
+            icon: <MenuIcon icon={forLoading.downloadDiagram.icon} />,
             className: 'loading-action-item',
-            disabled: forLoading.saveDiagram.disabled,
+            disabled: forLoading.downloadDiagram.disabled,
         },
         {
             key: forLoading.saveDiagramToFile.label,
             label: forLoading.saveDiagramToFile.label,
             icon: <MenuIcon icon={forLoading.saveDiagramToFile.icon} />,
             className: 'loading-action-item',
-            disabled: forLoading.saveDiagramToFile.disabled,
+            disabled: false,
         },
     ];
 
@@ -72,8 +72,8 @@ export const FileMenu = () => {
             dispatch(forLoading.newDiagram.onAction);
         } else if (key == forLoading.openDiagramAction.label) {
             dispatch(forLoading.openDiagramAction.onAction);
-        } else if (key == forLoading.saveDiagram.label) {
-            dispatch(forLoading.saveDiagram.onAction);
+        } else if (key == forLoading.downloadDiagram.label) {
+            dispatch(forLoading.downloadDiagram.onAction);
         } else if (key == forLoading.saveDiagramToFile.label) {
             dispatch(forLoading.saveDiagramToFile.onAction);
         }
