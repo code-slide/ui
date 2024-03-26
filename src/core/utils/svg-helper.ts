@@ -181,8 +181,7 @@ export module SVGHelper {
     }
 
     export function fastSetAttribute(element: Element, name: string, value: any) {
-        // @ts-ignore
-        const attrs: { [key: string]: any } = element['__attrs'] ||= {};
+        const attrs: { [key: string]: any } = (element as any)['__attrs'] ||= {};
 
         if (attrs[name] === value) {
             return;

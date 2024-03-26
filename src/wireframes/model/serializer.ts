@@ -5,7 +5,7 @@
  * Copyright (c) Sebastian Stehle. All rights reserved.
 */
 
-import { IDHelper, ImmutableList, ImmutableMap, Rotation, Vec2 } from '@app/core';
+import { IDHelper, ImmutableList, ImmutableMap, Rotation, Vec2 } from '@app/core/utils';
 import { Diagram } from './diagram';
 import { DiagramItem } from './diagram-item';
 import { DiagramItemSet } from './diagram-item-set';
@@ -112,7 +112,7 @@ function writeDiagramItem(source: DiagramItem) {
 }
 
 function writeObject(source: object, serializers: PropertySerializers) {
-    const result: { [id: string]: any } = {};
+    const result: Record<string, any> = {};
 
     for (const [key, value] of Object.entries(source)) {
         const serializer = serializers[key];
@@ -125,17 +125,16 @@ function writeObject(source: object, serializers: PropertySerializers) {
     return result;
 }
 
-function readEditor(source: object) {
+function readEditor(source: Record<string, any>) {
     const raw: any = readObject(source, EDITOR_SERIALIZERS);
 
     return EditorState.create(raw);
 }
 
-function readDiagram(source: object) {
+function readDiagram(source: Record<string, any>) {
     const raw: any = readObject(source, DIAGRAM_SERIALIZERS);
 
     if (!raw.rootIds) {
-        // @ts-ignore
         raw.rootIds = source['itemIds'];
     }
 
@@ -158,8 +157,8 @@ function readDiagramItem(source: object, type?: any) {
     }
 }
 
-function readObject(source: object, serializers: PropertySerializers) {
-    const result: { [id: string]: any } = {};
+function readObject(source: Record<string, any>, serializers: PropertySerializers) {
+    const result: Record<string, any> = {};
 
     for (const [key, value] of Object.entries(source)) {
         const serializer = serializers[key];

@@ -1,17 +1,15 @@
 name: Build
-
-on:
-  push:
-    branches: [ master ]
-
-  workflow_dispatch:
+on: push
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
@@ -19,13 +17,21 @@ jobs:
       - name: Install Dependencies
         run: npm i
 
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
       - name: Run Tests 
-        run: npm run test:coverage
+        run: npm run test:ci
+        
+      - name: Upload storybook to Chromatic
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
         
       - name: Run Build 
         run: npm run build
 
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:
           branch: gh-pages

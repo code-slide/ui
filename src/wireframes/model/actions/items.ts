@@ -8,7 +8,7 @@
 /* eslint-disable @typescript-eslint/no-loop-func */
 
 import { ActionReducerMapBuilder, createAction } from '@reduxjs/toolkit';
-import { IDHelper, Rotation, Vec2 } from '@app/core';
+import { IDHelper, Rotation, Vec2 } from '@app/core/utils';
 import { Appearance } from '@app/wireframes/interface';
 import { Diagram, DiagramItem, DiagramItemSet, EditorState, RendererService, Serializer, Transform } from './../internal';
 import { createDiagramAction, createItemAction, createItemsAction, DiagramRef, ItemRef, ItemsRef } from './utils';
@@ -156,6 +156,10 @@ export function buildItems(builder: ActionReducerMapBuilder<EditorState>) {
                 const defaultId = id || defaultID;
                 
                 const rendererInstance = RendererService.get(renderer);
+
+                if (!rendererInstance) {
+                    throw new Error(`Cannot find renderer for ${renderer}.`);
+                }
 
                 const { size: defaultSize, appearance: defaultAppearance, ...other } = rendererInstance.createDefaultShape();
 

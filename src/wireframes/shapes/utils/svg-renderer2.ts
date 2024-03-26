@@ -14,7 +14,7 @@ import { escapeHTML, Rect2, sizeInPx, SVGHelper, Types } from '@app/core';
 import { RendererColor, RendererElement, RendererOpacity, RendererText, RendererWidth, Shape, ShapeFactory, ShapeFactoryFunc, ShapeProperties, ShapePropertiesFunc, TextConfig, TextDecoration } from '@app/wireframes/interface';
 import { AbstractRenderer2 } from './abstract-renderer';
 
-const katex = require('katex');
+import katex from 'katex';
 
 export * from './abstract-renderer';
 
@@ -684,8 +684,7 @@ function getText(value: TextConfig | Shape | string | null | undefined) {
     if (isShape(value)) {
         return value.text || '';
     } else {
-        // @ts-ignore
-        return value?.['text'] || value || '';
+        return (value as any)?.['text'] || value || '';
     }
 }
 
@@ -693,8 +692,7 @@ function getTextAlignment(value: TextConfig | Shape | string | null | undefined)
     if (isShape(value)) {
         return value.textAlignment || 'center';
     } else {
-        // @ts-ignore
-        return value?.['alignment'] || value || 'center';
+        return (value as any)?.['alignment'] || value || 'center';
     }
 }
 
@@ -702,8 +700,7 @@ function getFontSize(value: TextConfig | Shape | number | null | undefined) {
     if (isShape(value)) {
         return value.fontSize || 10;
     } else {
-        // @ts-ignore
-        return value?.['fontSize'] || value || 10;
+        return (value as any)?.['fontSize'] || value || 10;
     }
 }
 
@@ -711,8 +708,7 @@ function getFontFamily(value: TextConfig | Shape | string | null | undefined) {
     if (isShape(value)) {
         return value.fontFamily || 'inherit';
     } else {
-        // @ts-ignore
-        return value?.['fontFamily'] || value || 10;
+        return (value as any)?.['fontFamily'] || value || 10;
     }
 }
 

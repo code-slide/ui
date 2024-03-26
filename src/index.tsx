@@ -50,8 +50,7 @@ const undoableReducer = Reducers.undoable(
 
 const history = createBrowserHistory();
 
-// @ts-ignore
-const composeEnhancers = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose;
+const composeEnhancers = (window as any)['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose;
 
 const store = createStore(
     combineReducers({

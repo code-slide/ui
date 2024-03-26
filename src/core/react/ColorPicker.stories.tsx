@@ -5,31 +5,29 @@
  * Copyright (c) Sebastian Stehle. All rights reserved.
 */
 
-import type { Meta } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import * as React from 'react';
-import { ColorPalette } from './../utils/color-palette';
+import { ColorPalette } from '@app/core/utils';
 import { ColorPicker } from './ColorPicker';
 
 const meta: Meta<typeof ColorPicker> = {
     component: ColorPicker,
+    render: ({ palette: _, ...args }) => {
+        const palette = ColorPalette.colors();
+
+        return (
+            <ColorPicker palette={palette} {...args} />
+        );
+    },
+    argTypes: {
+        palette: {
+            table: {
+                disable: true,
+            },
+        },
+    }
 };
 export default meta;
 
-const Template = ({ palette: _, ...rest }: any) => {
-    const palette = ColorPalette.colors();
-
-    return (
-        <ColorPicker palette={palette} {...rest} />
-    );
-};
-
-export const Default = Template.bind({});
-
-// @ts-ignore
-Default['argTypes'] = {
-    palette: {
-        table: {
-            disable: true,
-        },
-    },
-};
+type Story = StoryObj<typeof ColorPicker>;
+export const Default: Story = {};

@@ -5,34 +5,33 @@
  * Copyright (c) Sebastian Stehle. All rights reserved.
  */
 
-import { Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import * as React from 'react';
 import { Shortcut } from './Shortcut';
 
-export default {
+const meta: Meta<typeof Shortcut> = {
     component: Shortcut,
-} as Meta<typeof Shortcut>;
+    render: (args) => {
+        return (
+            <>
+                {args.keys}
 
-const Template = (args: any) => {
-    return (
-        <>
-            {args.keys}
+                <Shortcut {...args} />
+            </>
+        );
+    },
+};
+export default meta;
 
-            <Shortcut {...args} />
-        </>
-    );
+type Story = StoryObj<typeof Shortcut>;
+export const Default: Story = {
+    args: {
+        keys: 'ctrl+s',
+    },
 };
 
-export const Default = Template.bind({});
-
-// @ts-ignore
-Default['args'] = {
-    keys: 'ctrl+s',
-};
-
-export const ReadableKeys = Template.bind({});
-
-// @ts-ignore
-ReadableKeys['args'] = {
-    keys: 'CTRL + S',
+export const ReadableKeys: Story = {
+    args: {
+        keys: 'CTRL + S',
+    },
 };

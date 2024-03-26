@@ -10,16 +10,15 @@ import type { TabsProps } from 'antd';
 import { TooltipPlacement } from 'antd/lib/tooltip';
 import * as React from 'react';
 import { ColorResult, SketchPicker } from 'react-color';
+import { Color, ColorPalette } from '@app/core/utils';
 import { texts } from '@app/texts';
-import { Color } from './../utils/color';
-import { ColorPalette } from './../utils/color-palette';
-import './ColorPicker.scss';
 import { ColorList } from './ColorList';
 import { useEventCallback } from './hooks';
+import './ColorPicker.scss';
 
 type ColorTab = 'palette' | 'custom';
 
-interface ColorPickerProps {
+export interface ColorPickerProps {
     // The selected color.
     value?: Color | string | null;
 
