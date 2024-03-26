@@ -31,6 +31,9 @@ jobs:
       - name: Run Build 
         run: npm run build
 
+      - name: List directory contents
+        run: ls -al
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:
