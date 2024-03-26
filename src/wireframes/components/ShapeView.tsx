@@ -15,7 +15,6 @@ import './styles/ShapeView.scss';
 import { useState } from 'react';
 import classNames from 'classnames';
 import { ModalForm } from './overlay/ModalForm';
-import TextArea from 'antd/es/input/TextArea';
 
 type ShapeModal = 'image' | 'shape' | '';
 
@@ -71,7 +70,7 @@ export const ShapeView = React.memo(() => {
         {
             key: 'Cell', className: 'menu-table', label: <>
                 <div className='menu-table' style={{ width: dropdownWidth }} >
-                    {[...Array(CELL_ATTR.rows * CELL_ATTR.cols)].map((e, i) =>
+                    {[...Array(CELL_ATTR.rows * CELL_ATTR.cols)].map((_, i) =>
                         <div
                             key={i}
                             className={classNames('menu-cell', { active: (i <= selectedCell) && ((i % CELL_ATTR.cols) < numCol) })}
@@ -225,7 +224,7 @@ export const ShapeView = React.memo(() => {
                 formItems={
                     <>
                         <Form.Item name="svg_code">
-                            <TextArea rows={10} type="textarea" placeholder="Paste SVG code..." />
+                            <Input.TextArea rows={10} placeholder="Paste SVG code..." />
                         </Form.Item>
                     </>
                 }

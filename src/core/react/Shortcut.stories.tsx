@@ -6,7 +6,6 @@
  */
 
 import { Meta, StoryObj } from '@storybook/react';
-import * as React from 'react';
 import { Shortcut } from './Shortcut';
 
 const meta: Meta<typeof Shortcut> = {

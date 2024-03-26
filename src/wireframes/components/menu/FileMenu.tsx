@@ -1,6 +1,5 @@
 import { changeName, getEditor, useStore } from '@app/wireframes/model';
 import { Button, Dropdown, Form, Input } from 'antd';
-import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useLoading } from '../actions';
 import { texts } from '@app/texts/en';

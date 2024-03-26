@@ -1,4 +1,3 @@
-import * as React from "react";
 import { getDiagram, useStore, changeScript } from "@app/wireframes/model";
 import { useDispatch } from "react-redux";
 import './styles/AnimationView.scss';

@@ -8,7 +8,6 @@
 import { Collapse } from 'antd';
 import type { CollapseProps } from 'antd';
 import classNames from 'classnames';
-import * as React from 'react';
 import { texts } from '@app/texts';
 import { getDiagram, getSelectedItems, useStore } from '@app/wireframes/model';
 import { Colors, CustomProperties, DiagramProperties, LayoutProperties, ShapeProperties, TransformProperties } from './properties';

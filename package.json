@@ -1,6 +1,6 @@
 {
   "name": "codeslide.net",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.8.1",
@@ -47,6 +47,7 @@
     "chromatic": "npx chromatic --project-token=chpt_fb075605340d316"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.24.1",
     "@storybook/addon-actions": "^7.5.1",
     "@storybook/addon-essentials": "^7.5.1",
     "@storybook/addon-links": "^7.5.1",

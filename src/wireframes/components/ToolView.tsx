@@ -1,5 +1,4 @@
 import { DiagramItem, setAnimation, setSidebarLeftSize, getDiagram, useStore, changeFrames } from '@app/wireframes/model';
-import * as React from 'react';
 import { ClipboardMenu } from './menu/ClipboardMenu';
 import { TableMenu } from './menu/TableMenu';
 import { GroupingMenu } from './menu/GroupingMenu';

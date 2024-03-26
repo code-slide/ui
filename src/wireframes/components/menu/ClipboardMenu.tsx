@@ -5,7 +5,6 @@
  * Copyright (c) Sebastian Stehle. All rights reserved.
 */
 
-import * as React from 'react';
 import { ActionMenuButton, useClipboard } from '../actions';
 import { Diagram, getDiagram, useStore } from '@app/wireframes/model';
 
@@ -25,7 +24,7 @@ export const ClipboardMenu = (props: ClipboardMenuProps) => {
     );
 };
 
-export const ClipboardMenuInner = ({ diagram, canCopy }: ClipboardMenuProps & { diagram: Diagram }) => {
+export const ClipboardMenuInner = ({ canCopy }: ClipboardMenuProps & { diagram: Diagram }) => {
     const forClipboard = useClipboard();
 
     return (
