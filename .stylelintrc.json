@@ -30,7 +30,7 @@
     },
     "ignoreFiles": [
         "**/*.cs",
-        "build/**/*.*",
+        "dist/**/*.*",
         "node_modules/**/*.*"
     ]
 }
