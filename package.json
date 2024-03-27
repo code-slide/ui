@@ -9,6 +9,7 @@
     "@marker.io/browser": "^0.18.0",
     "@reduxjs/toolkit": "^1.7.1",
     "@svgdotjs/svg.js": "^3.1.1",
+    "antd": "^5.15.4",
     "classnames": "^2.3.1",
     "connected-react-router": "6.9.3",
     "date-fns": "^2.28.0",
