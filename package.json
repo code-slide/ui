@@ -37,6 +37,7 @@
   },
   "scripts": {
     "start": "vite",
+    "start-local": "vite --mode local-server",
     "test": "vitest --browser",
     "test:ci": "vitest run --browser.name=firefox --browser.provider=playwright --browser.headless",
     "lint": "eslint src/**/*.ts[x]",

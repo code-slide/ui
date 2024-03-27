@@ -11,7 +11,7 @@ import { saveAs } from 'file-saver';
 import { AnyAction, Reducer } from 'redux';
 import { texts } from '@app/texts';
 import { EditorState, EditorStateInStore, LoadingState, Serializer, UndoableState } from './../internal';
-import { getDiagram } from './api';
+import { fetchDiagram } from './api';
 import { addDiagram, selectDiagram } from './diagrams';
 import { selectItems } from './items';
 import { migrateOldAction } from './obsolete';
@@ -31,7 +31,7 @@ export const loadDiagramFromFile =
 
 export const loadDiagramFromServer =
     createAsyncThunk('diagram/load/server', async (args: { tokenToRead: string; tokenToWrite?: string; navigate: boolean }) => {
-        const stored = await getDiagram(args.tokenToRead);
+        const stored = await fetchDiagram(args.tokenToRead);
 
         return { tokenToRead: args.tokenToRead, tokenToWrite: args.tokenToWrite, stored };
     });

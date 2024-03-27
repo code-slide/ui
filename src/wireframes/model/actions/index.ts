@@ -7,6 +7,7 @@
 
 export * from './alignment';
 export * from './appearance';
+export * from './api';
 export * from './assets';
 export * from './diagrams';
 export * from './grouping';

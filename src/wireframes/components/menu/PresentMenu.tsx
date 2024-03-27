@@ -1,7 +1,7 @@
 import { FundProjectionScreenOutlined } from "@ant-design/icons";
 import { Button, Segmented, message } from "antd";
 import * as React from "react";
-import { getFilteredDiagrams, getEditor, setMode, setSidebarRightSize, useStore, Diagram } from "@app/wireframes/model";
+import { getFilteredDiagrams, getEditor, setMode, setSidebarRightSize, useStore, Diagram, compileSlides } from "@app/wireframes/model";
 import { AnimationIcon, DesignIcon, IconOutline } from "@app/icons/icon";
 import { useDispatch } from "react-redux";
 import { AbstractControl } from "@app/wireframes/shapes/utils/abstract-control";
@@ -86,29 +86,22 @@ export const PresentMenu = React.memo(() => {
         };
     }
 
-    const fetchAPI = () => {
+    const fetchAPI = async () => {
         const { fileName, size, backgroundColor, frame } = getSlides();
 
-        if ((html != undefined)) {
-            fetch('http://localhost:5001', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                },
-                body: JSON.stringify({
-                    fileName: fileName,
-                    size: size,
-                    backgroundColor: backgroundColor,
-                    frame: frame,
-                })
-            })
-                .catch((err) => {
-                    messageApi.error(`${err}`);
-                });
-
-                window.open(`http://localhost:8001/${fileName}.html`);
-        } else {
+        if (!html) {
             messageApi.error('Empty slide. Cannot perform action');
+            return;
+        }
+
+        try {
+            const linkPresentation = await compileSlides(fileName, size, backgroundColor, frame);
+
+            console.log(linkPresentation);
+            messageApi.success('Compiling successfully. Your presentation will be opened in a new tab.');
+            window.open(linkPresentation);
+        } catch (err) {
+            messageApi.error(`${err}`);
         }
     }
 

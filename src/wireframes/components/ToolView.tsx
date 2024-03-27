@@ -1,4 +1,4 @@
-import { DiagramItem, setAnimation, setSidebarLeftSize, getDiagram, useStore, changeFrames } from '@app/wireframes/model';
+import { DiagramItem, setAnimation, setSidebarLeftSize, getDiagram, useStore, changeFrames, parseFrames } from '@app/wireframes/model';
 import { ClipboardMenu } from './menu/ClipboardMenu';
 import { TableMenu } from './menu/TableMenu';
 import { GroupingMenu } from './menu/GroupingMenu';
@@ -96,53 +96,22 @@ export const ToolAnimationView = () => {
         if (key == 'script' || key == 'output')
             dispatch(setAnimation(key));
     }
-
-    const strToList = (str: string) => {
-        // Remove the outer brackets and split the string into separate items
-        let items = str.slice(2, -2).split('], [');
-
-        // Process each item to remove the quotes and split it into a list
-        let result = items.map(item => {
-            // Split into sub-items using `,` symbol, ignoring those inside curly brackets
-            const regex = /,(?![^{]*})/;
-            let subItems = item.split(regex);
-            
-            // Process each sub-item to remove the quotes
-            let listItem = subItems.map(subItem => subItem.trim().slice(1, -1));
-            
-            return listItem;
-        });
-        
-        return result;
-    }
     
-    const fetchFrames = () => {
+    const fetchFrames = async () => {
         const script = diagram.script;
 
-        if ((script != undefined)) {
-            fetch('http://localhost:5002', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                },
-                body: JSON.stringify({
-                    script: script
-                })
-            })
-                .then((response) => {
-                    return response.json();
-                })
-                .then((data) => {
-                    let frames = strToList(data.frames);
-                    dispatch(changeFrames(diagram.id, frames));
-                    messageApi.success('Script is loaded successfully');
-                })
-                .catch((err) => {
-                    messageApi.error(`${err}`);
-                });
-            } else {
-                messageApi.error('Empty script. Cannot perform action');
-            }
+        if (!script) {
+            messageApi.error('Empty script. Cannot perform action');
+            return;
+        };
+
+        try {
+            const frames = await parseFrames(script);
+            dispatch(changeFrames(diagram.id, frames));
+            messageApi.success('Script is loaded successfully');
+        } catch (error) {
+            messageApi.error(`${error}`);
+        }
     }
 
     return (

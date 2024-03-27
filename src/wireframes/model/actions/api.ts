@@ -5,10 +5,29 @@
  * Copyright (c) Sebastian Stehle. All rights reserved.
 */
 
-const API_URL = process.env.NODE_ENV === 'test_development' ? 'http://localhost:4000' : 'https://api.codeslide.net';
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export async function getDiagram(readToken: string) {
-    const response = await fetch(`${API_URL}/${readToken}`);
+const strToList = (str: string) => {
+    // Remove the outer brackets and split the string into separate items
+    let items = str.slice(2, -2).split('], [');
+
+    // Process each item to remove the quotes and split it into a list
+    let result = items.map(item => {
+        // Split into sub-items using `,` symbol, ignoring those inside curly brackets
+        const regex = /,(?![^{]*})/;
+        let subItems = item.split(regex);
+        
+        // Process each sub-item to remove the quotes
+        let listItem = subItems.map(subItem => subItem.trim().slice(1, -1));
+        
+        return listItem;
+    });
+    
+    return result;
+}
+
+export async function fetchDiagram(readToken: string) {
+    const response = await fetch(`${SERVER_URL}/store/${readToken}`);
 
     if (!response.ok) {
         throw Error('Failed to load diagram');
@@ -19,34 +38,41 @@ export async function getDiagram(readToken: string) {
     return stored;
 }
 
-export async function putDiagram(readToken: string, writeToken: string, body: any) {
-    const response = await fetch(`${API_URL}/${readToken}/${writeToken}`, {
-        method: 'PUT',
-        headers: {
-            ContentType: 'text/json',
-        },
-        body: JSON.stringify(body),
-    });
-
-    if (!response.ok) {
-        throw Error('Failed to save diagram');
-    }
-}
-
-export async function postDiagram(body: any)  {
-    const response = await fetch(`${API_URL}/`, {
+export const parseFrames = async (script: string) => {
+    const response = await fetch(`${SERVER_URL}/parser`, {
         method: 'POST',
         headers: {
-            ContentType: 'text/json',
+            'Content-type': 'application/json; charset=UTF-8',
         },
-        body: JSON.stringify(body),
+        body: JSON.stringify({
+            script: script
+        })
     });
 
-    if (!response.ok) {
-        throw Error('Failed to save diagram');
-    }
+    if (!response.ok) throw Error(response.statusText);
 
-    const json: { readToken: string; writeToken: string } = await response.json();
+    const data = await response.json();
+    const frames = strToList(data.frames);
+    return frames;
+}
 
-    return json;
+export const compileSlides = async (fileName: string, size: number[], backgroundColor: string, frame: string[][]) => {
+    const response = await fetch(`${SERVER_URL}/compiler`, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify({
+            fileName: fileName,
+            size: size,
+            backgroundColor: backgroundColor,
+            frame: frame,
+        })
+    })
+
+    if (!response.ok) throw Error(response.statusText);
+
+    const data = await response.json();
+    const link = `${SERVER_URL}/${data.link}`;
+    return link;
 }
