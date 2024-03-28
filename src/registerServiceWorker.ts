@@ -16,7 +16,7 @@ export function registerServiceWorker(store: Store) {
 
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            const url = '/service-worker2.js';
+            const url = '/sw.js';
 
             navigator.serviceWorker.register(url)
                 .then(registration => {
