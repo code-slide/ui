@@ -1,3 +1,11 @@
+/*
+ * codeslide.net
+ *
+ * @license
+ * Forked from mydraft.cc by Sebastian Stehle
+ * Copyright (c) Do Duc Quan. All rights reserved.
+*/
+
 import { changeName, getEditor, useStore } from '@app/wireframes/model';
 import { Button, Dropdown, Form, Input } from 'antd';
 import { useEffect, useState } from 'react';

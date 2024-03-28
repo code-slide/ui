@@ -1,3 +1,11 @@
+/*
+ * codeslide.net
+ *
+ * @license
+ * Forked from mydraft.cc by Sebastian Stehle
+ * Copyright (c) Do Duc Quan. All rights reserved.
+*/
+
 import { getDiagram, useStore, changeScript } from "@app/wireframes/model";
 import { useDispatch } from "react-redux";
 import './styles/AnimationView.scss';

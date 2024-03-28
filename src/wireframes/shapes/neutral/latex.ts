@@ -1,8 +1,9 @@
 /*
  * codeslide.net
  *
- * Author: Duc Quan Do
- * Date: 24/09/2023
+ * @license
+ * Forked from mydraft.cc by Sebastian Stehle
+ * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
 import { DefaultAppearance, RenderContext, ShapePlugin } from '@app/wireframes/interface';

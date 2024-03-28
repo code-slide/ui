@@ -1,3 +1,11 @@
+/*
+ * codeslide.net
+ *
+ * @license
+ * Forked from mydraft.cc by Sebastian Stehle
+ * Copyright (c) Do Duc Quan. All rights reserved.
+*/
+
 import { Graphic, Image, Latex, Line, Raster, Shape, Table, Textbox } from '../dependencies';
 
 export function getPlugin(renderer: string) {

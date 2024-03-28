@@ -1,8 +1,9 @@
 /*
  * codeslide.net
  *
- * Do Duc Quan
- * 15 Oct 2023
+ * @license
+ * Forked from mydraft.cc by Sebastian Stehle
+ * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
 import { DeleteColumnOutlined, DeleteRowOutlined, InsertRowAboveOutlined, InsertRowBelowOutlined, InsertRowLeftOutlined, InsertRowRightOutlined } from '@ant-design/icons';

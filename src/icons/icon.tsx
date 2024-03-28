@@ -2,7 +2,8 @@
  * codeslide.net
  *
  * @license
- * Created by Do Duc Quan on 10 Nov 2023
+ * Forked from mydraft.cc by Sebastian Stehle
+ * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
 import * as React from "react";

@@ -1,3 +1,11 @@
+/*
+ * codeslide.net
+ *
+ * @license
+ * Forked from mydraft.cc by Sebastian Stehle
+ * Copyright (c) Do Duc Quan. All rights reserved.
+*/
+
 import { FundProjectionScreenOutlined } from "@ant-design/icons";
 import { Button, Segmented, message } from "antd";
 import * as React from "react";
