@@ -1,18 +1,17 @@
-# codeslide.net: Open Source Presentation Tools
+# codeslide.net: A presentation tool for simplified sequential animations
 
-Test it out at: https://codeslide.net/
+This project is to integrate coding capabilities into a presentation creation tool. Ideal for streamlining the process, especially when dealing with multiple items on a slide.
 
-The goal of this project is to infuse presentation creation tool with coding. I observed many people want to create presentation that has objects appear one by one in a specific manner, and there are great commercial tool in the market for that. However, the common struggle is that each animation takes 3 steps (selecting object, selecting animation type, and adjusting execution time), which can be a pain in a neck if there are 10+ items like so in a slide. And that's why this project was started.
+Try it out at: https://www.codeslide.net/
 
-## What is the tech stack?
+## Technology stack
 
 * Ant design (https://ant.design/)
 * React
 * React Hooks
 * Redux
 * Typescript
-* Webpack
-
+* Vite
 
 ## Acknowledgement
 
