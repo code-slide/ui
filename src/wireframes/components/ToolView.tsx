@@ -88,7 +88,7 @@ export const ToolAnimationView = () => {
     }
 
     const modeMenu = [
-        { value: 'script', label: 'Animation Script' },
+        { value: 'script', label: 'Script' },
         { value: 'output', label: 'Output' },
     ];
 
@@ -116,16 +116,17 @@ export const ToolAnimationView = () => {
 
     return (
         <div className='tool-container'>
+            {contextHolder}
             <Segmented 
                 options={modeMenu}
                 onChange={(value) => modeMenuEvt(value)}
             />
-            {contextHolder}
             <Button 
                 type='text' shape='round'
                 className="header-cta-right"
                 icon={<SelectOutlined />}
-                onClick={fetchFrames}>
+                onClick={fetchFrames}
+                style={{ marginRight: 0 }}>
                     <h4>Load script</h4>
             </Button>
         </div>

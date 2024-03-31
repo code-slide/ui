@@ -6,9 +6,14 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
+import Prism from 'prismjs';
 import { getDiagram, useStore, changeScript } from "@app/wireframes/model";
 import { useDispatch } from "react-redux";
+import { default as CodeEditor } from 'react-simple-code-editor';
+
 import './styles/AnimationView.scss';
+import 'prismjs/components/prism-python';
+import 'prismjs/themes/prism.css';
 
 export const AnimationView = () => {
     const dispatch = useDispatch();
@@ -21,14 +26,16 @@ export const AnimationView = () => {
 
     const AnimationInputMenu = () => {
         const selectedScript = diagram.script ?? '';
-        const changeTextbox = (event: any) => {
-            const newCode = event.target.value;
-            dispatch(changeScript(diagram.id, newCode));
-        };
-    
+
         return (
-            <div className="code-editor">
-                <textarea value={selectedScript} onChange={changeTextbox} />
+            <div className='code-editor'>
+                <CodeEditor
+                    value={selectedScript}
+                    onValueChange={code => dispatch(changeScript(diagram.id, code))}
+                    highlight={code => Prism.highlight(code, Prism.languages.py, 'python')}
+                    padding={16}
+                    
+                />
             </div>
         );
     };
@@ -37,7 +44,7 @@ export const AnimationView = () => {
         const selectedFrames = diagram.frames ?? [];
 
         return (
-            <div className="code-editor">
+            <div className="code-output">
                 <div>
                     {
                         selectedFrames.map((frame, i) => {
