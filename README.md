@@ -8,7 +8,6 @@ Try it out at: https://www.codeslide.net/
 
 * Ant design (https://ant.design/)
 * React
-* React Hooks
 * Redux
 * Typescript
 * Vite
