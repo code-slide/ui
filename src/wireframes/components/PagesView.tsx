@@ -57,7 +57,7 @@ export const PagesView = (props: PagesViewProps) => {
 
     return (
         <div className='pages-container' style={{ 
-            padding: `${vogues.common.previewPad} ${vogues.common.previewPad} ${vogues.common.previewPadBot}` 
+            padding: `${vogues.common.editorMargin}px ${vogues.common.editorMargin}px ${vogues.common.previewPadBot}px` 
         }}>
             <DragDropContext onDragEnd={doSort}>
                 <Droppable droppableId='droppable' direction='horizontal'>

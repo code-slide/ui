@@ -25,7 +25,7 @@ export const AnimationView = () => {
     }
 
     const AnimationInputMenu = () => {
-        const selectedScript = diagram.script ?? '';
+        const selectedScript = diagram.script ?? new Array(10).join('\n');
         const prefix = `${texts.common.prefix}:`;
 
         const pasteHandler = (event: React.ClipboardEvent<HTMLDivElement>) => {

@@ -23,7 +23,7 @@ export const ZoomMenu = React.memo(() => {
     const [zoomValue, setZoomValue] = useState('Fit');
 
     const zoomPad = {
-        vertical: vogues.common.editorMargin * 2 + 10 * 3 + vogues.common.headerHeight + vogues.common.shapeWidth + (vogues.common.previewHeight + vogues.common.previewPad + vogues.common.previewPadBot) + vogues.common.selectionThickness * 4,
+        vertical: vogues.common.editorMargin * 2 + 10 * 3 + vogues.common.headerHeight + vogues.common.shapeWidth + (vogues.common.previewHeight + vogues.common.editorMargin + vogues.common.previewPadBot) + vogues.common.selectionThickness * 4,
         horizontal: vogues.common.editorMargin * 2 + 13 * 2 + 10 * 2 + vogues.common.shapeWidth + vogues.common.selectionThickness * 4,
     }
     const [areaSize, setAreaSize] = useState(new Vec2(window.innerWidth - zoomPad.horizontal - sidebarLeftSize - sidebarRightSize, window.innerHeight - zoomPad.vertical));
