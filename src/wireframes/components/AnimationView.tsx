@@ -10,10 +10,10 @@ import Prism from 'prismjs';
 import { getDiagram, useStore, changeScript } from "@app/wireframes/model";
 import { useDispatch } from "react-redux";
 import { default as CodeEditor } from 'react-simple-code-editor';
-
-import './styles/AnimationView.scss';
 import 'prismjs/components/prism-python';
 import 'prismjs/themes/prism.css';
+import './styles/AnimationView.scss';
+import { texts } from '@app/texts/en';
 
 export const AnimationView = () => {
     const dispatch = useDispatch();
@@ -26,6 +26,21 @@ export const AnimationView = () => {
 
     const AnimationInputMenu = () => {
         const selectedScript = diagram.script ?? '';
+        const PREFIX = `${texts.common.prefix}:`;
+
+        const pasteHandler = (event: React.ClipboardEvent<HTMLDivElement>) => {
+            const text = event.clipboardData.getData('text');
+            if (!text || text.indexOf(PREFIX) !== 0) return; 
+
+            // Paste drawing objects by their id
+            const textJSON = JSON.parse(text.substring(PREFIX.length));
+            const pasteText: string = textJSON['visuals'].map(
+                (e: {[id: string]: string}) => { return e['id'] as string; }
+            )
+            const modifiedText = selectedScript + pasteText;
+            dispatch(changeScript(diagram.id, modifiedText))
+            event.preventDefault();
+        };
 
         return (
             <div className='code-editor'>
@@ -34,7 +49,7 @@ export const AnimationView = () => {
                     onValueChange={code => dispatch(changeScript(diagram.id, code))}
                     highlight={code => Prism.highlight(code, Prism.languages.py, 'python')}
                     padding={16}
-                    
+                    onPaste={pasteHandler}
                 />
             </div>
         );
@@ -48,7 +63,7 @@ export const AnimationView = () => {
                 <div>
                     {
                         selectedFrames.map((frame, i) => {
-                            return <p key={i} style={{color: 'blue'}}>&lt;{i+1}&gt;&emsp;{frame.join(', ')}</p>;
+                            return <p key={i} style={{ color: 'blue' }}>&lt;{i + 1}&gt;&emsp;{frame.join(', ')}</p>;
                         })
                     }
                 </div>

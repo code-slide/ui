@@ -6,14 +6,6 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-/*
- * codeslide.net
- *
- * @license
- * Forked from mydraft.cc by Sebastian Stehle
- * Copyright (c) Do Duc Quan. All rights reserved.
-*/
-
 import { texts } from '@app/texts';
 import { DefaultAppearance, Rect2, RenderContext, Shape, ShapePlugin } from '@app/wireframes/interface';
 import { DiagramItem } from '@app/wireframes/model';

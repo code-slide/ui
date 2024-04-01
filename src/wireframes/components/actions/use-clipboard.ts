@@ -14,7 +14,7 @@ import { DiagramItemSet, getDiagram, getSelectedItems, pasteItems, removeItems, 
 import { UIAction } from './shared';
 
 const OFFSET = 1;
-const PREFIX = 'my-draft:';
+const PREFIX = `${texts.common.prefix}:`;
 
 export function useClipboard() {
     const dispatch = useDispatch();

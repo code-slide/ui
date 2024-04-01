@@ -54,9 +54,9 @@ export function useLoading() {
     const downloadDiagram: UIAction = React.useMemo(() => ({
         disabled: !canSave,
         icon: 'icon-floppy-o',
-        label: texts.common.downloadDiagramTooltip,
+        label: texts.common.saveDiagramTooltip,
         shortcut: 'MOD + S',
-        tooltip: texts.common.downloadDiagramTooltip,
+        tooltip: texts.common.saveDiagramTooltip,
         onAction: doDownload,
     }), [doDownload, canSave]);
 
