@@ -40,8 +40,8 @@ export const ModalForm: React.FC<ModalFormProps> = (props: ModalFormProps) => {
     const [form] = Form.useForm();
 
     React.useEffect(() => {
-        form.setFieldsValue(!initValue ? {} : { [initValue[0]]: initValue[1] })
-        }, [initValue])
+        if (open) form.setFieldsValue(!initValue ? {} : { [initValue[0]]: initValue[1] });
+    }, [initValue]);
 
     return (
         <Modal
