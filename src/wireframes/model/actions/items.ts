@@ -19,8 +19,8 @@ export const addShape =
         return { payload: createDiagramAction(diagram, { id: id, renderer, ...props }) };
     });
 
-export const replaceID =
-    createAction('items/replaceID', (diagram: DiagramRef, item: ItemRef, id: string) => {
+export const replaceId =
+    createAction('items/replaceId', (diagram: DiagramRef, item: ItemRef, id: string) => {
         return { payload: createItemAction(diagram, item, { id }) };
     });
 
@@ -94,7 +94,7 @@ export function buildItems(builder: ActionReducerMapBuilder<EditorState>) {
                 });
             });
         })
-        .addCase(replaceID, (state, action) => {
+        .addCase(replaceId, (state, action) => {
             const { diagramId, itemId, id } = action.payload;
             
             return state.updateDiagram(diagramId, diagram => {

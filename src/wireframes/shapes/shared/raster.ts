@@ -7,8 +7,8 @@
 */
 
 import { DefaultAppearance, RenderContext, ShapePlugin, ShapeSource } from '@app/wireframes/interface';
+import { vogues } from '@app/const';
 
-const MAX_IMAGE_SIZE = 300;
 const SOURCE = 'SOURCE';
 
 const DEFAULT_APPEARANCE = {
@@ -32,15 +32,15 @@ export class Raster implements ShapePlugin {
         if (source.type === 'Image') {
             let { width: w, height: h, source: data } = source.image;
 
-            if (w > MAX_IMAGE_SIZE || h > MAX_IMAGE_SIZE) {
+            if (w > vogues.common.maxImgSize || h > vogues.common.maxImgSize) {
                 const ratio = w / h;
 
                 if (ratio > 1) {
-                    w = MAX_IMAGE_SIZE;
-                    h = MAX_IMAGE_SIZE / ratio;
+                    w = vogues.common.maxImgSize;
+                    h = vogues.common.maxImgSize / ratio;
                 } else {
-                    h = MAX_IMAGE_SIZE;
-                    w = MAX_IMAGE_SIZE * ratio;
+                    h = vogues.common.maxImgSize;
+                    w = vogues.common.maxImgSize * ratio;
                 }
             }
 

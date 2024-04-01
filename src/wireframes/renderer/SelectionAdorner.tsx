@@ -10,13 +10,11 @@ import * as svg from '@svgdotjs/svg.js';
 import * as React from 'react';
 import { isModKey, Rect2, Subscription, SVGHelper, Vec2 } from '@app/core';
 import { calculateSelection, Diagram, DiagramItem, Transform } from '@app/wireframes/model';
+import { vogues } from '@app/const';
 import { InteractionHandler, InteractionService, SvgEvent } from './interaction-service';
 import { PreviewEvent } from './preview';
 import { OverlayManager } from '../contexts/OverlayContext';
 import { getSelectedCell, getTableAttributes } from '../shapes/dependencies';
-
-const SELECTION_STROKE_COLOR = '#080';
-const SELECTION_STROKE_LOCK_COLOR = '#f00';
 
 export interface SelectionAdornerProps {
     // The current zoom value.
@@ -198,8 +196,8 @@ export class SelectionAdorner extends React.Component<SelectionAdornerProps> imp
 
             const color =
                 item.isLocked ?
-                    SELECTION_STROKE_LOCK_COLOR :
-                    SELECTION_STROKE_COLOR;
+                    vogues.color.selectionLock :
+                    vogues.color.selectionStroke;
                     
             // Use the inverted zoom level as stroke width to have a constant stroke style.
             marker.stroke({ color, width: strokeWidth });

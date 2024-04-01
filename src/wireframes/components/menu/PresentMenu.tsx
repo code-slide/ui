@@ -17,10 +17,10 @@ import * as svg from '@svgdotjs/svg.js';
 import { getPlugin } from "@app/wireframes/shapes/utils/abstract-plugin";
 import { SegmentedValue } from "antd/es/segmented";
 import { Color } from "@app/core/utils/color";
+import { vogues } from "@app/const";
 
 export const PresentMenu = React.memo(() => {
     const html = document.querySelector('.editor-diagram')?.innerHTML;
-    const SIDEBAR_RIGHT_WIDTH = 400;
 
     const dispatch = useDispatch();
     const diagrams = useStore(getFilteredDiagrams);
@@ -94,7 +94,7 @@ export const PresentMenu = React.memo(() => {
         };
     }
 
-    const fetchAPI = async () => {
+    const fetchApi = async () => {
         const { fileName, size, backgroundColor, frame } = getSlides();
 
         if (!html) {
@@ -120,10 +120,10 @@ export const PresentMenu = React.memo(() => {
 
     const modeMenuEvt = (key: SegmentedValue) => {
         if (key == 'design') {
-            dispatch(setSidebarRightSize(0));
+            dispatch(setSidebarRightSize(vogues.common.sidebarClose));
             dispatch(setMode('design'));
         } else {
-            dispatch(setSidebarRightSize(SIDEBAR_RIGHT_WIDTH));
+            dispatch(setSidebarRightSize(vogues.common.sidebarRight));
             dispatch(setMode('animation'));
         }
     };
@@ -136,7 +136,7 @@ export const PresentMenu = React.memo(() => {
             />
             <span className='menu-separator' />
             {contextHolder}
-            <Button icon={<FundProjectionScreenOutlined />} onClick={fetchAPI} className="header-cta-right" type="text" shape='round'>
+            <Button icon={<FundProjectionScreenOutlined />} onClick={fetchApi} className="header-cta-right" type="text" shape='round' style={{ marginRight: vogues.common.editorMargin }}>
                 <h4>Present</h4>
             </Button>
         </>

@@ -10,7 +10,7 @@ import { Empty } from 'antd';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { useEventCallback } from '@app/core';
-import { texts } from '@app/texts';
+import { texts } from '@app/const';
 import { loadDiagramFromServer, RecentDiagram, useStore } from '@app/wireframes/model';
 import { RecentItem } from './menu/RecentMenu';
 import './styles/RecentView.scss';

@@ -10,7 +10,7 @@ import { Col, InputNumber, Row } from 'antd';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { Color, ColorPicker, useEventCallback } from '@app/core';
-import { texts } from '@app/texts';
+import { texts } from '@app/const';
 import { changeColor, changeSize, getColors, getEditor, useStore } from '@app/wireframes/model';
 
 export const DiagramProperties = React.memo(() => {

@@ -10,6 +10,7 @@ import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { Shortcut, useEventCallback } from '@app/core';
 import { calculateSelection, getDiagram, selectItems, useStore } from '@app/wireframes/model';
+import { keys } from '@app/const';
 import { useRemove } from '../actions';
 
 export const ArrangeMenu = React.memo(() => {
@@ -30,10 +31,13 @@ export const ArrangeMenu = React.memo(() => {
 
     return (
         <>
-            <Shortcut disabled={forRemove.remove.disabled} onPressed={forRemove.remove.onAction} keys='del' />
-            <Shortcut disabled={forRemove.remove.disabled} onPressed={forRemove.remove.onAction} keys='backspace' />
+            {
+                keys.option.remove.map((key) => (
+                    <Shortcut disabled={forRemove.remove.disabled} onPressed={forRemove.remove.onAction} keys={key} />
+                ))
+            }
 
-            <Shortcut disabled={!selectedDiagram} onPressed={doSelectAll} keys='MOD + A' />
+            <Shortcut disabled={!selectedDiagram} onPressed={doSelectAll} keys={keys.common.selectAll} />
         </>
     );
 });

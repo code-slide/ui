@@ -12,7 +12,7 @@ import { TooltipPlacement } from 'antd/lib/tooltip';
 import * as React from 'react';
 import { ColorResult, SketchPicker } from 'react-color';
 import { Color, ColorPalette } from '@app/core/utils';
-import { texts } from '@app/texts';
+import { texts } from '@app/const';
 import { ColorList } from './ColorList';
 import { useEventCallback } from './hooks';
 import './ColorPicker.scss';

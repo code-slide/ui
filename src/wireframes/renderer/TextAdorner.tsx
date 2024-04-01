@@ -12,7 +12,7 @@ import { DefaultAppearance } from '@app/wireframes/interface';
 import { Diagram, DiagramItem } from '@app/wireframes/model';
 import { InteractionHandler, InteractionService, SvgEvent } from './interaction-service';
 import { getSelectedCell, getTableAttributes } from '../shapes/dependencies';
-import { texts } from '@app/texts';
+import { texts } from '@app/const';
 
 export interface TextAdornerProps {
     // The current zoom value.

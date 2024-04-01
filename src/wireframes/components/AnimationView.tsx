@@ -13,7 +13,7 @@ import { default as CodeEditor } from 'react-simple-code-editor';
 import 'prismjs/components/prism-python';
 import 'prismjs/themes/prism.css';
 import './styles/AnimationView.scss';
-import { texts } from '@app/texts/en';
+import { texts } from '@app/const/texts';
 
 export const AnimationView = () => {
     const dispatch = useDispatch();
@@ -26,15 +26,15 @@ export const AnimationView = () => {
 
     const AnimationInputMenu = () => {
         const selectedScript = diagram.script ?? '';
-        const PREFIX = `${texts.common.prefix}:`;
+        const prefix = `${texts.common.prefix}:`;
 
         const pasteHandler = (event: React.ClipboardEvent<HTMLDivElement>) => {
             const text = event.clipboardData.getData('text');
-            if (!text || text.indexOf(PREFIX) !== 0) return; 
+            if (!text || text.indexOf(prefix) !== 0) return; 
 
             // Paste drawing objects by their id
-            const textJSON = JSON.parse(text.substring(PREFIX.length));
-            const pasteText: string = textJSON['visuals'].map(
+            const textJson = JSON.parse(text.substring(prefix.length));
+            const pasteText: string = textJson['visuals'].map(
                 (e: {[id: string]: string}) => { return e['id'] as string; }
             )
             const modifiedText = selectedScript + pasteText;

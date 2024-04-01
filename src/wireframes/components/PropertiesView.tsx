@@ -9,7 +9,7 @@
 import { Collapse } from 'antd';
 import type { CollapseProps } from 'antd';
 import classNames from 'classnames';
-import { texts } from '@app/texts';
+import { texts } from '@app/const';
 import { getDiagram, getSelectedItems, useStore } from '@app/wireframes/model';
 import { Colors, CustomProperties, DiagramProperties, LayoutProperties, ShapeProperties, TransformProperties } from './properties';
 import './styles/PropertiesView.scss';

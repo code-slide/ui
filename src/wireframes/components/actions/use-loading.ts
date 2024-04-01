@@ -9,8 +9,9 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { useEventCallback, useOpenFile } from '@app/core';
-import { texts } from '@app/texts';
+import { texts } from '@app/const';
 import { downloadDiagramToFile, getDiagrams, loadDiagramFromFile, newDiagram, useStore } from '@app/wireframes/model';
+import { keys } from '@app/const';
 import { UIAction } from './shared';
 
 export function useLoading() {
@@ -23,7 +24,6 @@ export function useLoading() {
                 return true;
             }
         }
-
         return false;
     }, [diagrams]);
     
@@ -46,7 +46,7 @@ export function useLoading() {
         disabled: false,
         icon: 'icon-new',
         label: texts.common.newDiagram,
-        shortcut: 'MOD + N',
+        shortcut: keys.common.new,
         tooltip: texts.common.newDiagramTooltip,
         onAction: doNew,
     }), [doNew]);
@@ -55,7 +55,7 @@ export function useLoading() {
         disabled: !canSave,
         icon: 'icon-floppy-o',
         label: texts.common.saveDiagramTooltip,
-        shortcut: 'MOD + S',
+        shortcut: keys.common.save,
         tooltip: texts.common.saveDiagramTooltip,
         onAction: doDownload,
     }), [doDownload, canSave]);

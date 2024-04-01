@@ -8,8 +8,8 @@
 
 import { Button, Col, Input, Row, Space } from 'antd';
 import * as React from 'react';
-import { texts } from '@app/texts';
-import { getDiagram, getSelectedItems, replaceID, useStore } from '@app/wireframes/model';
+import { texts } from '@app/const';
+import { getDiagram, getSelectedItems, replaceId, useStore } from '@app/wireframes/model';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -18,23 +18,23 @@ export const ShapeProperties = React.memo(() => {
     const diagram = useStore(getDiagram);
     const [ selectedItem ] = useStore(getSelectedItems);
     const id = !selectedItem ? '' : selectedItem.id;
-    const [newID, setNewID] = useState<string>(id);
+    const [newId, setNewId] = useState<string>(id);
     const [isUpdate, setIsUpdate] = useState<boolean>(false);
 
-    const updateID = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setNewID(e.target.value);
+    const updateId = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setNewId(e.target.value);
         setIsUpdate(true);
     }
-    const cancelUpdateID = () => {
-        setNewID(id);
+    const cancelUpdateId = () => {
+        setNewId(id);
         setIsUpdate(false);
     };
-    const acceptUpdateID = () => {
-        dispatch(replaceID(diagram!, id, newID));
+    const acceptUpdateId = () => {
+        dispatch(replaceId(diagram!, id, newId));
     };
 
     React.useEffect(() => {
-        cancelUpdateID();
+        cancelUpdateId();
     }, [id]);
 
     return (
@@ -43,20 +43,20 @@ export const ShapeProperties = React.memo(() => {
                 <Col span={4} className='property-label'>{texts.common.id}</Col>
                 <Col span={20} className='property-value'>
                     <Space direction="vertical"> 
-                        <Input value={newID} onChange={updateID} />
+                        <Input value={newId} onChange={updateId} />
                         {
                             isUpdate 
                                 ? <Space.Compact style={{ width: '100%' }}>
                                     <Button 
                                         className='item' type='text' 
                                         size='small' shape='round' 
-                                        onClick={cancelUpdateID}>
+                                        onClick={cancelUpdateId}>
                                             Cancel
                                         </Button>
                                     <Button 
                                         className='item' type='text' 
                                         size='small' shape='round' 
-                                        onClick={acceptUpdateID}>
+                                        onClick={acceptUpdateId}>
                                             Done
                                         </Button>
                                 </Space.Compact>

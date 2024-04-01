@@ -12,18 +12,21 @@ import { useDispatch } from 'react-redux';
 import { useStore, getEditor, setZoom } from '@app/wireframes/model';
 import { Button, Dropdown } from 'antd';
 import { Vec2 } from '@app/core';
+import { vogues } from '@app/const';
 import type { MenuProps } from 'antd';
 
 export const ZoomMenu = React.memo(() => {
-    const PADD_VERT = 13 * 2 + 10 * 3 + 56 + 38 + (72 + 15 + 23) + 4; // EDITOR_MARGIN * 2 + INNER_PADD * 3 + headerHeight + SHAPE_HEIGHT + pagesHeight + (BORDER * 4)?
-    const PADD_HORI = 13 * 2 + 13 * 2 + 10 * 2 + 38 + 4; // EDITOR_MARGIN * 2 + OUTER_PADD * 2 + INNER_PADD * 2 + SHAPE_WIDTH + (BORDER * 4)?;
-
     const dispatch = useDispatch();
     const editorSize = useStore(getEditor).size;
     const sidebarLeftSize = useStore(s => s.ui.sidebarLeftSize);
     const sidebarRightSize = useStore(s => s.ui.sidebarRightSize);
     const [zoomValue, setZoomValue] = useState('Fit');
-    const [areaSize, setAreaSize] = useState(new Vec2(window.innerWidth - PADD_HORI - sidebarLeftSize - sidebarRightSize, window.innerHeight - PADD_VERT));
+
+    const zoomPad = {
+        vertical: vogues.common.editorMargin * 2 + 10 * 3 + vogues.common.headerHeight + vogues.common.shapeWidth + (vogues.common.previewHeight + vogues.common.previewPad + vogues.common.previewPadBot) + vogues.common.selectionThickness * 4,
+        horizontal: vogues.common.editorMargin * 2 + 13 * 2 + 10 * 2 + vogues.common.shapeWidth + vogues.common.selectionThickness * 4,
+    }
+    const [areaSize, setAreaSize] = useState(new Vec2(window.innerWidth - zoomPad.horizontal - sidebarLeftSize - sidebarRightSize, window.innerHeight - zoomPad.vertical));
 
     const isZoom = (key: string) => {
         setZoomValue(key);
@@ -31,7 +34,7 @@ export const ZoomMenu = React.memo(() => {
     };
 
     const getWindowSize = () => {
-        setAreaSize(new Vec2(window.innerWidth - PADD_HORI - sidebarLeftSize - sidebarRightSize, window.innerHeight - PADD_VERT));
+        setAreaSize(new Vec2(window.innerWidth - zoomPad.horizontal - sidebarLeftSize - sidebarRightSize, window.innerHeight - zoomPad.vertical));
     }
     
     // Get area size value on resizing window

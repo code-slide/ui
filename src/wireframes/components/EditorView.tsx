@@ -19,7 +19,7 @@ import { Editor } from '@app/wireframes/renderer/Editor';
 import { DiagramRef, ItemsRef } from '../model/actions/utils';
 import { ShapeSource } from '../interface';
 import { MenuIcon } from '@app/style/icomoon/icomoon_icon';
-import { texts } from '@app/texts';
+import { texts } from '@app/const';
 import { useAlignment, useClipboard, useGrouping, useRemove } from './actions';
 import './styles/EditorView.scss';
 

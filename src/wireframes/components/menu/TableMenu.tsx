@@ -13,7 +13,7 @@ import { useStore, getSelectedShape, changeItemsAppearance, getDiagram } from '@
 import * as React from 'react';
 import { getAddToTable, getRemoveFromTable } from '@app/wireframes/shapes/neutral/table';
 import { useDispatch } from 'react-redux';
-import { texts } from '@app/texts';
+import { texts } from '@app/const';
 
 export const TableMenu = React.memo(() => {
     const dispatch = useDispatch();

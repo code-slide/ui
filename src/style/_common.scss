@@ -41,14 +41,6 @@ body {
         border: 0 !important;
         height: fit-content;
     }
-
-    &-left {
-        margin: 10px 13px 10px 10px;
-    }
-
-    &-right {
-        margin: 10px 0;
-    }
 }
 
 .header-cta-right {
@@ -56,16 +48,11 @@ body {
     flex-direction: row;
     align-items: center;
     gap: 2px;
-    margin-right: 13px;
     background-color: $color-theme-blue-lightest;
 
     h4 {
         margin-bottom: 0;
     }
-}
-
-.editor-content {
-    margin: 10px 13px 10px 10px;
 }
 
 .header-cta-right:hover {
@@ -136,11 +123,6 @@ tspan {
 
     &-left {
         border-radius: 20px;
-        margin: 10px 5px 10px 13px;
-    }
-
-    &-right {
-        margin: 0 13px 10px 5px;
     }
 
     &-shape {

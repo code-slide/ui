@@ -10,8 +10,9 @@ import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { IDHelper } from '@app/core';
 import { useEventCallback } from '@app/core';
-import { texts } from '@app/texts';
+import { texts } from '@app/const';
 import { getDiagram, getSelectedGroups, getSelectedItems, groupItems, ungroupItems, useStore } from '@app/wireframes/model';
+import { keys } from '@app/const';
 import { UIAction } from './shared';
 
 export function useGrouping() {
@@ -39,7 +40,7 @@ export function useGrouping() {
         disabled: !canGroup,
         icon: 'icon-group',
         label: texts.common.group,
-        shortcut: 'MOD + G',
+        shortcut: keys.common.group,
         tooltip: texts.common.groupTooltip,
         onAction: doGroup,
     }), [canGroup, doGroup]);
@@ -48,7 +49,7 @@ export function useGrouping() {
         disabled: !canUngroup,
         icon: 'icon-ungroup',
         label: texts.common.ungroup,
-        shortcut: 'MOD + SHIFT + G',
+        shortcut: keys.common.ungroup,
         tooltip: texts.common.ungroupTooltip,
         onAction: doUngroup,
     }), [canUngroup, doUngroup]);

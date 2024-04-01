@@ -11,7 +11,7 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { useEventCallback } from '@app/core';
-import { texts } from '@app/texts';
+import { texts } from '@app/const';
 import { alignItems, AlignmentMode, getDiagramId, getSelectedItems, orderItems, OrderMode, useStore } from '@app/wireframes/model';
 import { UIAction } from './shared';
 

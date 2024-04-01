@@ -9,6 +9,7 @@ import { ArrowsAltOutlined, FullscreenExitOutlined, SelectOutlined } from '@ant-
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { SegmentedValue } from "antd/es/segmented";
+import { vogues } from '@app/const';
 
 export interface ToolDesignViewProps {
     item: DiagramItem | null;
@@ -16,16 +17,15 @@ export interface ToolDesignViewProps {
 }
 
 const FullscreenButton = () => {
-    const SIDEBAR_LEFT_WIDTH = 200; 
     const dispatch = useDispatch();
     const [isFullscreen, setIsFullscreen] = useState(false);
 
     const hideSidebar = () => {
         if (isFullscreen) {
-            dispatch(setSidebarLeftSize(SIDEBAR_LEFT_WIDTH));
+            dispatch(setSidebarLeftSize(vogues.common.sidebarLeft));
             setIsFullscreen(!isFullscreen);
         } else {
-            dispatch(setSidebarLeftSize(0));
+            dispatch(setSidebarLeftSize(vogues.common.sidebarClose));
             setIsFullscreen(!isFullscreen);
         }
     }

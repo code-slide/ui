@@ -14,6 +14,7 @@ import { DefaultAppearance } from '@app/wireframes/interface';
 import { getColors, getDiagramId, getSelectionSet, selectColorTab, useStore } from '@app/wireframes/model';
 import { useAppearance, useColorAppearance } from '../actions';
 import { BorderWidthIcon, ColorBackgroundFill, ColorBorderFill, ColorTextFill, IconOutline } from '@app/icons/icon';
+import { vogues } from '@app/const';
 
 export const VisualMenu = React.memo(() => {
     const dispatch = useDispatch();
@@ -60,7 +61,7 @@ export const VisualMenu = React.memo(() => {
                 <Dropdown 
                     className='tool-menu-item'
                     menu={{ 
-                        items: DEFINED_FONT_SIZES.map(value => (
+                        items: vogues.option.fontSize.map(value => (
                             { key: value.toString(), label: value, value: value }
                         )),
                         onClick: (e) => setFontSize(Number(e.key)),
@@ -132,7 +133,7 @@ export const VisualMenu = React.memo(() => {
                 <Dropdown 
                     className='tool-menu-item'
                     menu={{ 
-                        items: DEFINED_STROKE_THICKNESSES.map(value => (
+                        items: vogues.option.strokeThickness.map(value => (
                             { key: value.toString(), label: value, value: value }
                         )),
                         selectable: true,
@@ -160,6 +161,3 @@ export const VisualMenu = React.memo(() => {
         </>
     );
 });
-
-const DEFINED_STROKE_THICKNESSES = [0, 1, 2, 4, 6, 8];
-const DEFINED_FONT_SIZES = [4, 6, 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40, 48, 60];

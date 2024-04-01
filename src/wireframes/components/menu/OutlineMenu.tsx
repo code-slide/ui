@@ -12,7 +12,7 @@ import type { InputRef, MenuProps } from 'antd'
 import classNames from 'classnames';
 import * as React from 'react';
 import { Keys, useEventCallback } from '@app/core';
-import { texts } from '@app/texts';
+import { texts } from '@app/const';
 import { Diagram, DiagramItem, OrderMode } from '@app/wireframes/model';
 import { CircleIcon, FunctionIcon, ImageIcon, RectangleIcon, TableIcon, TextIcon, TriangleIcon } from '@app/icons/icon';
 

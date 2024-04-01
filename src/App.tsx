@@ -13,6 +13,7 @@ import { useRouteMatch } from 'react-router';
 import { ClipboardContainer } from '@app/core';
 import { EditorView, ShapeView, ToolDesignView, PagesView, HeaderView, PropertiesView, AnimationView, ToolAnimationView } from '@app/wireframes/components';
 import { getSelectedItems, getSelectedShape, loadDiagramFromServer, newDiagram, useStore } from '@app/wireframes/model';
+import { vogues } from './const';
 import { CustomDragLayer } from './wireframes/components/CustomDragLayer';
 import { OverlayContainer } from './wireframes/contexts/OverlayContext';
 
@@ -27,10 +28,12 @@ export const App = () => {
     const sidebarRightWidth = useStore(s => s.ui.sidebarRightSize);
     const applicationMode = useStore(s => s.ui.selectedMode);
 
-    const SHAPE_WIDTH = 38;
-    const PREVIEW_WIDTH = 128;
-    const PREVIEW_HEIGHT = 72;
-    const EDITOR_MARGIN = 13;
+    const margin = {
+        toolLeft: `${vogues.common.editorPad}px ${vogues.common.editorMargin}px ${vogues.common.editorPad}px ${vogues.common.editorPad}px`,
+        toolRight: `${vogues.common.editorPad}px 0`,
+        sideLeft: `${vogues.common.editorPad}px ${vogues.common.editorPad / 2}px ${vogues.common.editorPad / 2}px ${vogues.common.editorMargin}px`,
+        sideRight: `0 ${vogues.common.editorMargin}px ${vogues.common.editorPad}px ${vogues.common.editorPad / 2}px`,
+    }
 
     React.useEffect(() => {
         const token = routeTokenSnapshot.current;
@@ -50,7 +53,7 @@ export const App = () => {
                         paddingBlock: 7,
                     },
                     Layout: {
-                        headerHeight: 56,
+                        headerHeight: vogues.common.headerHeight,
                     },
                     Tabs: {
                         horizontalItemGutter: 16,
@@ -72,7 +75,7 @@ export const App = () => {
                         <Layout className='content'>
                             <Layout.Sider
                                 width={sidebarLeftWidth}
-                                style={{ visibility: sidebarLeftWidth == 0 ? 'hidden' : 'visible' }}
+                                style={{ visibility: sidebarLeftWidth == 0 ? 'hidden' : 'visible', margin: margin.sideLeft }}
                                 className='sidebar-left'>
                                 <PropertiesView />
                             </Layout.Sider>
@@ -81,18 +84,22 @@ export const App = () => {
                                 ?
                                 <Layout>
                                     <Layout>
-                                        <Layout.Header className='header-toolbar-left'>
-                                            <ToolDesignView item={selectedItem} set={selectedSet} />
+                                        <Layout.Header 
+                                            className='header-toolbar-left' 
+                                            style={{ margin: margin.toolLeft }}>
+                                                <ToolDesignView item={selectedItem} set={selectedSet} />
                                         </Layout.Header>
 
-                                        <EditorView spacing={EDITOR_MARGIN} />
+                                        <EditorView spacing={vogues.common.editorMargin} />
                                     </Layout>
                                     <Layout.Sider 
                                         width={sidebarRightWidth} 
-                                        style={{ visibility: sidebarRightWidth == 0 ? 'hidden' : 'visible' }}
+                                        style={{ visibility: sidebarRightWidth == 0 ? 'hidden' : 'visible', margin: margin.sideRight }}
                                         className='sidebar-right'>
-                                            <Layout.Header className='header-toolbar-right'>
-                                                <ToolAnimationView />
+                                            <Layout.Header 
+                                                className='header-toolbar-right'
+                                                style={{ margin: margin.toolRight }}>
+                                                    <ToolAnimationView />
                                             </Layout.Header>
 
                                             <AnimationView />
@@ -100,22 +107,24 @@ export const App = () => {
                                 </Layout>
                                 :
                                 <Layout>
-                                    <Layout.Header className='header-toolbar-left'>
-                                        <ToolDesignView item={selectedItem} set={selectedSet} />
+                                    <Layout.Header 
+                                        className='header-toolbar-left'
+                                        style={{ margin: margin.toolLeft }}>
+                                            <ToolDesignView item={selectedItem} set={selectedSet} />
                                     </Layout.Header>
                                     <Layout>
-                                        <Layout.Sider width={SHAPE_WIDTH} className='sidebar-shape'>
+                                        <Layout.Sider width={vogues.common.shapeWidth} className='sidebar-shape'>
                                             <ShapeView />
                                         </Layout.Sider>
 
-                                        <EditorView spacing={EDITOR_MARGIN} />
+                                        <EditorView spacing={vogues.common.editorMargin} />
                                     </Layout>
                                 </Layout>
                             }
                         </Layout>
 
                         <Layout.Footer style={{ padding: 0 }} >
-                            <PagesView prevWidth={PREVIEW_WIDTH} prevHeight={PREVIEW_HEIGHT} />
+                            <PagesView prevWidth={vogues.common.previewWidth} prevHeight={vogues.common.previewHeight} />
                         </Layout.Footer>
                     </Layout>
                     <CustomDragLayer />

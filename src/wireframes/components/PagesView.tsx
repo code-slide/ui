@@ -10,6 +10,7 @@ import { DragDropContext, Draggable, Droppable, DropResult } from '@hello-pangea
 import { useDispatch } from 'react-redux';
 import { useEventCallback, Vec2 } from '@app/core';
 import { addDiagram, duplicateDiagram, getDiagramId, getFilteredDiagrams, moveDiagram, removeDiagram, selectDiagram, useStore } from '@app/wireframes/model';
+import { vogues } from '@app/const';
 import { PageThumbnail, PageAdd, PageAction } from './menu';
 import './styles/PagesView.scss';
 
@@ -55,7 +56,9 @@ export const PagesView = (props: PagesViewProps) => {
     });
 
     return (
-        <div className='pages-container'>
+        <div className='pages-container' style={{ 
+            padding: `${vogues.common.previewPad} ${vogues.common.previewPad} ${vogues.common.previewPadBot}` 
+        }}>
             <DragDropContext onDragEnd={doSort}>
                 <Droppable droppableId='droppable' direction='horizontal'>
                     {(provided) => (

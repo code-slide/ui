@@ -145,13 +145,13 @@ export function buildDiagrams(builder: ActionReducerMapBuilder<EditorState>) {
             const newDiagram = diagram.clone();
 
             let newState = state.addDiagram(newDiagram);
-            let newID = newState.diagramIds.at(newState.diagramIds.size - 1);
+            let newId = newState.diagramIds.at(newState.diagramIds.size - 1);
 
-            if ((!index) || (!newID)) {
+            if ((!index) || (!newId)) {
                 return newState;
             }
 
-            return newState.moveDiagram(newID, index);
+            return newState.moveDiagram(newId, index);
         })
         .addCase(addDiagram, (state, action) => {
             const { diagramId, index } = action.payload;

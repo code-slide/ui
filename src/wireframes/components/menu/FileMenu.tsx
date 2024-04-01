@@ -10,7 +10,7 @@ import { changeName, getEditor, useStore } from '@app/wireframes/model';
 import { Button, Dropdown, Form, Input } from 'antd';
 import { useEffect, useState } from 'react';
 import { useLoading } from '../actions';
-import { texts } from '@app/texts/en';
+import { texts } from '@app/const/texts';
 import { useDispatch } from 'react-redux';
 import { ModalForm } from '../overlay/ModalForm';
 import type { MenuProps } from 'antd';

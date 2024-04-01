@@ -9,8 +9,9 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { useEventCallback } from '@app/core';
-import { texts } from '@app/texts';
+import { texts } from '@app/const';
 import { redo, undo, useStore } from '@app/wireframes/model';
+import { keys } from '@app/const';
 import { UIAction } from './shared';
 
 export function useHistory() {
@@ -30,7 +31,7 @@ export function useHistory() {
         disabled: !canRedo,
         icon: 'icon-redo',
         label: texts.common.redo,
-        shortcut: 'MOD + Y',
+        shortcut: keys.common.redo,
         tooltip: texts.common.redo,
         onAction: doRedo,
     }), [canRedo, doRedo]);
@@ -39,7 +40,7 @@ export function useHistory() {
         disabled: !canUndo,
         icon: 'icon-undo',
         label: texts.common.undo,
-        shortcut: 'MOD + Z',
+        shortcut: keys.common.undo,
         tooltip: texts.common.undo,
         onAction: doUndo,
     }), [canUndo, doUndo]);

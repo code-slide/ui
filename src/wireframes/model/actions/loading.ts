@@ -10,7 +10,7 @@ import { createAction, createAsyncThunk, createReducer, Middleware } from '@redu
 import { push } from 'connected-react-router';
 import { saveAs } from 'file-saver';
 import { AnyAction, Reducer } from 'redux';
-import { texts } from '@app/texts';
+import { texts } from '@app/const';
 import { EditorState, EditorStateInStore, LoadingState, Serializer, UndoableState } from './../internal';
 import { fetchDiagram } from './api';
 import { addDiagram, selectDiagram } from './diagrams';
