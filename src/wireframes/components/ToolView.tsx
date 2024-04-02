@@ -118,6 +118,7 @@ export const ToolAnimationView = () => {
         <div className='tool-container'>
             {contextHolder}
             <Segmented 
+                className='menu-segment'
                 options={modeMenu}
                 onChange={(value) => modeMenuEvt(value)}
             />

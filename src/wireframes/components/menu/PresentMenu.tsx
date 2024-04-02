@@ -131,6 +131,7 @@ export const PresentMenu = React.memo(() => {
     return (
         <>
             <Segmented 
+                className='menu-segment'
                 options={modeMenu}
                 onChange={(value) => modeMenuEvt(value)}
             />

@@ -76,6 +76,11 @@ export const changeColor =
         return { payload:  { color: color.toString() } };
     });
 
+export const changeRevealConfig =
+    createAction('editor/revealConfig', (config: string) => {
+        return { payload:  { config } };
+    });
+
 export function buildDiagrams(builder: ActionReducerMapBuilder<EditorState>) {
     return builder
         .addCase(selectDiagram, (state, action) => {

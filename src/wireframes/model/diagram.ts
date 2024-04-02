@@ -9,6 +9,7 @@
 import { ImmutableList, ImmutableMap, ImmutableSet, MathHelper, Record, Types } from '@app/core/utils';
 import { DiagramItem } from './diagram-item';
 import { DiagramItemSet } from './diagram-item-set';
+import { scripts } from '@app/const';
 
 type Items = ImmutableMap<DiagramItem>;
 type ItemIds = ImmutableList<string>;
@@ -47,11 +48,11 @@ type Props = {
     // The selected ids.
     selectedIds: ImmutableSet;
 
+    // The animation script
+    script: string;
+
     // Set the master diagram.
     master?: string;
-
-    // The animation script
-    script?: string;
 
     // The animation script
     frames?: string[][];
@@ -75,9 +76,6 @@ export type InitialDiagramProps = {
 
     // Set the master diagram.
     master?: string;
-
-    // The animation script
-    script?: string;
 
     // The animation frames
     frames?: string[][];
@@ -127,7 +125,7 @@ export class Diagram extends Record<Props> {
     }
 
     public static create(setup: InitialDiagramProps = {}) {
-        const { id, items, rootIds, master, title, script } = setup;
+        const { id, items, rootIds, master, title } = setup;
 
         const props: Props = {
             id: id || MathHelper.nextId(),
@@ -137,7 +135,7 @@ export class Diagram extends Record<Props> {
             rootIds: ImmutableList.of(rootIds),
             selectedIds: ImmutableSet.empty(),
             title,
-            script,
+            script: scripts.common.animation
         };
 
         return new Diagram(props);
@@ -307,12 +305,12 @@ export class Diagram extends Record<Props> {
         });
     }
 
-    public setScript(script: string) {
-        return this.set('script', script);
-    }
-
     public setFrames(frames: string[][]) {
         return this.set('frames', frames);
+    }
+
+    public setScript(script: string) {
+        return this.set('script', script);
     }
 
     private mutate(targetIds: ReadonlyArray<string>, updater: (diagram: UpdateProps, targetItems: DiagramItem[]) => void): Diagram {

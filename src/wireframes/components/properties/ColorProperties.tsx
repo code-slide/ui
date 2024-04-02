@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import { Color, ColorPicker } from '@app/core';
 import { changeColors, getColors, useStore } from '@app/wireframes/model';
 
-export const Colors = () => {
+export const ColorProperties = () => {
     const dispatch = useDispatch();
     const recentColors = useStore(getColors);
 
@@ -20,7 +20,7 @@ export const Colors = () => {
     }, [dispatch]);
 
     return (
-        <div>
+        <div className='property-color'>
             {recentColors.colors.map(c =>
                 <span key={c.toString()} className='mr-2 mb-2'>
                     <ColorPicker value={c} onChange={color => doChangeColor(c, color)} />,

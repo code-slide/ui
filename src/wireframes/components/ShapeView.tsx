@@ -14,7 +14,7 @@ import { ArrowIcon, CircleIcon, FunctionIcon, ImageIcon, RectangleIcon, TableIco
 import './styles/ShapeView.scss';
 import { useState } from 'react';
 import classNames from 'classnames';
-import { ModalForm } from './overlay/ModalForm';
+import { FormModal } from './overlay/FormModal';
 
 type ShapeModal = 'image' | 'shape' | '';
 
@@ -200,7 +200,7 @@ export const ShapeView = React.memo(() => {
                 </Button>
             </Dropdown>
 
-            <ModalForm
+            <FormModal
                 title='Add Image'
                 okText='Add'
                 open={isShapeModal == 'image'}
@@ -215,7 +215,7 @@ export const ShapeView = React.memo(() => {
                 }
             />
 
-            <ModalForm
+            <FormModal
                 title='Add Custom Shape'
                 okText='Add'
                 open={isShapeModal == 'shape'}

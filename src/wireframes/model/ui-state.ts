@@ -47,7 +47,7 @@ export const createInitialUIState: () => UIState = () => {
         selectedColor: 'palette',
         selectedMode: 'design',
         selectedAnimation: 'script',
-        sidebarLeftSize: 200,
+        sidebarLeftSize: 0,
         sidebarRightSize: 0,
     };
 };

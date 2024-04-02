@@ -29,10 +29,11 @@ export const App = () => {
     const applicationMode = useStore(s => s.ui.selectedMode);
 
     const margin = {
-        toolLeft: `${vogues.common.editorPad}px ${vogues.common.editorMargin}px ${vogues.common.editorPad}px ${vogues.common.editorPad}px`,
-        toolRight: `${vogues.common.editorPad}px 0`,
-        sideLeft: `${vogues.common.editorPad}px ${vogues.common.editorPad / 2}px ${vogues.common.editorPad / 2}px ${vogues.common.editorMargin}px`,
-        sideRight: `0 ${vogues.common.editorMargin}px ${vogues.common.editorPad}px ${vogues.common.editorPad / 2}px`,
+        tool: `${vogues.common.editorPad}px 0`,
+        sideLeft: `${vogues.common.editorPad}px ${vogues.common.editorPad}px ${vogues.common.editorPad}px 0`,
+        sideMid: `0 ${vogues.common.editorPad}px 0 0`,
+        sideRight: `0 0 ${vogues.common.editorPad}px ${vogues.common.editorPad}px`,
+        editor: `0 ${vogues.common.editorMargin}px`,
     }
 
     React.useEffect(() => {
@@ -72,7 +73,7 @@ export const App = () => {
                             <HeaderView />
                         </Layout.Header>
 
-                        <Layout className='content'>
+                        <Layout className='content' style={{ padding: margin.editor }}>
                             <Layout.Sider
                                 width={sidebarLeftWidth}
                                 style={{ visibility: sidebarLeftWidth == 0 ? 'hidden' : 'visible', margin: margin.sideLeft }}
@@ -83,10 +84,10 @@ export const App = () => {
                             {applicationMode == 'animation'
                                 ?
                                 <Layout>
-                                    <Layout>
+                                    <Layout style={{ margin: margin.sideMid }}>
                                         <Layout.Header 
                                             className='header-toolbar-left' 
-                                            style={{ margin: margin.toolLeft }}>
+                                            style={{ margin: margin.tool }}>
                                                 <ToolDesignView item={selectedItem} set={selectedSet} />
                                         </Layout.Header>
 
@@ -98,7 +99,7 @@ export const App = () => {
                                         className='sidebar-right'>
                                             <Layout.Header 
                                                 className='header-toolbar-right'
-                                                style={{ margin: margin.toolRight }}>
+                                                style={{ margin: margin.tool }}>
                                                     <ToolAnimationView />
                                             </Layout.Header>
 
@@ -109,7 +110,7 @@ export const App = () => {
                                 <Layout>
                                     <Layout.Header 
                                         className='header-toolbar-left'
-                                        style={{ margin: margin.toolLeft }}>
+                                        style={{ margin: margin.tool }}>
                                             <ToolDesignView item={selectedItem} set={selectedSet} />
                                     </Layout.Header>
                                     <Layout>

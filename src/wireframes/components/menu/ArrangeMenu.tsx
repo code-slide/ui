@@ -33,7 +33,7 @@ export const ArrangeMenu = React.memo(() => {
         <>
             {
                 keys.option.remove.map((key) => (
-                    <Shortcut disabled={forRemove.remove.disabled} onPressed={forRemove.remove.onAction} keys={key} />
+                    <Shortcut disabled={forRemove.remove.disabled} onPressed={forRemove.remove.onAction} keys={key} key={key} />
                 ))
             }
 

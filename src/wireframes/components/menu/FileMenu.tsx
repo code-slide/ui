@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { useLoading } from '../actions';
 import { texts } from '@app/const/texts';
 import { useDispatch } from 'react-redux';
-import { ModalForm } from '../overlay/ModalForm';
+import { FormModal, SettingModal } from '../overlay';
 import type { MenuProps } from 'antd';
 import { MenuIcon } from '@app/style/icomoon/icomoon_icon';
 
@@ -21,6 +21,7 @@ export const FileMenu = () => {
     const forLoading = useLoading();
     const editor = useStore(getEditor);
     const [isRename, setIsRename] = useState(false);
+    const [isSettings, setIsSettings] = useState(false);
 
     // Get editor's name
     let name = editor.name;
@@ -32,6 +33,11 @@ export const FileMenu = () => {
     const handleRenameOk = (values: any) => {
         dispatch(changeName(values.new_name));
         setIsRename(false);
+    };
+
+    // Change setting modal appearance
+    const handleSettingClose = () => {
+        setIsSettings(false);
     };
 
     const menu: MenuProps['items'] = [
@@ -50,11 +56,23 @@ export const FileMenu = () => {
             disabled: forLoading.openDiagramAction.disabled,
         },
         {
+            type: 'divider',
+        },
+        {
             key: texts.common.rename,
             label: texts.common.rename,
             icon: <MenuIcon icon='icon-file_rename' />,
             className: 'loading-action-item',
             disabled: false,
+        },
+        {
+            key: texts.common.settings,
+            label: texts.common.settings,
+            icon: <MenuIcon icon='icon-save' />,
+            className: 'loading-action-item',
+        },
+        {
+            type: 'divider',
         },
         {
             key: forLoading.downloadDiagram.label,
@@ -63,27 +81,20 @@ export const FileMenu = () => {
             className: 'loading-action-item',
             disabled: forLoading.downloadDiagram.disabled,
         },
-        {
-            key: forLoading.saveDiagramToFile.label,
-            label: forLoading.saveDiagramToFile.label,
-            icon: <MenuIcon icon={forLoading.saveDiagramToFile.icon} />,
-            className: 'loading-action-item',
-            disabled: false,
-        },
     ];
 
     const menuEvt: MenuProps['onClick'] = ({key}) => {
         if (key == texts.common.rename) {
             setIsRename(true);
+        } else if (key == texts.common.settings) {
+            setIsSettings(true);
         } else if (key == forLoading.newDiagram.label) {
             dispatch(forLoading.newDiagram.onAction);
         } else if (key == forLoading.openDiagramAction.label) {
             dispatch(forLoading.openDiagramAction.onAction);
         } else if (key == forLoading.downloadDiagram.label) {
             dispatch(forLoading.downloadDiagram.onAction);
-        } else if (key == forLoading.saveDiagramToFile.label) {
-            dispatch(forLoading.saveDiagramToFile.onAction);
-        }
+        } 
     }
 
     return (
@@ -96,7 +107,8 @@ export const FileMenu = () => {
                     <h4>{(name.length < 25) ? name : `${name.substring(0, 25)}...`}</h4>
                 </Button>
             </Dropdown>
-            <ModalForm
+            
+            <FormModal
                 title={texts.common.renameTooltip}
                 open={isRename}
                 okText='Rename'
@@ -112,6 +124,8 @@ export const FileMenu = () => {
                     </>
                 }            
             />
+
+            <SettingModal title={texts.common.settings} open={isSettings} onCancel={handleSettingClose} />
         </>
     );
 };

@@ -39,9 +39,6 @@ export function useLoading() {
         dispatch(downloadDiagramToFile());
     });
 
-    const doSaveToFile = useEventCallback(() => {
-    });
-
     const newDiagramAction: UIAction = React.useMemo(() => ({
         disabled: false,
         icon: 'icon-new',
@@ -60,14 +57,6 @@ export function useLoading() {
         onAction: doDownload,
     }), [doDownload, canSave]);
 
-    const saveDiagramToFileAction: UIAction = React.useMemo(() => ({
-        disabled: !canSave,
-        icon: 'icon-save',
-        label: texts.common.saveDiagramToFileTooltip,
-        tooltip: texts.common.saveDiagramToFileTooltip,
-        onAction: doSaveToFile,
-    }), [doSaveToFile, canSave]);
-
     const openDiagramAction: UIAction = React.useMemo(() => ({
         disabled: false,
         icon: 'icon-folder-open',
@@ -76,5 +65,5 @@ export function useLoading() {
         onAction: openHandler,
     }), [openHandler]);
 
-    return { newDiagram: newDiagramAction, openDiagramAction, downloadDiagram, saveDiagramToFile: saveDiagramToFileAction };
+    return { newDiagram: newDiagramAction, openDiagramAction, downloadDiagram };
 }

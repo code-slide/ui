@@ -9,7 +9,7 @@
 import { Form, Modal } from 'antd';
 import * as React from 'react';
 
-type ModalFormProps = {
+type FormModalProps = {
     // Modal title
     title: string;
 
@@ -35,7 +35,7 @@ type ModalFormProps = {
     onCancel: () => void;
 }
 
-export const ModalForm: React.FC<ModalFormProps> = (props: ModalFormProps) => {
+export const FormModal: React.FC<FormModalProps> = (props: FormModalProps) => {
     const { title, open, okText, cancelText, formItems, initValue, onCreate, onCancel } = props;
     const [form] = Form.useForm();
 

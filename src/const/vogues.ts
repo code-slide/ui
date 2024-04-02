@@ -28,6 +28,7 @@ export const vogues = {
     },
     color: {
         blue: '#00f',
+        codeEditor: '#f5f5f5',
         purple: '#a020f0',
         red: '#f00',
         selectionFill: '#0f0',

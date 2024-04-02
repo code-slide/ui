@@ -49,22 +49,22 @@ export const DiagramProperties = React.memo(() => {
     return (
         <>
             <Row className='property'>
-                <Col span={12} className='property-label'>{texts.common.width}</Col>
-                <Col span={12} className='property-value'>
+                <Col span={10} className='property-label'>{texts.common.width}</Col>
+                <Col span={4} className='property-value'>
                     <InputNumber value={sizeWidth} min={100} max={3000} onChange={(e) => !e ? null : doChangeWidth(e)} />
                 </Col>
             </Row>
 
             <Row className='property'>
-                <Col span={12} className='property-label'>{texts.common.height}</Col>
-                <Col span={12} className='property-value'>
+                <Col span={10} className='property-label'>{texts.common.height}</Col>
+                <Col span={4} className='property-value'>
                     <InputNumber value={sizeHeight} min={100} max={3000} onChange={(e) => !e ? null : doChangeHeight(e)} />
                 </Col>
             </Row>
 
             <Row className='property'>
-                <Col span={12} className='property-label'>{texts.common.background}</Col>
-                <Col span={12} className='property-value'>
+                <Col span={10} className='property-label'>{texts.common.background}</Col>
+                <Col span={4} className='property-value'>
                     <ColorPicker value={color} onChange={doChangeColor} recentColors={recentColors} />
                 </Col>
             </Row>

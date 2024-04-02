@@ -11,7 +11,7 @@ import type { CollapseProps } from 'antd';
 import classNames from 'classnames';
 import { texts } from '@app/const';
 import { getDiagram, getSelectedItems, useStore } from '@app/wireframes/model';
-import { Colors, CustomProperties, DiagramProperties, LayoutProperties, ShapeProperties, TransformProperties } from './properties';
+import { CustomProperties, LayoutProperties, ShapeProperties, TransformProperties } from './properties';
 import './styles/PropertiesView.scss';
 
 export const PropertiesView = () => {
@@ -20,18 +20,6 @@ export const PropertiesView = () => {
     const isModeDesign = useStore(s => s.ui.selectedMode) == 'design';
     const hasSelection = selectedItems.length > 0;
     const hasDiagram = !!selectedItem;
-
-    const diagramMenu: CollapseProps['items'] = [
-        {
-            key: 'diagram',
-            label: texts.common.diagram,
-            children: <DiagramProperties />,
-        },{
-            key: 'colors',
-            label: texts.common.palette,
-            children: <Colors />,
-        },
-    ];
 
     const designMenu: CollapseProps['items'] = [
         {
@@ -76,7 +64,6 @@ export const PropertiesView = () => {
             <Collapse
                 className={`properties-collapse ${classNames({ hidden: hasSelection || !hasDiagram })}`}
                 bordered={false}
-                items={diagramMenu}
                 defaultActiveKey={['diagram', 'colors']} />
         </>
     );

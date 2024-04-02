@@ -6,6 +6,7 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-export * from './texts';
 export * from './keys';
+export * from './scripts';
+export * from './texts';
 export * from './vogues';

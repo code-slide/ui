@@ -10,10 +10,11 @@ import Prism from 'prismjs';
 import { getDiagram, useStore, changeScript } from "@app/wireframes/model";
 import { useDispatch } from "react-redux";
 import { default as CodeEditor } from 'react-simple-code-editor';
+import { texts } from '@app/const/texts';
+
 import 'prismjs/components/prism-python';
 import 'prismjs/themes/prism.css';
 import './styles/AnimationView.scss';
-import { texts } from '@app/const/texts';
 
 export const AnimationView = () => {
     const dispatch = useDispatch();
