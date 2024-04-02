@@ -13,7 +13,6 @@ import { useDispatch } from 'react-redux';
 import { default as RevealEditor } from 'react-simple-code-editor';
 import { changeRevealConfig, getEditor, useStore } from '@app/wireframes/model';
 
-import 'prismjs/components/prism-JSON';
 import 'prismjs/themes/prism.css';
 import { Button, Space } from 'antd';
 import { vogues } from '@app/const';
@@ -59,7 +58,7 @@ export const PresentProperties = React.memo(() => {
                 <RevealEditor 
                     value={revealScr}
                     onValueChange={handleSrcChange}
-                    highlight={code => Prism.highlight(code, Prism.languages.json, 'JSON')}
+                    highlight={code => Prism.highlight(code, Prism.languages.javascript, 'javascript')}
                     padding={16}
                 />
             </div>
