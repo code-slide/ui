@@ -1,42 +1,17 @@
-import { DiagramItem, setAnimation, setSidebarLeftSize, getDiagram, useStore, changeFrames, parseFrames } from '@app/wireframes/model';
+import { DiagramItem, setAnimation, getDiagram, useStore, changeFrames, parseFrames } from '@app/wireframes/model';
 import { ClipboardMenu } from './menu/ClipboardMenu';
 import { TableMenu } from './menu/TableMenu';
 import { GroupingMenu } from './menu/GroupingMenu';
 import './styles/ToolView.scss';
 import { HistoryMenu, VisualMenu, ZoomMenu } from './menu';
 import { Button, Segmented, message } from 'antd';
-import { ArrowsAltOutlined, FullscreenExitOutlined, SelectOutlined } from '@ant-design/icons';
-import { useState } from 'react';
+import { SelectOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { SegmentedValue } from "antd/es/segmented";
-import { vogues } from '@app/const';
 
 export interface ToolDesignViewProps {
     item: DiagramItem | null;
     set: DiagramItem[] | null;
-}
-
-const FullscreenButton = () => {
-    const dispatch = useDispatch();
-    const [isFullscreen, setIsFullscreen] = useState(false);
-
-    const hideSidebar = () => {
-        if (isFullscreen) {
-            dispatch(setSidebarLeftSize(vogues.common.sidebarLeft));
-            setIsFullscreen(!isFullscreen);
-        } else {
-            dispatch(setSidebarLeftSize(vogues.common.sidebarClose));
-            setIsFullscreen(!isFullscreen);
-        }
-    }
-
-    return (
-        <Button 
-            type='text' shape='circle' 
-            className='tool-toggle' 
-            icon={isFullscreen ? <FullscreenExitOutlined /> : <ArrowsAltOutlined />}
-            onClick={hideSidebar} />
-    )
 }
 
 export const ToolDesignView = (props: ToolDesignViewProps) => {
@@ -44,7 +19,6 @@ export const ToolDesignView = (props: ToolDesignViewProps) => {
 
     return (
         <div className='tool-container'>
-            <FullscreenButton />
             <div className='tool-menu'>
                 <HistoryMenu />
                 <span className='menu-separator' />

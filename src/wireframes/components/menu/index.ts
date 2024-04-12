@@ -3,6 +3,7 @@ export * from './ClipboardMenu';
 export * from './FileMenu';
 export * from './GroupingMenu';
 export * from './HistoryMenu';
+export * from './IdMenu';
 export * from './PageMenu';
 export * from './PresentMenu';
 export * from './TableMenu';

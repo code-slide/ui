@@ -30,7 +30,9 @@ body {
 }
 
 .header-left {
-    @include fixed(null, null, null, 13px);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .header-toolbar {

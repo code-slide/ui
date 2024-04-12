@@ -2,6 +2,14 @@
 @import '@app/style/vars';
 
 .header {
+    & {
+        @include fixed(null, 13px, null, 13px);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
     &-mode {
         border-color: $color-border !important;
     }
@@ -59,6 +67,24 @@
             .anticon {
                 width: 15px;
             }
+        }
+    }
+}
+
+.shape {
+    &-input {
+        border: 1px solid white;
+        width: 100px;
+    }
+
+    &-cta {
+        border: 1px solid white;
+    }
+
+    &-id:hover {
+        .shape-cta,
+        .shape-input {
+            border: 1px solid #1677ff;
         }
     }
 }

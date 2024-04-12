@@ -11,7 +11,7 @@ import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouteMatch } from 'react-router';
 import { ClipboardContainer } from '@app/core';
-import { EditorView, ShapeView, ToolDesignView, PagesView, HeaderView, PropertiesView, AnimationView, ToolAnimationView } from '@app/wireframes/components';
+import { EditorView, ShapeView, ToolDesignView, PagesView, HeaderView, AnimationView, ToolAnimationView } from '@app/wireframes/components';
 import { getSelectedItems, getSelectedShape, loadDiagramFromServer, newDiagram, useStore } from '@app/wireframes/model';
 import { vogues } from './const';
 import { CustomDragLayer } from './wireframes/components/CustomDragLayer';
@@ -24,7 +24,6 @@ export const App = () => {
     const routeTokenSnapshot = React.useRef(routeToken);
     const selectedItem = useStore(getSelectedShape);
     const selectedSet = useStore(getSelectedItems);
-    const sidebarLeftWidth = useStore(s => s.ui.sidebarLeftSize);
     const sidebarRightWidth = useStore(s => s.ui.sidebarRightSize);
     const applicationMode = useStore(s => s.ui.selectedMode);
 
@@ -74,13 +73,6 @@ export const App = () => {
                         </Layout.Header>
 
                         <Layout className='content' style={{ padding: margin.editor }}>
-                            <Layout.Sider
-                                width={sidebarLeftWidth}
-                                style={{ visibility: sidebarLeftWidth == 0 ? 'hidden' : 'visible', margin: margin.sideLeft }}
-                                className='sidebar-left'>
-                                <PropertiesView />
-                            </Layout.Sider>
-
                             {applicationMode == 'animation'
                                 ?
                                 <Layout>

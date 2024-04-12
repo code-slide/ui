@@ -29,11 +29,6 @@ export const selectColorTab =
         return { payload: { tab } };
     });
 
-export const setSidebarLeftSize =
-    createAction('ui/sizebarLeftSize', (size: number) => {
-        return { payload: { size } };
-    });
-
 export const setSidebarRightSize =
     createAction('ui/sizebarRightSize', (size: number) => {
         return { payload: { size } };
@@ -77,9 +72,6 @@ export function ui(initialState: UIState): Reducer<UIState> {
         })
         .addCase(setZoom, (state, action) => {
             state.zoom = action.payload.zoom;
-        })
-        .addCase(setSidebarLeftSize, (state, action) => {
-            state.sidebarLeftSize = action.payload.size;
         })
         .addCase(setSidebarRightSize, (state, action) => {
             state.sidebarRightSize = action.payload.size;

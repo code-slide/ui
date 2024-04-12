@@ -18,9 +18,6 @@ export interface UIState {
     // The info toast from any loading operation.
     infoToast?: string;
 
-    // The size for left sidebar
-    sidebarLeftSize: number;
-
     // The size for right sidebar
     sidebarRightSize: number;
 
@@ -47,7 +44,6 @@ export const createInitialUIState: () => UIState = () => {
         selectedColor: 'palette',
         selectedMode: 'design',
         selectedAnimation: 'script',
-        sidebarLeftSize: 0,
         sidebarRightSize: 0,
     };
 };

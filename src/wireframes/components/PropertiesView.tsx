@@ -11,7 +11,7 @@ import type { CollapseProps } from 'antd';
 import classNames from 'classnames';
 import { texts } from '@app/const';
 import { getDiagram, getSelectedItems, useStore } from '@app/wireframes/model';
-import { CustomProperties, LayoutProperties, ShapeProperties, TransformProperties } from './properties';
+import { CustomProperties, LayoutProperties, TransformProperties } from './properties';
 import './styles/PropertiesView.scss';
 
 export const PropertiesView = () => {
@@ -22,11 +22,6 @@ export const PropertiesView = () => {
     const hasDiagram = !!selectedItem;
 
     const designMenu: CollapseProps['items'] = [
-        {
-            key: 'properties',
-            label: texts.common.properties,
-            children: <ShapeProperties />,
-        },
         {
             key: 'visual',
             label: texts.common.layout,
@@ -40,11 +35,6 @@ export const PropertiesView = () => {
     ];
 
     const animateMenu: CollapseProps['items'] = [
-        {
-            key: 'properties',
-            label: texts.common.properties,
-            children: <ShapeProperties />,
-        },
         {
             key: 'transform',
             label: texts.common.transform,
@@ -60,7 +50,7 @@ export const PropertiesView = () => {
                 className={`properties-collapse ${classNames({ hidden: !hasSelection })}`}
                 bordered={false}
                 items={isModeDesign ? designMenu : animateMenu}
-                defaultActiveKey={['properties', 'transform', 'visual', 'custom']} />
+                defaultActiveKey={['transform', 'visual', 'custom']} />
             <Collapse
                 className={`properties-collapse ${classNames({ hidden: hasSelection || !hasDiagram })}`}
                 bordered={false}
