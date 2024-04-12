@@ -6,7 +6,7 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-import { ConfigurableFactory, DefaultAppearance, RenderContext, ShapePlugin } from '@app/wireframes/interface';
+import { DefaultAppearance, RenderContext, ShapePlugin } from '@app/wireframes/interface';
 import { CommonTheme } from './_theme';
 
 const IMAGE_URL = 'IMAGE_URL';
@@ -34,12 +34,12 @@ export class Image implements ShapePlugin {
         return { x: 100, y: 100 };
     }
 
-    public configurables(factory: ConfigurableFactory) {
-        return [
-            factory.text(IMAGE_URL, 'Image URL'),
-            factory.toggle(IMAGE_ASPECT_RATIO, 'Preserve aspect ratio'),
-        ];
-    }
+    // public configurables(factory: ConfigurableFactory) {
+    //     return [
+    //         factory.text(IMAGE_URL, 'Image URL'),
+    //         factory.toggle(IMAGE_ASPECT_RATIO, 'Preserve aspect ratio'),
+    //     ];
+    // }
 
     public render(ctx: RenderContext) {
         const url = ctx.shape.getAppearance(IMAGE_URL);

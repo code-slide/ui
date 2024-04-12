@@ -14,7 +14,7 @@ import { ArrowIcon, CircleIcon, FunctionIcon, ImageIcon, RectangleIcon, TableIco
 import './styles/ShapeView.scss';
 import { useState } from 'react';
 import classNames from 'classnames';
-import { FormModal } from './overlay/FormModal';
+import { FormModal } from './modal/FormModal';
 
 type ShapeModal = 'image' | 'shape' | '';
 

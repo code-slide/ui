@@ -6,7 +6,7 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-import { ConfigurableFactory, DefaultAppearance, RenderContext, ShapePlugin, ShapeProperties } from '@app/wireframes/interface';
+import { DefaultAppearance, RenderContext, ShapePlugin, ShapeProperties } from '@app/wireframes/interface';
 import { CommonTheme } from './_theme';
 
 const SHAPE = 'SHAPE';
@@ -42,17 +42,17 @@ export class Shape implements ShapePlugin {
         return { x: 100, y: 100 };
     }
 
-    public configurables(factory: ConfigurableFactory) {
-        return [
-            factory.selection(SHAPE, 'Shape', [
-                SHAPE_STYLE.Rectangle,
-                SHAPE_STYLE.RoundedRetangle,
-                SHAPE_STYLE.Ellipse,
-                SHAPE_STYLE.Triangle,
-                SHAPE_STYLE.Rhombus,
-            ]),
-        ];
-    }
+    // public configurables(factory: ConfigurableFactory) {
+    //     return [
+    //         factory.selection(SHAPE, 'Shape', [
+    //             SHAPE_STYLE.Rectangle,
+    //             SHAPE_STYLE.RoundedRetangle,
+    //             SHAPE_STYLE.Ellipse,
+    //             SHAPE_STYLE.Triangle,
+    //             SHAPE_STYLE.Rhombus,
+    //         ]),
+    //     ];
+    // }
 
     public render(ctx: RenderContext) {
         this.createShape(ctx);

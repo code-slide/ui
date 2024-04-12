@@ -13,7 +13,7 @@ export interface ClipboardMenuProps {
     canCopy: boolean
 }
 
-export const ClipboardMenu = (props: ClipboardMenuProps) => {
+export const ClipboardTool = (props: ClipboardMenuProps) => {
     const diagram = useStore(getDiagram);
 
     if (!diagram) {
@@ -21,11 +21,11 @@ export const ClipboardMenu = (props: ClipboardMenuProps) => {
     }
 
     return (
-        <ClipboardMenuInner {...props} diagram={diagram} />
+        <ClipboardToolInner {...props} diagram={diagram} />
     );
 };
 
-export const ClipboardMenuInner = ({ canCopy }: ClipboardMenuProps & { diagram: Diagram }) => {
+export const ClipboardToolInner = ({ canCopy }: ClipboardMenuProps & { diagram: Diagram }) => {
     const forClipboard = useClipboard();
 
     return (

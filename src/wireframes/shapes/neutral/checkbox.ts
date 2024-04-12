@@ -6,7 +6,7 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-import { ConfigurableFactory, ConstraintFactory, DefaultAppearance, Rect2, RenderContext, ShapePlugin } from '@app/wireframes/interface';
+import { ConstraintFactory, DefaultAppearance, Rect2, RenderContext, ShapePlugin } from '@app/wireframes/interface';
 import { CommonTheme } from './_theme';
 
 const STATE = 'STATE';
@@ -43,16 +43,6 @@ export class Checkbox implements ShapePlugin {
 
     public constraint(factory: ConstraintFactory) {
         return factory.textHeight(8);
-    }
-
-    public configurables(factory: ConfigurableFactory) {
-        return [
-            factory.selection(STATE, 'State', [
-                STATE_NORMAL,
-                STATE_CHECKED,
-                STATE_INTERDEMINATE,
-            ]),
-        ];
     }
 
     public render(ctx: RenderContext) {

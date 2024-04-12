@@ -16,7 +16,7 @@ import { useAppearance, useColorAppearance } from '../actions';
 import { BorderWidthIcon, ColorBackgroundFill, ColorBorderFill, ColorTextFill, IconOutline } from '@app/icons/icon';
 import { vogues } from '@app/const';
 
-export const VisualMenu = React.memo(() => {
+export const VisualTool = React.memo(() => {
     const dispatch = useDispatch();
     const recentColors = useStore(getColors);
     const selectedColorTab = useStore(s => s.ui.selectedColor as any);

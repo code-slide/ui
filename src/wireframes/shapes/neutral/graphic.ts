@@ -7,7 +7,7 @@
 */
 
 import SVGPathCommander, { ShapeTypes } from 'svg-path-commander';
-import { ConfigurableFactory, DefaultAppearance, RenderContext, ShapePlugin, ShapeProperties } from '@app/wireframes/interface';
+import { DefaultAppearance, RenderContext, ShapePlugin, ShapeProperties } from '@app/wireframes/interface';
 import { CommonTheme } from './_theme';
 
 const SVG_CODE = 'SVG_CODE';
@@ -38,12 +38,12 @@ export class Graphic implements ShapePlugin {
         return { x: 100, y: 100 };
     }
 
-    public configurables(factory: ConfigurableFactory) {
-        return [
-            factory.text(SVG_CODE, 'SVG Code'),
-            factory.toggle(SVG_ASPECT_RATIO, 'Preserve aspect ratio'),
-        ];
-    }
+    // public configurables(factory: ConfigurableFactory) {
+    //     return [
+    //         factory.text(SVG_CODE, 'SVG Code'),
+    //         factory.toggle(SVG_ASPECT_RATIO, 'Preserve aspect ratio'),
+    //     ];
+    // }
 
     public render(ctx: RenderContext) {
         this.createShape(ctx);

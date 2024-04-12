@@ -9,7 +9,7 @@
 import * as React from 'react';
 import { ActionMenuButton, useGrouping } from '../actions';
 
-export const GroupingMenu = React.memo(() => {
+export const GroupingTool = React.memo(() => {
     const forGrouping = useGrouping();
 
     return (

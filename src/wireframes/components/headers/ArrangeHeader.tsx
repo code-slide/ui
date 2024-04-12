@@ -13,7 +13,7 @@ import { calculateSelection, getDiagram, selectItems, useStore } from '@app/wire
 import { keys } from '@app/const';
 import { useRemove } from '../actions';
 
-export const ArrangeMenu = React.memo(() => {
+export const ArrangeHeader = React.memo(() => {
     const dispatch = useDispatch();
     const forRemove = useRemove();
     const selectedDiagram = useStore(getDiagram);

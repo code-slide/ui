@@ -19,7 +19,7 @@ import { SegmentedValue } from "antd/es/segmented";
 import { Color } from "@app/core/utils/color";
 import { vogues } from "@app/const";
 
-export const PresentMenu = React.memo(() => {
+export const PresentHeader = React.memo(() => {
     const html = document.querySelector('.editor-diagram')?.innerHTML;
 
     const dispatch = useDispatch();

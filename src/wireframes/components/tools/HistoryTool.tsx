@@ -9,7 +9,7 @@
 import * as React from 'react';
 import { ActionMenuButton, useHistory } from '../actions';
 
-export const HistoryMenu = React.memo(() => {
+export const HistoryTool = React.memo(() => {
     const forHistory = useHistory();
 
     return (

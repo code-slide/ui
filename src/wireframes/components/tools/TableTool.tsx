@@ -15,7 +15,7 @@ import { getAddToTable, getRemoveFromTable } from '@app/wireframes/shapes/neutra
 import { useDispatch } from 'react-redux';
 import { texts } from '@app/const';
 
-export const TableMenu = React.memo(() => {
+export const TableTool = React.memo(() => {
     const dispatch = useDispatch();
     const selectedItem = useStore(getSelectedShape);
     const selectedDiagram = useStore(getDiagram);

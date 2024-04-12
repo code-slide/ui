@@ -15,7 +15,7 @@ import { Vec2 } from '@app/core';
 import { vogues } from '@app/const';
 import type { MenuProps } from 'antd';
 
-export const ZoomMenu = React.memo(() => {
+export const ZoomTool = React.memo(() => {
     const dispatch = useDispatch();
     const editorSize = useStore(getEditor).size;
     const sidebarRightSize = useStore(s => s.ui.sidebarRightSize);

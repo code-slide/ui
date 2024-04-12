@@ -1,9 +1,9 @@
 import { DiagramItem, setAnimation, getDiagram, useStore, changeFrames, parseFrames } from '@app/wireframes/model';
-import { ClipboardMenu } from './menu/ClipboardMenu';
-import { TableMenu } from './menu/TableMenu';
-import { GroupingMenu } from './menu/GroupingMenu';
+import { ClipboardTool } from './tools/ClipboardTool';
+import { TableTool } from './tools/TableTool';
+import { GroupingTool } from './tools/GroupingTool';
 import './styles/ToolView.scss';
-import { HistoryMenu, VisualMenu, ZoomMenu } from './menu';
+import { HistoryTool, VisualTool, ZoomTool } from './tools';
 import { Button, Segmented, message } from 'antd';
 import { SelectOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
@@ -20,31 +20,31 @@ export const ToolDesignView = (props: ToolDesignViewProps) => {
     return (
         <div className='tool-container'>
             <div className='tool-menu'>
-                <HistoryMenu />
+                <HistoryTool />
                 <span className='menu-separator' />
-                <ZoomMenu />
+                <ZoomTool />
                 <span className='menu-separator' />
 
                 {(set != null && set.length > 1) && 
                     <>
-                        <GroupingMenu />
+                        <GroupingTool />
                         <span className='menu-separator' />
                     </>
                 }
 
-                <ClipboardMenu canCopy={(set != null && set.length > 1) || item != null} />
+                <ClipboardTool canCopy={(set != null && set.length > 1) || item != null} />
 
                 {(item != null) && 
                     <>
                         <span className='menu-separator' />
-                        <VisualMenu />
+                        <VisualTool />
                     </>
                 }
 
                 {(item != null && item.renderer == 'Table') && 
                     <>
                         <span className='menu-separator' />
-                        <TableMenu />
+                        <TableTool />
                     </>
                 }
             </div>

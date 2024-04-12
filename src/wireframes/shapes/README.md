@@ -52,15 +52,6 @@ export class Toggle implements ShapePlugin {
         return { x: 60, y: 30 };
     }
 
-    public configurables(factory: ConfigurableFactory) {
-        return [
-            factory.selection(STATE, 'State', [
-                STATE_NORMAL,
-                STATE_CHECKED,
-            ]),
-        ];
-    }
-
     public render(ctx: RenderContext) {
         const border = ctx.shape.strokeThickness;
 

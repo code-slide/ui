@@ -7,11 +7,11 @@
 */
 
 import SVGPathCommander from 'svg-path-commander';
-import { ConfigurableFactory, DefaultAppearance, RenderContext, ShapePlugin } from '@app/wireframes/interface';
+import { DefaultAppearance, RenderContext, ShapePlugin } from '@app/wireframes/interface';
 import { CommonTheme } from './_theme';
 
 type NodeType = 'None' | 'Arrow' | 'Triangle';
-type EgdeType = 'Linear' | 'Quadratic' | 'Bounding Box';
+type EgdeType = 'Linear' | 'Quadratic';
 type CurveType = 'Up' | 'Down';
 type PivotType = 'Top Left' | 'Bottom Left';
 type Position = 'x1' | 'x2' | 'y1' | 'y2';
@@ -28,7 +28,6 @@ const LINE_STYLE: { [index: string]: NodeType | EgdeType | CurveType | PivotType
     Triangle: 'Triangle',
     Linear: 'Linear',
     Quadratic: 'Quadratic',
-    BoundingBox: 'Bounding Box',
     Up: 'Up',
     Down: 'Down',
     TopLeft: 'Top Left',
@@ -63,33 +62,33 @@ export class Line implements ShapePlugin {
         return { x: 200, y: 100 };
     }
 
-    public configurables(factory: ConfigurableFactory) {
-        return [
-            factory.selection(LINE_START, 'Start', [
-                LINE_STYLE.None,
-                LINE_STYLE.Arrow,
-                LINE_STYLE.Triangle,
-            ]),
-            factory.selection(LINE_END, 'End', [
-                LINE_STYLE.None,
-                LINE_STYLE.Arrow,
-                LINE_STYLE.Triangle,
-            ]),
-            factory.selection(LINE_TYPE, 'Type', [
-                LINE_STYLE.Linear,
-                LINE_STYLE.Quadratic,
-                LINE_STYLE.BoundingBox,
-            ]),
-            factory.selection(LINE_CURVE, 'Curve', [
-                LINE_STYLE.Up,
-                LINE_STYLE.Down,
-            ]),
-            factory.selection(LINE_PIVOT, 'Pivot', [
-                LINE_STYLE.TopLeft,
-                LINE_STYLE.BottomLeft,
-            ]),
-        ];
-    }
+    // public configurables(factory: ConfigurableFactory) {
+    //     return [
+    //         factory.selection(LINE_START, 'Start', [
+    //             LINE_STYLE.None,
+    //             LINE_STYLE.Arrow,
+    //             LINE_STYLE.Triangle,
+    //         ]),
+    //         factory.selection(LINE_END, 'End', [
+    //             LINE_STYLE.None,
+    //             LINE_STYLE.Arrow,
+    //             LINE_STYLE.Triangle,
+    //         ]),
+    //         factory.selection(LINE_TYPE, 'Type', [
+    //             LINE_STYLE.Linear,
+    //             LINE_STYLE.Quadratic,
+    //             LINE_STYLE.BoundingBox,
+    //         ]),
+    //         factory.selection(LINE_CURVE, 'Curve', [
+    //             LINE_STYLE.Up,
+    //             LINE_STYLE.Down,
+    //         ]),
+    //         factory.selection(LINE_PIVOT, 'Pivot', [
+    //             LINE_STYLE.TopLeft,
+    //             LINE_STYLE.BottomLeft,
+    //         ]),
+    //     ];
+    // }
 
     public render(ctx: RenderContext) {
         this.createShape(ctx);
@@ -138,35 +137,6 @@ export class Line implements ShapePlugin {
             this.createEdge(ctx, path);
             this.createNode(ctx, pos, ctlRad - ctlDir * Math.PI, ctlRad - ctlDir * Math.PI / 2, height, width, isPivotTop);
 
-        } else if (lineType == LINE_STYLE.BoundingBox) {
-            // Quadratic line with ctl point being the other corner
-            const isCurveDown = ctx.shape.getAppearance('LINE_CURVE') == LINE_STYLE.Down;
-            const ctlDir = isCurveDown ? 1 : -1;
-            const ctlRad = shapeRad + ctlDir * Math.PI / 4;
-
-            const pos: Record<Position, number> = {
-                // xLeft
-                x1: b.left + height * Math.cos(shapeRad),
-                // xRight
-                x2: b.right - height * Math.cos(shapeRad),
-                // yTop
-                y1: isPivotTop 
-                    ? b.top + height * Math.sin(shapeRad)
-                    : b.bottom - height * Math.sin(shapeRad),
-                // yBottom
-                y2: isPivotTop 
-                    ? b.bottom - height * Math.sin(shapeRad) 
-                    : b.top + height * Math.sin(shapeRad),
-            };
-
-            // Control point, assuming isosceles triangle
-            const ctlX = isPivotTop ? isCurveDown ? b.left : b.right : isCurveDown ? b.right : b.left;
-            const ctlY = isPivotTop ? isCurveDown ? b.bottom : b.top : isCurveDown ? b.bottom : b.top;
-
-            const path = `M${pos.x1} ${pos.y1} Q${ctlX} ${ctlY} ${pos.x2} ${pos.y2} Q${ctlX} ${ctlY} ${pos.x1} ${pos.y1} z`;
-            this.createEdge(ctx, path);
-            // this.createNode(ctx, pos, shapeRad - Math.PI, shapeRad, height, width, isPivotTop);
-            this.createNode(ctx, pos, ctlRad - ctlDir * Math.PI, ctlRad - ctlDir * Math.PI / 2, height, width, isPivotTop);
         } else if (lineType == LINE_STYLE.Linear) {
             // Linear line
             const pos: Record<Position, number> = {

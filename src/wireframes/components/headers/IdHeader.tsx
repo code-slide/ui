@@ -6,7 +6,7 @@ import '../styles/HeaderView.scss'
 import { useDispatch } from 'react-redux';
 import { CheckOutlined } from '@ant-design/icons';
 
-export const ShapeIdMenu = () => {
+export const IdHeader = () => {
     const dispatch = useDispatch();
     const diagram = useStore(getDiagram);
     const [ selectedItem ] = useStore(getSelectedItems);

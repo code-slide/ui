@@ -12,11 +12,11 @@ import { useEffect, useState } from 'react';
 import { useLoading } from '../actions';
 import { texts } from '@app/const/texts';
 import { useDispatch } from 'react-redux';
-import { FormModal, SettingModal } from '../overlay';
+import { FormModal, SettingModal } from '../modal';
 import type { MenuProps } from 'antd';
 import { MenuIcon } from '@app/style/icomoon/icomoon_icon';
 
-export const FileMenu = () => {
+export const FileHeader = () => {
     const dispatch = useDispatch();
     const forLoading = useLoading();
     const editor = useStore(getEditor);
