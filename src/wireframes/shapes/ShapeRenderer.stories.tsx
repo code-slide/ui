@@ -7,7 +7,7 @@
 */
 
 import { Meta } from '@storybook/react';
-import { DefaultAppearance } from '@app/wireframes/interface';
+import { theme } from '@app/const';
 import { ShapeRenderer } from './ShapeRenderer';
 import * as Shapes from './dependencies';
 
@@ -48,9 +48,9 @@ export const Textbox = () => {
         <>
             <ShapeRenderer usePreviewOffset plugin={new Shapes.Textbox()} />
             <hr />
-            <ShapeRenderer usePreviewOffset plugin={new Shapes.Textbox()} appearance={{ [DefaultAppearance.TEXT]: 'Lorem ipsum dolor sit amet, alii rebum postea eam ex.\nEt mei laoreet officiis, summo sensibus id me.' }} />
+            <ShapeRenderer usePreviewOffset plugin={new Shapes.Textbox()} appearance={{ [theme.key.text]: 'Lorem ipsum dolor sit amet, alii rebum postea eam ex.\nEt mei laoreet officiis, summo sensibus id me.' }} />
             <hr />
-            <ShapeRenderer usePreviewOffset plugin={new Shapes.Textbox()} appearance={{ [DefaultAppearance.TEXT]: 'Lorem ipsum dolor sit amet, alii rebum postea eam ex.\n\nEt mei laoreet officiis, summo sensibus id me.' }} />
+            <ShapeRenderer usePreviewOffset plugin={new Shapes.Textbox()} appearance={{ [theme.key.text]: 'Lorem ipsum dolor sit amet, alii rebum postea eam ex.\n\nEt mei laoreet officiis, summo sensibus id me.' }} />
         </>
     );
 };

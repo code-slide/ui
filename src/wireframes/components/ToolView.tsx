@@ -3,7 +3,7 @@ import { ClipboardTool } from './tools/ClipboardTool';
 import { TableTool } from './tools/TableTool';
 import { GroupingTool } from './tools/GroupingTool';
 import './styles/ToolView.scss';
-import { HistoryTool, VisualTool, ZoomTool } from './tools';
+import { GraphicTool, HistoryTool, VisualTool, ZoomTool } from './tools';
 import { Button, Segmented, message } from 'antd';
 import { SelectOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
@@ -45,6 +45,13 @@ export const ToolDesignView = (props: ToolDesignViewProps) => {
                     <>
                         <span className='menu-separator' />
                         <TableTool />
+                    </>
+                }
+
+                {(item != null && (item.renderer == 'Image' || item.renderer == 'Graphic')) && 
+                    <>
+                        <span className='menu-separator' />
+                        <GraphicTool />
                     </>
                 }
             </div>

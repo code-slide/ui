@@ -10,8 +10,7 @@
 
 import { AnyAction, createAction } from '@reduxjs/toolkit';
 import { MathHelper } from '@app/core/utils';
-import { DefaultAppearance } from '@app/wireframes/interface';
-import { vogues } from '@app/const';
+import { vogues, theme } from '@app/const';
 import { addShape } from './items';
 import { createDiagramAction, DiagramRef } from './utils';
 
@@ -62,8 +61,8 @@ export function migrateOldAction(action: AnyAction) {
             {
                 position,
                 appearance: {
-                    [DefaultAppearance.TEXT]: text,
-                    [DefaultAppearance.FONT_FAMILY]: fontFamily,
+                    [theme.key.text]: text,
+                    [theme.key.fontFamily]: fontFamily,
                 },
             },
             shapeId);

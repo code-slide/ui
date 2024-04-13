@@ -15,6 +15,7 @@ import './styles/ShapeView.scss';
 import { useState } from 'react';
 import classNames from 'classnames';
 import { FormModal } from './modal/FormModal';
+import { theme } from '@app/const';
 
 type ShapeModal = 'image' | 'shape' | '';
 
@@ -32,12 +33,18 @@ export const ShapeView = React.memo(() => {
     const numCol = selectedCell % CELL_ATTR.cols + 1;
 
     const handleImageURLOk = (values: any) => {
-        createNewShape('Image', { 'IMAGE_URL': values.image_url })
+        const customAppearance: { [key: string]: any } = {};
+        customAppearance[theme.key.imageUrl] = values.image_url;
+
+        createNewShape('Image', customAppearance)
         setIsShapeModal('');
     };
 
     const handleCustomShapeOk = (values: any) => {
-        createNewShape('Graphic', { 'SVG_CODE': values.svg_code });
+        const customAppearance: { [key: string]: any } = {};
+        customAppearance[theme.key.svgCode] = values.svg_code;
+
+        createNewShape('Graphic', customAppearance);
         setIsShapeModal('');
     };
 
@@ -55,12 +62,20 @@ export const ShapeView = React.memo(() => {
         { key: 'Equation', label: 'Equation', icon: <FunctionIcon />, className: 'menu-shape', }
     ];
     const textMenuEvt: MenuProps['onClick'] = ({ key }) => {
+        const customAppearance: { [key: string]: any } = {};
+        
         if (key == 'Heading') {
-            createNewShape('Textbox', { 'TEXT': 'Add a heading', 'FONT_SIZE': 60 })
+            customAppearance[theme.key.text] = 'Add a heading';
+            customAppearance[theme.key.fontSize] = 60;
+            createNewShape('Textbox', customAppearance);
         } else if (key == 'Subheading') {
-            createNewShape('Textbox', { 'TEXT': 'Add a subheading', 'FONT_SIZE': 40 })
+            customAppearance[theme.key.text] = 'Add a subheading';
+            customAppearance[theme.key.fontSize] = 40;
+            createNewShape('Textbox', customAppearance);
         } else if (key == 'Paragraph') {
-            createNewShape('Textbox', { 'TEXT': 'Add a paragraph', 'FONT_SIZE': 24 })
+            customAppearance[theme.key.text] = 'Add a paragraph';
+            customAppearance[theme.key.fontSize] = 24;
+            createNewShape('Textbox', customAppearance);
         } else if (key == 'Equation') {
             createNewShape('Equation')
         }
@@ -85,9 +100,9 @@ export const ShapeView = React.memo(() => {
         }
     ];
     const cellMenuEvtClick: MenuProps['onClick'] = () => {
-        createNewShape('Table', { 
-            'TEXT': Array(numCol).join(',') + Array(numRow).join(';'),
-        });
+        const customAppearance: { [key: string]: any } = {};
+        customAppearance[theme.key.text] = Array(numCol).join(',') + Array(numRow).join(';');
+        createNewShape('Table', customAppearance);
     };
     const cellMenuEvtLeave: MenuProps['onMouseLeave'] = () => {
         setSelectedCell(0);
@@ -102,10 +117,14 @@ export const ShapeView = React.memo(() => {
         { key: 'Custom', label: 'Custom', icon: <VectorIcon />, className: 'menu-shape', },
     ];
     const shapeMenuEvt: MenuProps['onClick'] = ({ key }) => {
+        const customAppearance: { [key: string]: any } = {};
+
         if (key == 'Custom') {
             setIsShapeModal('shape');
         } else {
-            createNewShape('Shape', { 'FONT_SIZE': 24, 'SHAPE': key });
+            customAppearance[theme.key.fontSize] = 24;
+            customAppearance[theme.key.shape] = key;
+            createNewShape('Shape', customAppearance);
         }
     };
 
@@ -114,11 +133,11 @@ export const ShapeView = React.memo(() => {
         { key: 'Curve', label: 'Curve', icon: <BezierIcon />, className: 'menu-shape', },
     ];
     const lineMenuEvt: MenuProps['onClick'] = ({ key }) => {
-        if (key == 'Curve') {
-            createNewShape('Line', { 'FONT_SIZE': 24, 'LINE_TYPE': 'Quadratic' });
-        } else {
-            createNewShape('Line', { 'FONT_SIZE': 24 });
-        }
+        const customAppearance: { [key: string]: any } = {};
+        customAppearance[theme.key.fontSize] = 24;
+
+        if (key == 'Curve') customAppearance[theme.key.lineType] = 'Quadratic'; 
+        createNewShape('Line', customAppearance);
     };
 
     const imageMenu: MenuProps['items'] = [

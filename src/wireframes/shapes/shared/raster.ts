@@ -6,13 +6,13 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-import { DefaultAppearance, RenderContext, ShapePlugin, ShapeSource } from '@app/wireframes/interface';
-import { vogues } from '@app/const';
+import { RenderContext, ShapePlugin, ShapeSource } from '@app/wireframes/interface';
+import { vogues, theme } from '@app/const';
 
 const SOURCE = 'SOURCE';
 
 const DEFAULT_APPEARANCE = {
-    [DefaultAppearance.TEXT_DISABLED]: true,
+    [theme.key.text]: true,
 };
 
 export class Raster implements ShapePlugin {

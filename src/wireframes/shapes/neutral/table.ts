@@ -7,24 +7,22 @@
 */
 
 import { texts } from '@app/const';
-import { DefaultAppearance, Rect2, RenderContext, Shape, ShapePlugin } from '@app/wireframes/interface';
+import { Rect2, RenderContext, Shape, ShapePlugin } from '@app/wireframes/interface';
 import { DiagramItem } from '@app/wireframes/model';
-import { CommonTheme } from './_theme';
+import { theme } from '@app/const';
 
 const DELIMITER_ROW = texts.common.tableDelimiterRow;  // ;
 const DELIMITER_COL = texts.common.tableDelimiterCol;  // ,
-const SELECTED_CELL_X = 'SELECTED_CELL_X';
-const SELECTED_CELL_Y = 'SELECTED_CELL_Y';
 const DEFAULT_APPEARANCE = {
-    [DefaultAppearance.BACKGROUND_COLOR]: '#fff',
-    [DefaultAppearance.FONT_SIZE]: CommonTheme.CONTROL_FONT_SIZE,
-    [DefaultAppearance.FOREGROUND_COLOR]: CommonTheme.CONTROL_TEXT_COLOR,
-    [DefaultAppearance.STROKE_COLOR]: CommonTheme.CONTROL_BORDER_COLOR,
-    [DefaultAppearance.STROKE_THICKNESS]: CommonTheme.CONTROL_BORDER_THICKNESS,
-    [DefaultAppearance.TEXT_ALIGNMENT]: 'center',
-    [DefaultAppearance.TEXT]: '',
-    [SELECTED_CELL_X]: 0,
-    [SELECTED_CELL_Y]: 0,
+    [theme.key.backgroundColor]: '#fff',
+    [theme.key.fontSize]: theme.common.fontSize,
+    [theme.key.foregroundColor]: theme.common.textColor,
+    [theme.key.strokeColor]: theme.common.borderColor,
+    [theme.key.strokeThickness]: theme.common.borderThickness,
+    [theme.key.textAlignment]: 'center',
+    [theme.key.text]: '',
+    [theme.key.tableSelectedX]: 0,
+    [theme.key.tableSelectedY]: 0,
 };
 
 export class Table implements ShapePlugin {
@@ -76,8 +74,8 @@ export class Table implements ShapePlugin {
     }
 
     private createBorders(ctx: RenderContext, columnCount: number, cellWidth: number, rows: string[][], cellHeight: number) {
-        const strokeColor = ctx.shape.getAppearance(DefaultAppearance.STROKE_COLOR);
-        const strokeWidth = ctx.shape.getAppearance(DefaultAppearance.STROKE_THICKNESS);
+        const strokeColor = ctx.shape.getAppearance(theme.key.strokeColor);
+        const strokeWidth = ctx.shape.getAppearance(theme.key.strokeThickness);
 
         for (let x = 0; x < columnCount; x++) {
             for (let y = 0; y < rows.length; y++) {
@@ -100,7 +98,7 @@ export class Table implements ShapePlugin {
     }
 
     private createFrame(ctx: RenderContext) {
-        ctx.renderer2.rectangle(ctx.shape, CommonTheme.CONTROL_BORDER_RADIUS, ctx.rect, p => {
+        ctx.renderer2.rectangle(ctx.shape, theme.common.borderRadius, ctx.rect, p => {
             p.setBackgroundColor(ctx.shape);
         });
     }

@@ -17,7 +17,7 @@ import * as svg from '@svgdotjs/svg.js';
 import { getPlugin } from "@app/wireframes/shapes/utils/abstract-plugin";
 import { SegmentedValue } from "antd/es/segmented";
 import { Color } from "@app/core/utils/color";
-import { vogues } from "@app/const";
+import { theme, vogues } from "@app/const";
 
 export const PresentHeader = React.memo(() => {
     const html = document.querySelector('.editor-diagram')?.innerHTML;
@@ -40,9 +40,11 @@ export const PresentHeader = React.memo(() => {
         let corrected = json.replace(/'/g, '"');
         let jsonObj: {[index: string]: string} = JSON.parse(corrected);      
 
-        // Modify appearance if there are specifications
+        // Modify appearance if there are valid specifications
         // e.g. Shape1 = {'TEXT': 'Hello, world!'}
         for (let [key, value] of Object.entries(jsonObj)) {
+            if (!(key in theme.key)) continue;      // Safe-check
+
             if (key.endsWith('COLOR')) {
                 const color = Color.fromValue(value).toNumber();
                 item = item.setAppearance(key, color);

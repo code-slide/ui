@@ -8,11 +8,10 @@
 
 import * as React from 'react';
 import { Keys, Vec2, sizeInPx } from '@app/core';
-import { DefaultAppearance } from '@app/wireframes/interface';
 import { Diagram, DiagramItem } from '@app/wireframes/model';
 import { InteractionHandler, InteractionService, SvgEvent } from './interaction-service';
 import { getSelectedCell, getTableAttributes } from '../shapes/dependencies';
-import { texts } from '@app/const';
+import { texts, theme } from '@app/const';
 
 export interface TextAdornerProps {
     // The current zoom value.
@@ -134,14 +133,14 @@ export class TextAdorner extends React.PureComponent<TextAdornerProps> implement
                     fullText.push(e.join(','));
                 })
 
-                this.props.onChangeItemsAppearance(this.props.selectedDiagram, [this.selectedShape], DefaultAppearance.TEXT, fullText.join(texts.common.tableDelimiterRow));
+                this.props.onChangeItemsAppearance(this.props.selectedDiagram, [this.selectedShape], theme.key.text, fullText.join(texts.common.tableDelimiterRow));
             }
         } else {
             const newText = this.textareaElement.value;
             const oldText = this.selectedShape.text;
 
             if (newText !== oldText) {
-                this.props.onChangeItemsAppearance(this.props.selectedDiagram, [this.selectedShape], DefaultAppearance.TEXT, newText);
+                this.props.onChangeItemsAppearance(this.props.selectedDiagram, [this.selectedShape], theme.key.text, newText);
             }
         }
         this.hide();

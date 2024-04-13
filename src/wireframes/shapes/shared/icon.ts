@@ -6,11 +6,12 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-import { DefaultAppearance, RenderContext, ShapePlugin, ShapeSource } from '@app/wireframes/interface';
+import { RenderContext, ShapePlugin, ShapeSource } from '@app/wireframes/interface';
+import { theme } from '@app/const';
 
 const DEFAULT_APPEARANCE = {
-    [DefaultAppearance.FOREGROUND_COLOR]: 0,
-    [DefaultAppearance.TEXT_DISABLED]: true,
+    [theme.key.foregroundColor]: 0,
+    [theme.key.text]: true,
 };
 
 export class Icon implements ShapePlugin {
@@ -33,8 +34,8 @@ export class Icon implements ShapePlugin {
             return {
                 renderer: this.identifier(),
                 appearance: { 
-                    [DefaultAppearance.TEXT]: text, 
-                    [DefaultAppearance.ICON_FONT_FAMILY]: fontFamily,
+                    [theme.key.text]: text, 
+                    [theme.key.iconFontFamily]: fontFamily,
                 },
             };
         }
@@ -53,7 +54,7 @@ export class Icon implements ShapePlugin {
 
         ctx.renderer2.text(config, ctx.rect, p => {
             p.setForegroundColor(ctx.shape);
-            p.setFontFamily(ctx.shape.getAppearance(DefaultAppearance.ICON_FONT_FAMILY) || 'FontAwesome');
+            p.setFontFamily(ctx.shape.getAppearance(theme.key.iconFontFamily) || 'FontAwesome');
         });
     }
 }

@@ -10,11 +10,10 @@ import { Button, Dropdown, InputNumber, Tooltip } from 'antd';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { ColorPicker, useEventCallback } from '@app/core';
-import { DefaultAppearance } from '@app/wireframes/interface';
 import { getColors, getDiagramId, getSelectionSet, selectColorTab, useStore } from '@app/wireframes/model';
 import { useAppearance, useColorAppearance } from '../actions';
 import { BorderWidthIcon, ColorBackgroundFill, ColorBorderFill, ColorTextFill, IconOutline } from '@app/icons/icon';
-import { vogues } from '@app/const';
+import { vogues, theme } from '@app/const';
 
 export const VisualTool = React.memo(() => {
     const dispatch = useDispatch();
@@ -25,27 +24,27 @@ export const VisualTool = React.memo(() => {
 
     const [backgroundColor, setBackgroundColor] =
         useColorAppearance(selectedDiagramId, selectedSet,
-            DefaultAppearance.BACKGROUND_COLOR);
+            theme.key.backgroundColor);
 
     const [fontSize, setFontSize] =
         useAppearance<number>(selectedDiagramId, selectedSet,
-            DefaultAppearance.FONT_SIZE);
+            theme.key.fontSize);
 
     const [foregroundColor, setForegroundColor] =
         useColorAppearance(selectedDiagramId, selectedSet,
-            DefaultAppearance.FOREGROUND_COLOR);
+            theme.key.foregroundColor);
 
     const [strokeColor, setStrokeColor] =
         useColorAppearance(selectedDiagramId, selectedSet,
-            DefaultAppearance.STROKE_COLOR);
+            theme.key.strokeColor);
 
     const [strokeThickness, setStrokeThickness] =
         useAppearance<number>(selectedDiagramId, selectedSet,
-            DefaultAppearance.STROKE_THICKNESS);
+            theme.key.strokeThickness);
 
     const [textAlignment, setTextAlignment] =
         useAppearance<string>(selectedDiagramId, selectedSet,
-            DefaultAppearance.TEXT_ALIGNMENT);
+            theme.key.textAlignment);
 
     const doSelectColorTab = useEventCallback((key: string) => {
         dispatch(selectColorTab(key));

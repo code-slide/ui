@@ -42,6 +42,10 @@
     &-menu-item {
         padding: 3px 8px;
 
+        &.active {
+            background-color: $color-white;
+        }
+
         h5 {
             margin: 0;
         }

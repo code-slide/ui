@@ -104,5 +104,5 @@ export const texts = {
         width: 'Width',
         zoomIn: 'Zoom In',
         zoomOut: 'Zoom Out',
-    },
+    }
 };

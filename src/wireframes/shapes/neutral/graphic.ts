@@ -7,22 +7,19 @@
 */
 
 import SVGPathCommander, { ShapeTypes } from 'svg-path-commander';
-import { DefaultAppearance, RenderContext, ShapePlugin, ShapeProperties } from '@app/wireframes/interface';
-import { CommonTheme } from './_theme';
-
-const SVG_CODE = 'SVG_CODE';
-const SVG_ASPECT_RATIO = 'ASPECT_RATIO';
+import { RenderContext, ShapePlugin, ShapeProperties } from '@app/wireframes/interface';
+import { theme } from '@app/const';
 
 const DEFAULT_APPEARANCE = {
-    [DefaultAppearance.BACKGROUND_COLOR]: 0xEEEEEE,
-    [DefaultAppearance.FONT_SIZE]: CommonTheme.CONTROL_FONT_SIZE,
-    [DefaultAppearance.FOREGROUND_COLOR]: 0,
-    [DefaultAppearance.STROKE_COLOR]: CommonTheme.CONTROL_BORDER_COLOR,
-    [DefaultAppearance.STROKE_THICKNESS]: CommonTheme.CONTROL_BORDER_THICKNESS,
-    [DefaultAppearance.TEXT_ALIGNMENT]: 'center',
-    [DefaultAppearance.TEXT]: '',
-    [SVG_CODE]: SVGAElement,
-    [SVG_ASPECT_RATIO]: true,
+    [theme.key.backgroundColor]: 0xEEEEEE,
+    [theme.key.fontSize]: theme.common.fontSize,
+    [theme.key.foregroundColor]: 0,
+    [theme.key.strokeColor]: theme.common.borderColor,
+    [theme.key.strokeThickness]: theme.common.borderThickness,
+    [theme.key.textAlignment]: 'center',
+    [theme.key.text]: '',
+    [theme.key.svgCode]: SVGAElement,
+    [theme.key.aspectRatio]: true,
 };
 
 export class Graphic implements ShapePlugin {
@@ -38,13 +35,6 @@ export class Graphic implements ShapePlugin {
         return { x: 100, y: 100 };
     }
 
-    // public configurables(factory: ConfigurableFactory) {
-    //     return [
-    //         factory.text(SVG_CODE, 'SVG Code'),
-    //         factory.toggle(SVG_ASPECT_RATIO, 'Preserve aspect ratio'),
-    //     ];
-    // }
-
     public render(ctx: RenderContext) {
         this.createShape(ctx);
         this.createText(ctx);
@@ -58,7 +48,7 @@ export class Graphic implements ShapePlugin {
 
     private createShape(ctx: RenderContext) {
         // Trim SVG input
-        const svgCode: string = ctx.shape.getAppearance(SVG_CODE);
+        const svgCode: string = ctx.shape.getAppearance(theme.key.svgCode);
         const hasSVG = svgCode.includes('<svg');
         const value = hasSVG ? svgCode.trim() : `<svg>\n${svgCode.trim()}</svg>`;
 
@@ -70,7 +60,7 @@ export class Graphic implements ShapePlugin {
         shapes.forEach((shape) => SVGPathCommander.shapeToPath(shape, true));
   
         // Create paths
-        const aspectRatio = ctx.shape.getAppearance(SVG_ASPECT_RATIO);
+        const aspectRatio = ctx.shape.getAppearance(theme.key.aspectRatio);
         const scaleX = ctx.rect.width / Number(viewBox && viewBox[2]);
         const scaleY = ctx.rect.height / Number(viewBox && viewBox[3]);
         const scaleUniform = Math.min(scaleX, scaleY);

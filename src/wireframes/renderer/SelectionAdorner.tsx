@@ -10,7 +10,7 @@ import * as svg from '@svgdotjs/svg.js';
 import * as React from 'react';
 import { isModKey, Rect2, Subscription, SVGHelper, Vec2 } from '@app/core';
 import { calculateSelection, Diagram, DiagramItem, Transform } from '@app/wireframes/model';
-import { vogues } from '@app/const';
+import { vogues, theme } from '@app/const';
 import { InteractionHandler, InteractionService, SvgEvent } from './interaction-service';
 import { PreviewEvent } from './preview';
 import { OverlayManager } from '../contexts/OverlayContext';
@@ -256,8 +256,8 @@ export class SelectionAdorner extends React.Component<SelectionAdornerProps> imp
             const parseTable = getTableAttributes(item.text);
             const sizeX = bounds.aabb.width / parseTable.columnCount;
             const sizeY = bounds.aabb.height / parseTable.rowCount;
-            const rowIndex = item.getAppearance('SELECTED_CELL_X');
-            const colIndex = item.getAppearance('SELECTED_CELL_Y');
+            const rowIndex = item.getAppearance(theme.key.tableSelectedX);
+            const colIndex = item.getAppearance(theme.key.tableSelectedY);
 
             this.props.overlayManager.showGrid(bounds, parseTable.columnCount, parseTable.rowCount);
             this.props.overlayManager.showBox(bounds, sizeX * rowIndex, sizeY * colIndex, sizeX, sizeY);
@@ -274,8 +274,8 @@ export class SelectionAdorner extends React.Component<SelectionAdornerProps> imp
                 {'x': shape.transform.left, 'y': shape.transform.top},
                 {'x': sizeX, 'y': sizeY},
                 {'x': parseTable.columnCount, 'y': parseTable.rowCount});
-            this.props.onChangeItemsAppearance(this.props.selectedDiagram, [shape], 'SELECTED_CELL_X', cell.indexCol);
-            this.props.onChangeItemsAppearance(this.props.selectedDiagram, [shape], 'SELECTED_CELL_Y', cell.indexRow);
+            this.props.onChangeItemsAppearance(this.props.selectedDiagram, [shape], theme.key.tableSelectedX, cell.indexCol);
+            this.props.onChangeItemsAppearance(this.props.selectedDiagram, [shape], theme.key.tableSelectedY, cell.indexRow);
         }
     }
 

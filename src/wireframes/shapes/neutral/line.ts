@@ -7,20 +7,14 @@
 */
 
 import SVGPathCommander from 'svg-path-commander';
-import { DefaultAppearance, RenderContext, ShapePlugin } from '@app/wireframes/interface';
-import { CommonTheme } from './_theme';
+import { RenderContext, ShapePlugin } from '@app/wireframes/interface';
+import { theme } from '@app/const';
 
 type NodeType = 'None' | 'Arrow' | 'Triangle';
 type EgdeType = 'Linear' | 'Quadratic';
 type CurveType = 'Up' | 'Down';
 type PivotType = 'Top Left' | 'Bottom Left';
 type Position = 'x1' | 'x2' | 'y1' | 'y2';
-
-const LINE_START = 'LINE_START';
-const LINE_END = 'LINE_END';
-const LINE_TYPE = 'LINE_TYPE';
-const LINE_CURVE = 'LINE_CURVE';
-const LINE_PIVOT = 'LINE_PIVOT';
 
 const LINE_STYLE: { [index: string]: NodeType | EgdeType | CurveType | PivotType } = {
     None: 'None',
@@ -35,18 +29,18 @@ const LINE_STYLE: { [index: string]: NodeType | EgdeType | CurveType | PivotType
 };
 
 const DEFAULT_APPEARANCE = {
-    [DefaultAppearance.BACKGROUND_COLOR]: 0xEEEEEE,
-    [DefaultAppearance.FONT_SIZE]: CommonTheme.CONTROL_FONT_SIZE,
-    [DefaultAppearance.FOREGROUND_COLOR]: 0,
-    [DefaultAppearance.STROKE_COLOR]: CommonTheme.CONTROL_BORDER_COLOR,
-    [DefaultAppearance.STROKE_THICKNESS]: 2,
-    [DefaultAppearance.TEXT_ALIGNMENT]: 'center',
-    [DefaultAppearance.TEXT]: '',
-    [LINE_START]: LINE_STYLE.None,
-    [LINE_END]: LINE_STYLE.Arrow,
-    [LINE_TYPE]: LINE_STYLE.Linear,
-    [LINE_CURVE]: LINE_STYLE.Down,
-    [LINE_PIVOT]: LINE_STYLE.TopLeft,
+    [theme.key.backgroundColor]: 0xEEEEEE,
+    [theme.key.fontSize]: theme.common.fontSize,
+    [theme.key.foregroundColor]: 0,
+    [theme.key.strokeColor]: theme.common.borderColor,
+    [theme.key.strokeThickness]: 2,
+    [theme.key.textAlignment]: 'center',
+    [theme.key.text]: '',
+    [theme.key.lineStart]: LINE_STYLE.None,
+    [theme.key.lineEnd]: LINE_STYLE.Arrow,
+    [theme.key.lineType]: LINE_STYLE.Linear,
+    [theme.key.lineCurve]: LINE_STYLE.Down,
+    [theme.key.linePivot]: LINE_STYLE.TopLeft,
 };
 
 export class Line implements ShapePlugin {
@@ -61,34 +55,6 @@ export class Line implements ShapePlugin {
     public defaultSize() {
         return { x: 200, y: 100 };
     }
-
-    // public configurables(factory: ConfigurableFactory) {
-    //     return [
-    //         factory.selection(LINE_START, 'Start', [
-    //             LINE_STYLE.None,
-    //             LINE_STYLE.Arrow,
-    //             LINE_STYLE.Triangle,
-    //         ]),
-    //         factory.selection(LINE_END, 'End', [
-    //             LINE_STYLE.None,
-    //             LINE_STYLE.Arrow,
-    //             LINE_STYLE.Triangle,
-    //         ]),
-    //         factory.selection(LINE_TYPE, 'Type', [
-    //             LINE_STYLE.Linear,
-    //             LINE_STYLE.Quadratic,
-    //             LINE_STYLE.BoundingBox,
-    //         ]),
-    //         factory.selection(LINE_CURVE, 'Curve', [
-    //             LINE_STYLE.Up,
-    //             LINE_STYLE.Down,
-    //         ]),
-    //         factory.selection(LINE_PIVOT, 'Pivot', [
-    //             LINE_STYLE.TopLeft,
-    //             LINE_STYLE.BottomLeft,
-    //         ]),
-    //     ];
-    // }
 
     public render(ctx: RenderContext) {
         this.createShape(ctx);
@@ -109,12 +75,12 @@ export class Line implements ShapePlugin {
         const height = ctx.shape.strokeThickness * 6;
         const width = ctx.shape.strokeThickness * 4.5;
 
-        const lineType = ctx.shape.getAppearance(LINE_TYPE);
-        const isPivotTop = ctx.shape.getAppearance(LINE_PIVOT) == LINE_STYLE.TopLeft;
+        const lineType = ctx.shape.getAppearance(theme.key.lineType);
+        const isPivotTop = ctx.shape.getAppearance(theme.key.linePivot) == LINE_STYLE.TopLeft;
 
         if (lineType == LINE_STYLE.Quadratic) {
             // Quadratic line
-            const ctlDir = ctx.shape.getAppearance('LINE_CURVE') == LINE_STYLE.Down ? 1 : -1;
+            const ctlDir = ctx.shape.getAppearance(theme.key.lineCurve) == LINE_STYLE.Down ? 1 : -1;
             const ctlRad = shapeRad + ctlDir * Math.PI / 4;
 
             const pos: Record<Position, number> = {
@@ -163,8 +129,8 @@ export class Line implements ShapePlugin {
     }
 
     private createNode(ctx: RenderContext, pos: Record<Position, number>, xRad: number, yRad: number, height: number, width: number, isPivotTop: boolean) {
-        const startType = ctx.shape.getAppearance('LINE_START');
-        const endType = ctx.shape.getAppearance('LINE_END');
+        const startType = ctx.shape.getAppearance(theme.key.lineStart);
+        const endType = ctx.shape.getAppearance(theme.key.lineEnd);
 
         const rotatingDegree = (radian: number) => {
             const relativeRad = isPivotTop ? radian : -radian;

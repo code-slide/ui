@@ -6,19 +6,16 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-import { DefaultAppearance, RenderContext, ShapePlugin } from '@app/wireframes/interface';
-import { CommonTheme } from './_theme';
-
-const IMAGE_URL = 'IMAGE_URL';
-const IMAGE_ASPECT_RATIO = 'ASPECT_RATIO';
+import { RenderContext, ShapePlugin } from '@app/wireframes/interface';
+import { theme } from '@app/const';
 
 const DEFAULT_APPEARANCE = {
-    [DefaultAppearance.BACKGROUND_COLOR]: 0xFFFFFF,
-    [DefaultAppearance.STROKE_COLOR]: CommonTheme.CONTROL_BORDER_COLOR,
-    [DefaultAppearance.STROKE_THICKNESS]: CommonTheme.CONTROL_BORDER_THICKNESS,
-    [DefaultAppearance.TEXT]: '',
-    [IMAGE_URL]: '',
-    [IMAGE_ASPECT_RATIO]: true,
+    [theme.key.backgroundColor]: 0xFFFFFF,
+    [theme.key.strokeColor]: theme.common.borderColor,
+    [theme.key.strokeThickness]: theme.common.borderThickness,
+    [theme.key.text]: '',
+    [theme.key.imageUrl]: '',
+    [theme.key.aspectRatio]: true,
 };
 
 export class Image implements ShapePlugin {
@@ -34,18 +31,11 @@ export class Image implements ShapePlugin {
         return { x: 100, y: 100 };
     }
 
-    // public configurables(factory: ConfigurableFactory) {
-    //     return [
-    //         factory.text(IMAGE_URL, 'Image URL'),
-    //         factory.toggle(IMAGE_ASPECT_RATIO, 'Preserve aspect ratio'),
-    //     ];
-    // }
-
     public render(ctx: RenderContext) {
-        const url = ctx.shape.getAppearance(IMAGE_URL);
+        const url = ctx.shape.getAppearance(theme.key.imageUrl);
 
         if (url) {
-            const aspectRatio = ctx.shape.getAppearance(IMAGE_ASPECT_RATIO);
+            const aspectRatio = ctx.shape.getAppearance(theme.key.aspectRatio);
             ctx.renderer2.raster(url, ctx.rect, aspectRatio);
         } else {
             this.createText(ctx);

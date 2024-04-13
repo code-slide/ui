@@ -6,17 +6,17 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-import { DefaultAppearance, RenderContext, ShapePlugin } from '@app/wireframes/interface';
-import { CommonTheme } from './_theme';
+import { RenderContext, ShapePlugin } from '@app/wireframes/interface';
+import { theme } from '@app/const';
 
 const DEFAULT_APPEARANCE = {
-    [DefaultAppearance.BACKGROUND_COLOR]: CommonTheme.CONTROL_BACKGROUND_COLOR,
-    [DefaultAppearance.FONT_SIZE]: CommonTheme.CONTROL_FONT_SIZE,
-    [DefaultAppearance.FOREGROUND_COLOR]: CommonTheme.CONTROL_TEXT_COLOR,
-    [DefaultAppearance.STROKE_COLOR]: CommonTheme.CONTROL_BORDER_COLOR,
-    [DefaultAppearance.STROKE_THICKNESS]: CommonTheme.CONTROL_BORDER_THICKNESS,
-    [DefaultAppearance.TEXT_ALIGNMENT]: 'center',
-    [DefaultAppearance.TEXT]: 'Button',
+    [theme.key.backgroundColor]: theme.common.backgroundColor,
+    [theme.key.fontSize]: theme.common.fontSize,
+    [theme.key.foregroundColor]: theme.common.textColor,
+    [theme.key.strokeColor]: theme.common.borderColor,
+    [theme.key.strokeThickness]: theme.common.borderThickness,
+    [theme.key.textAlignment]: 'center',
+    [theme.key.text]: 'Button',
 };
 
 export class Button implements ShapePlugin {
@@ -38,7 +38,7 @@ export class Button implements ShapePlugin {
     }
 
     private createBorder(ctx: RenderContext) {
-        ctx.renderer2.rectangle(ctx.shape, CommonTheme.CONTROL_BORDER_RADIUS, ctx.rect, p => {
+        ctx.renderer2.rectangle(ctx.shape, theme.common.borderRadius, ctx.rect, p => {
             p.setBackgroundColor(ctx.shape);
             p.setStrokeColor(ctx.shape);
         });

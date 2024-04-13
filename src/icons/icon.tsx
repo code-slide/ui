@@ -19,6 +19,10 @@ export const ArrowIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconDefault} viewBox="0 -960 960 960" width={vogues.common.iconLarge}><path d="m249.154-212.001-37.153-37.153L634.847-672H384v-51.999h339.999V-384H672v-250.847L249.154-212.001Z"/></svg>
 );
 
+export const AspectRatioIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconDefault} viewBox="0 -960 960 960" width={vogues.common.iconDefault}><path d="M562.001-322.001h171.998v-171.998h-51.998v120h-120v51.998Zm-336-144h51.998v-120h120v-51.998H226.001v171.998Zm-110 254v-535.998h727.998v535.998H116.001ZM168-264h624v-432H168v432Zm0 0v-432 432Z"/></svg>
+);
+
 export const BorderWidthIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconDefault} viewBox="0 -960 960 960" width={vogues.common.iconDefault}><path d="M195.004-226.618v-37.999h570.992v37.999H195.004Zm0-109.999v-51.999h570.992v51.999H195.004Zm-1-123.999v-65.228h570.992v65.228H194.004Zm1-137.998v-134.768h570.992v134.768H195.004Z"/></svg>
 );

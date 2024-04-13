@@ -9,7 +9,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { Color, Rotation, Vec2 } from '@app/core/utils';
-import { DefaultAppearance } from '@app/wireframes/interface';
+import { theme } from '@app/const';
 import { buildAppearance, changeColors, changeItemsAppearance, createClassReducer, Diagram, DiagramItem, EditorState, RendererService, Transform, transformItems } from '@app/wireframes/model';
 import { Button } from '@app/wireframes/shapes/neutral/button';
 import { AbstractControl } from '@app/wireframes/shapes/utils/abstract-control';
@@ -24,7 +24,7 @@ describe('AppearanceReducer', () => {
             Rotation.ZERO,
         ),
         appearance: {
-            [DefaultAppearance.BACKGROUND_COLOR]: 0xff0000,
+            [theme.key.backgroundColor]: 0xff0000,
         },
     });
 
@@ -37,7 +37,7 @@ describe('AppearanceReducer', () => {
             Rotation.ZERO,
         ),
         appearance: {
-            [DefaultAppearance.BACKGROUND_COLOR]: '#ff0000',
+            [theme.key.backgroundColor]: '#ff0000',
         },
     });
 
@@ -63,11 +63,11 @@ describe('AppearanceReducer', () => {
     });
 
     it('should change appearance of all items to new value', () => {
-        const action = changeItemsAppearance(diagram, diagram.items.values, DefaultAppearance.TEXT, 'MyValue');
+        const action = changeItemsAppearance(diagram, diagram.items.values, theme.key.text, 'MyValue');
 
         expectShapesAfterAction(action, (newShape1, newShape2) => {
-            expect(newShape1.appearance.get(DefaultAppearance.TEXT)).toEqual('MyValue');
-            expect(newShape2.appearance.get(DefaultAppearance.TEXT)).toEqual('MyValue');
+            expect(newShape1.appearance.get(theme.key.text)).toEqual('MyValue');
+            expect(newShape2.appearance.get(theme.key.text)).toEqual('MyValue');
         });
     });
 
@@ -75,8 +75,8 @@ describe('AppearanceReducer', () => {
         const action = changeColors(Color.RED, Color.GREEN);
 
         expectShapesAfterAction(action, (newShape1, newShape2) => {
-            expect(newShape1.appearance.get(DefaultAppearance.BACKGROUND_COLOR)).toEqual(0x00ff00);
-            expect(newShape2.appearance.get(DefaultAppearance.BACKGROUND_COLOR)).toEqual(0x00ff00);
+            expect(newShape1.appearance.get(theme.key.backgroundColor)).toEqual(0x00ff00);
+            expect(newShape2.appearance.get(theme.key.backgroundColor)).toEqual(0x00ff00);
         });
     });
 
@@ -84,8 +84,8 @@ describe('AppearanceReducer', () => {
         const action = changeColors(Color.BLUE, Color.GREEN);
 
         expectShapesAfterAction(action, (newShape1, newShape2) => {
-            expect(newShape1.appearance.get(DefaultAppearance.BACKGROUND_COLOR)).not.toEqual(0x00ff00);
-            expect(newShape2.appearance.get(DefaultAppearance.BACKGROUND_COLOR)).not.toEqual(0x00ff00);
+            expect(newShape1.appearance.get(theme.key.backgroundColor)).not.toEqual(0x00ff00);
+            expect(newShape2.appearance.get(theme.key.backgroundColor)).not.toEqual(0x00ff00);
         });
     });
 

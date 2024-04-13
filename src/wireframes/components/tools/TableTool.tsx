@@ -13,7 +13,7 @@ import { useStore, getSelectedShape, changeItemsAppearance, getDiagram } from '@
 import * as React from 'react';
 import { getAddToTable, getRemoveFromTable } from '@app/wireframes/shapes/neutral/table';
 import { useDispatch } from 'react-redux';
-import { texts } from '@app/const';
+import { texts, theme } from '@app/const';
 
 export const TableTool = React.memo(() => {
     const dispatch = useDispatch();
@@ -30,23 +30,23 @@ export const TableTool = React.memo(() => {
             switch (type) {
                 case 'column':
                 case 'left':
-                    attribute = 'SELECTED_CELL_X';
+                    attribute = theme.key.tableSelectedX;
                     selectedIndex = selectedItem.getAppearance(attribute);
                     delimiter = texts.common.tableDelimiterCol;
                     break;
                 case 'right':
-                    attribute = 'SELECTED_CELL_X';
+                    attribute = theme.key.tableSelectedX;
                     selectedIndex = selectedItem.getAppearance(attribute) + 1;
                     delimiter = texts.common.tableDelimiterCol;
                     break;
                 case 'row':
                 case 'above':
-                    attribute = 'SELECTED_CELL_Y';
+                    attribute = theme.key.tableSelectedY;
                     selectedIndex = selectedItem.getAppearance(attribute);
                     delimiter = texts.common.tableDelimiterRow;
                     break;
                 case 'below':
-                    attribute = 'SELECTED_CELL_Y';
+                    attribute = theme.key.tableSelectedY;
                     selectedIndex = selectedItem.getAppearance(attribute) + 1;
                     delimiter = texts.common.tableDelimiterRow;
                     break;
@@ -66,7 +66,7 @@ export const TableTool = React.memo(() => {
                     return;
             }
 
-            dispatch(changeItemsAppearance(selectedDiagram, [selectedItem.id], 'TEXT', newText));
+            dispatch(changeItemsAppearance(selectedDiagram, [selectedItem.id], theme.key.text, newText));
             dispatch(changeItemsAppearance(selectedDiagram, [selectedItem.id], attribute, selectedIndex));
         }
     });

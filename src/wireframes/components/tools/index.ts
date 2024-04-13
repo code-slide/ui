@@ -1,3 +1,4 @@
+export * from './GraphicTool';
 export * from './ClipboardTool';
 export * from './GroupingTool';
 export * from './HistoryTool';
