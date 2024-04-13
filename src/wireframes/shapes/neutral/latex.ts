@@ -7,18 +7,18 @@
 */
 
 import { RenderContext, ShapePlugin } from '@app/wireframes/interface';
-import { theme } from '@app/const';
+import { shapes } from '@app/const';
 
 const DEFAULT_APPEARANCE = {
-    [theme.key.fontSize]: theme.common.fontSize,
-    [theme.key.foregroundColor]: theme.common.textColor,
-    [theme.key.textAlignment]: 'left',
-    [theme.key.text]: '',
+    [shapes.key.fontSize]: shapes.common.fontSize,
+    [shapes.key.foregroundColor]: shapes.common.textColor,
+    [shapes.key.textAlignment]: 'left',
+    [shapes.key.text]: '',
 };
 
 export class Latex implements ShapePlugin {
     public identifier(): string {
-        return 'Equation';
+        return shapes.id.equation;
     }
 
     public defaultAppearance() {
@@ -30,6 +30,8 @@ export class Latex implements ShapePlugin {
     }
 
     public render(ctx: RenderContext) {
-        ctx.renderer2.equation(ctx.shape, ctx.rect, undefined);
+        ctx.renderer2.equation(ctx.shape, ctx.rect, p => {
+            p.setForegroundColor(ctx.shape);
+        });
     }
 }
