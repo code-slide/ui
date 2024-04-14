@@ -41,8 +41,9 @@ export const PresentHeader = React.memo(() => {
 
         // Modify appearance if there are valid specifications
         // e.g. Shape1 = {'TEXT': 'Hello, world!'}
+        const allKeys = Object.values(shapes.key);
         for (let [key, value] of Object.entries(jsonObj)) {
-            if (!(key in shapes.key)) continue;      // Safe-check
+            if (!allKeys.includes(key)) continue;      // Safe-check
 
             if (key.endsWith('COLOR')) {
                 const color = Color.fromValue(value).toNumber();
