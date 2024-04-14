@@ -11,7 +11,7 @@ import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouteMatch } from 'react-router';
 import { ClipboardContainer } from '@app/core';
-import { EditorView, ShapeView, ToolDesignView, PagesView, HeaderView, AnimationView, ToolAnimationView } from '@app/wireframes/components';
+import { EditorView, ShapeView, PagesView, HeaderView, AnimationView, ToolView } from '@app/wireframes/components';
 import { getSelectedItems, getSelectedShape, loadDiagramFromServer, newDiagram, useStore } from '@app/wireframes/model';
 import { vogues } from './const';
 import { CustomDragLayer } from './wireframes/components/CustomDragLayer';
@@ -24,7 +24,7 @@ export const App = () => {
     const routeTokenSnapshot = React.useRef(routeToken);
     const selectedItem = useStore(getSelectedShape);
     const selectedSet = useStore(getSelectedItems);
-    const sidebarRightWidth = useStore(s => s.ui.sidebarRightSize);
+    const sidebarWidth = useStore(s => s.ui.sidebarSize);
     const applicationMode = useStore(s => s.ui.selectedMode);
 
     const margin = {
@@ -73,47 +73,28 @@ export const App = () => {
                         </Layout.Header>
 
                         <Layout className='content' style={{ padding: margin.editor }}>
-                            {applicationMode == 'animation'
-                                ?
-                                <Layout>
-                                    <Layout style={{ margin: margin.sideMid }}>
-                                        <Layout.Header 
-                                            className='header-toolbar-left' 
-                                            style={{ margin: margin.tool }}>
-                                                <ToolDesignView item={selectedItem} set={selectedSet} />
-                                        </Layout.Header>
+                            <Layout.Header 
+                                className='header-toolbar-left' 
+                                style={{ margin: margin.tool }}>
+                                    <ToolView item={selectedItem} set={selectedSet} mode={applicationMode}  />
+                            </Layout.Header>
 
-                                        <EditorView spacing={vogues.common.editorMargin} />
-                                    </Layout>
-                                    <Layout.Sider 
-                                        width={sidebarRightWidth} 
-                                        style={{ visibility: sidebarRightWidth == 0 ? 'hidden' : 'visible', margin: margin.sideRight }}
-                                        className='sidebar-right'>
-                                            <Layout.Header 
-                                                className='header-toolbar-right'
-                                                style={{ margin: margin.tool }}>
-                                                    <ToolAnimationView />
-                                            </Layout.Header>
-
-                                            <AnimationView />
+                            <Layout>
+                                <Layout style={{ margin: margin.sideMid }}>
+                                    <Layout.Sider width={vogues.common.sidebarShape} className='sidebar-shape'>
+                                        <ShapeView />
                                     </Layout.Sider>
-                                </Layout>
-                                :
-                                <Layout>
-                                    <Layout.Header 
-                                        className='header-toolbar-left'
-                                        style={{ margin: margin.tool }}>
-                                            <ToolDesignView item={selectedItem} set={selectedSet} />
-                                    </Layout.Header>
-                                    <Layout>
-                                        <Layout.Sider width={vogues.common.shapeWidth} className='sidebar-shape'>
-                                            <ShapeView />
-                                        </Layout.Sider>
 
-                                        <EditorView spacing={vogues.common.editorMargin} />
-                                    </Layout>
+                                    <EditorView spacing={vogues.common.editorMargin} />
                                 </Layout>
-                            }
+
+                                <Layout.Sider 
+                                    width={vogues.common.sidebarCode} className='sidebar-right'
+                                    style={{ display: sidebarWidth == 0 ? 'none' : '', margin: margin.sideRight }}
+                                >
+                                    <AnimationView />
+                                </Layout.Sider>
+                            </Layout>
                         </Layout>
 
                         <Layout.Footer style={{ padding: 0 }} >

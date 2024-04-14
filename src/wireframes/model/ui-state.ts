@@ -6,7 +6,8 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-import { AnimationType, ModeType } from '@app/core';
+import { vogues } from '@app/const';
+import { AnimationType, ModeType } from '../interface';
 
 export interface UIState {
     // The current zoom level.
@@ -19,7 +20,7 @@ export interface UIState {
     infoToast?: string;
 
     // The size for right sidebar
-    sidebarRightSize: number;
+    sidebarSize: number;
 
     // The mode for the application.
     selectedMode: ModeType;
@@ -44,6 +45,6 @@ export const createInitialUIState: () => UIState = () => {
         selectedColor: 'palette',
         selectedMode: 'design',
         selectedAnimation: 'script',
-        sidebarRightSize: 0,
+        sidebarSize: vogues.common.sidebarClose,
     };
 };

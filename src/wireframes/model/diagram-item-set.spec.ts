@@ -10,10 +10,10 @@ import { Diagram, DiagramItem, DiagramItemSet } from '@app/wireframes/model';
 
 describe('Diagram Item Set', () => {
     const groupId = 'group-1';
-    const root1 = DiagramItem.createShape({ id: '1', renderer: 'Button' });
-    const root2 = DiagramItem.createShape({ id: '2', renderer: 'Button' });
-    const child1 = DiagramItem.createShape({ id: '3', renderer: 'Button' });
-    const child2 = DiagramItem.createShape({ id: '4', renderer: 'Button' });
+    const root1 = DiagramItem.createShape({ id: '1', renderer: shapes.id.button });
+    const root2 = DiagramItem.createShape({ id: '2', renderer: shapes.id.button });
+    const child1 = DiagramItem.createShape({ id: '3', renderer: shapes.id.button });
+    const child2 = DiagramItem.createShape({ id: '4', renderer: shapes.id.button });
 
     const diagram =
         Diagram.create()

@@ -31,8 +31,8 @@ describe('GroupingReducer', () => {
 
         const diagram =
             Diagram.create({ id: '1' })
-                .addShape(DiagramItem.createShape({ id: id1, renderer: 'Button' }))
-                .addShape(DiagramItem.createShape({ id: id2, renderer: 'Button' }));
+                .addShape(DiagramItem.createShape({ id: id1, renderer: shapes.id.button }))
+                .addShape(DiagramItem.createShape({ id: id2, renderer: shapes.id.button }));
 
         const groupId = 'group-1';
 
@@ -58,9 +58,9 @@ describe('GroupingReducer', () => {
 
         let diagram =
             Diagram.create({ id: '1' })
-                .addShape(DiagramItem.createShape({ id: id1, renderer: 'Button' }))
-                .addShape(DiagramItem.createShape({ id: id2, renderer: 'Button' }))
-                .addShape(DiagramItem.createShape({ id: id3, renderer: 'Button' }))
+                .addShape(DiagramItem.createShape({ id: id1, renderer: shapes.id.button }))
+                .addShape(DiagramItem.createShape({ id: id2, renderer: shapes.id.button }))
+                .addShape(DiagramItem.createShape({ id: id3, renderer: shapes.id.button }))
                 .addShape(DiagramItem.createShape({ id: id4, renderer: 'btn' }));
 
         const shapes = diagram.items;

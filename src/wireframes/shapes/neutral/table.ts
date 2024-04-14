@@ -9,25 +9,25 @@
 import { texts } from '@app/const';
 import { Rect2, RenderContext, Shape, ShapePlugin } from '@app/wireframes/interface';
 import { DiagramItem } from '@app/wireframes/model';
-import { theme } from '@app/const';
+import { shapes } from '@app/const';
 
 const DELIMITER_ROW = texts.common.tableDelimiterRow;  // ;
 const DELIMITER_COL = texts.common.tableDelimiterCol;  // ,
 const DEFAULT_APPEARANCE = {
-    [theme.key.backgroundColor]: '#fff',
-    [theme.key.fontSize]: theme.common.fontSize,
-    [theme.key.foregroundColor]: theme.common.textColor,
-    [theme.key.strokeColor]: theme.common.borderColor,
-    [theme.key.strokeThickness]: theme.common.borderThickness,
-    [theme.key.textAlignment]: 'center',
-    [theme.key.text]: '',
-    [theme.key.tableSelectedX]: 0,
-    [theme.key.tableSelectedY]: 0,
+    [shapes.key.backgroundColor]: '#fff',
+    [shapes.key.fontSize]: shapes.common.fontSize,
+    [shapes.key.foregroundColor]: shapes.common.textColor,
+    [shapes.key.strokeColor]: shapes.common.borderColor,
+    [shapes.key.strokeThickness]: shapes.common.borderThickness,
+    [shapes.key.textAlignment]: 'center',
+    [shapes.key.text]: '',
+    [shapes.key.tableSelectedX]: 0,
+    [shapes.key.tableSelectedY]: 0,
 };
 
 export class Table implements ShapePlugin {
     public identifier(): string {
-        return 'Table';
+        return shapes.id.table;
     }
 
     public defaultAppearance() {
@@ -74,8 +74,8 @@ export class Table implements ShapePlugin {
     }
 
     private createBorders(ctx: RenderContext, columnCount: number, cellWidth: number, rows: string[][], cellHeight: number) {
-        const strokeColor = ctx.shape.getAppearance(theme.key.strokeColor);
-        const strokeWidth = ctx.shape.getAppearance(theme.key.strokeThickness);
+        const strokeColor = ctx.shape.getAppearance(shapes.key.strokeColor);
+        const strokeWidth = ctx.shape.getAppearance(shapes.key.strokeThickness);
 
         for (let x = 0; x < columnCount; x++) {
             for (let y = 0; y < rows.length; y++) {
@@ -98,7 +98,7 @@ export class Table implements ShapePlugin {
     }
 
     private createFrame(ctx: RenderContext) {
-        ctx.renderer2.rectangle(ctx.shape, theme.common.borderRadius, ctx.rect, p => {
+        ctx.renderer2.rectangle(ctx.shape, shapes.common.borderRadius, ctx.rect, p => {
             p.setBackgroundColor(ctx.shape);
         });
     }
@@ -141,7 +141,7 @@ export function getAddToTable(item: DiagramItem, index: number, delimiter: strin
     const text = item.text;
     let newText = '';
 
-    if (item.renderer == 'Table') {
+    if (item.renderer == shapes.id.table) {
         let counter = 0;
         let startString = 0;
         let writeEnable = true;
@@ -190,7 +190,7 @@ export function getRemoveFromTable(item: DiagramItem, index: number, delimiter: 
     const text = item.text;
     let newText = (text.includes(delimiter)) ? '' : text;
 
-    if (item.renderer == 'Table' && text.includes(delimiter)) {
+    if (item.renderer == shapes.id.table && text.includes(delimiter)) {
         const FIRST_CELL = 0;
         let counter = 0;
 

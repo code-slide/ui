@@ -7,10 +7,11 @@
 */
 
 import Prism from 'prismjs';
+import { useEffect, useState } from 'react';
 import { getDiagram, useStore, changeScript } from "@app/wireframes/model";
 import { useDispatch } from "react-redux";
 import { default as CodeEditor } from 'react-simple-code-editor';
-import { texts } from '@app/const/texts';
+import { vogues, texts } from '@app/const';
 
 import 'prismjs/components/prism-python';
 import 'prismjs/themes/prism.css';
@@ -20,6 +21,13 @@ export const AnimationView = () => {
     const dispatch = useDispatch();
     const diagram = useStore(getDiagram);
     const animation = useStore(s => s.ui.selectedAnimation);
+
+    const viewPadd = vogues.common.editorMargin * 2 + 10 * 3 + vogues.common.headerHeight + vogues.common.shapeWidth + (vogues.common.previewHeight + vogues.common.editorMargin + vogues.common.previewPadBot) + vogues.common.selectionThickness * 4;
+    const [viewHeight, setViewHeight] = useState(window.innerHeight - viewPadd);
+
+    useEffect(() => {
+        window.addEventListener('resize', () => setViewHeight(window.innerHeight - viewPadd));
+    }, []);
 
     if (!diagram) {
         return null;
@@ -44,7 +52,7 @@ export const AnimationView = () => {
         };
 
         return (
-            <div className='code-editor'>
+            <div className='code-editor' style={{ maxHeight: viewHeight }}>
                 <CodeEditor
                     value={selectedScript}
                     onValueChange={code => dispatch(changeScript(diagram.id, code))}

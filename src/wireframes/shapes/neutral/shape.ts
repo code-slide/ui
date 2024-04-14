@@ -7,7 +7,7 @@
 */
 
 import { RenderContext, ShapePlugin, ShapeProperties } from '@app/wireframes/interface';
-import { theme } from '@app/const';
+import { shapes } from '@app/const';
 
 const SHAPE_STYLE = {
     Rectangle: 'Rectangle',
@@ -18,19 +18,19 @@ const SHAPE_STYLE = {
 };
 
 const DEFAULT_APPEARANCE = {
-    [theme.key.backgroundColor]: 0xEEEEEE,
-    [theme.key.fontSize]: theme.common.fontSize,
-    [theme.key.foregroundColor]: 0,
-    [theme.key.strokeColor]: theme.common.borderColor,
-    [theme.key.strokeThickness]: theme.common.borderThickness,
-    [theme.key.textAlignment]: 'center',
-    [theme.key.text]: '',
-    [theme.key.shape]: SHAPE_STYLE.Rectangle,
+    [shapes.key.backgroundColor]: 0xEEEEEE,
+    [shapes.key.fontSize]: shapes.common.fontSize,
+    [shapes.key.foregroundColor]: 0,
+    [shapes.key.strokeColor]: shapes.common.borderColor,
+    [shapes.key.strokeThickness]: shapes.common.borderThickness,
+    [shapes.key.textAlignment]: 'center',
+    [shapes.key.text]: '',
+    [shapes.key.shape]: SHAPE_STYLE.Rectangle,
 };
 
 export class Shape implements ShapePlugin {
     public identifier(): string {
-        return 'Shape';
+        return shapes.id.shape;
     }
 
     public defaultAppearance() {
@@ -49,7 +49,7 @@ export class Shape implements ShapePlugin {
     private createShape(ctx: RenderContext) {
         const b = ctx.rect;
 
-        const shapeType = ctx.shape.getAppearance(theme.key.shape);
+        const shapeType = ctx.shape.getAppearance(shapes.key.shape);
 
         if (shapeType === SHAPE_STYLE.RoundedRetangle) {
             ctx.renderer2.rectangle(ctx.shape, 10, ctx.rect, p => {

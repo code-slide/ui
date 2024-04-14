@@ -7,14 +7,14 @@
 */
 
 import { Vec2 } from '@app/core/utils';
-import { theme } from '@app/const';
+import { shapes } from '@app/const';
 import { DiagramItem, MinSizeConstraint, SizeConstraint, TextHeightConstraint } from '@app/wireframes/model';
 
 const shape = DiagramItem.createShape({ 
     id: '1',
-    renderer: 'Button',
+    renderer: shapes.id.button,
     appearance: {
-        [theme.key.fontSize]: 12,
+        [shapes.key.fontSize]: 12,
     },
 });
 

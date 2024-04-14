@@ -7,21 +7,21 @@
 */
 
 import { RenderContext, ShapePlugin } from '@app/wireframes/interface';
-import { theme } from '@app/const';
+import { shapes } from '@app/const';
 
 const DEFAULT_APPEARANCE = {
-    [theme.key.backgroundColor]: theme.common.backgroundColor,
-    [theme.key.fontSize]: theme.common.fontSize,
-    [theme.key.foregroundColor]: theme.common.textColor,
-    [theme.key.strokeColor]: theme.common.borderColor,
-    [theme.key.strokeThickness]: theme.common.borderThickness,
-    [theme.key.textAlignment]: 'center',
-    [theme.key.text]: 'Button',
+    [shapes.key.backgroundColor]: shapes.common.backgroundColor,
+    [shapes.key.fontSize]: shapes.common.fontSize,
+    [shapes.key.foregroundColor]: shapes.common.textColor,
+    [shapes.key.strokeColor]: shapes.common.borderColor,
+    [shapes.key.strokeThickness]: shapes.common.borderThickness,
+    [shapes.key.textAlignment]: 'center',
+    [shapes.key.text]: 'Button',
 };
 
 export class Button implements ShapePlugin {
     public identifier(): string {
-        return 'Button';
+        return shapes.id.button;
     }
 
     public defaultAppearance() {
@@ -38,7 +38,7 @@ export class Button implements ShapePlugin {
     }
 
     private createBorder(ctx: RenderContext) {
-        ctx.renderer2.rectangle(ctx.shape, theme.common.borderRadius, ctx.rect, p => {
+        ctx.renderer2.rectangle(ctx.shape, shapes.common.borderRadius, ctx.rect, p => {
             p.setBackgroundColor(ctx.shape);
             p.setStrokeColor(ctx.shape);
         });

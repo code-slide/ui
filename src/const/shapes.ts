@@ -6,13 +6,13 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-export const theme = {
+export const shapes = {
     common: {
-        fontSize: 16,
         backgroundColor: 0xF0F0F0,
-        borderThickness: 2,
         borderColor: 0x252525,
         borderRadius: 4,
+        borderThickness: 2,
+        fontSize: 16,
         textColor: 0x252525,
     },
     key: {
@@ -40,5 +40,17 @@ export const theme = {
         textAlignment: 'TEXT_ALIGNMENT',
         textDisable: 'TEXT_DISABLED',
         text: 'TEXT',
+    },
+    id: {
+        button: 'Button',
+        checkbox: 'Checkbox',
+        equation: 'Equation',
+        icon: 'Icon',
+        image: 'Image',
+        line: 'Line',
+        graphic: 'Graphic',
+        shape: 'Shape',
+        table: 'Table',
+        textbox: 'Textbox'
     }
 };

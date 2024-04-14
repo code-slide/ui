@@ -7,25 +7,24 @@
 */
 
 import { FundProjectionScreenOutlined } from "@ant-design/icons";
-import { Button, Segmented, message } from "antd";
+import { Button, message } from "antd";
 import * as React from "react";
-import { getFilteredDiagrams, getEditor, setMode, setSidebarRightSize, useStore, Diagram, compileSlides } from "@app/wireframes/model";
-import { AnimationIcon, DesignIcon, IconOutline } from "@app/icons/icon";
-import { useDispatch } from "react-redux";
+import { getFilteredDiagrams, getEditor, useStore, Diagram, compileSlides } from "@app/wireframes/model";
 import { AbstractControl } from "@app/wireframes/shapes/utils/abstract-control";
 import * as svg from '@svgdotjs/svg.js';
 import { getPlugin } from "@app/wireframes/shapes/utils/abstract-plugin";
-import { SegmentedValue } from "antd/es/segmented";
 import { Color } from "@app/core/utils/color";
-import { theme, vogues } from "@app/const";
+import { shapes } from "@app/const";
+import { useState } from "react";
 
 export const PresentHeader = React.memo(() => {
     const html = document.querySelector('.editor-diagram')?.innerHTML;
+    const messageKey = 'PRESENT';
 
-    const dispatch = useDispatch();
     const diagrams = useStore(getFilteredDiagrams);
     const editor = useStore(getEditor);
     const [messageApi, contextHolder] = message.useMessage();
+    const [loading, setLoading] = useState<boolean>(false);
 
     const getItem = (diagram: Diagram, str: string) => {
         // Split text using `=` symbol, ignoring those inside curly brackets
@@ -43,7 +42,7 @@ export const PresentHeader = React.memo(() => {
         // Modify appearance if there are valid specifications
         // e.g. Shape1 = {'TEXT': 'Hello, world!'}
         for (let [key, value] of Object.entries(jsonObj)) {
-            if (!(key in theme.key)) continue;      // Safe-check
+            if (!(key in shapes.key)) continue;      // Safe-check
 
             if (key.endsWith('COLOR')) {
                 const color = Color.fromValue(value).toNumber();
@@ -98,48 +97,48 @@ export const PresentHeader = React.memo(() => {
 
     const fetchApi = async () => {
         const { fileName, size, backgroundColor, frame } = getSlides();
-
+        
         if (!html) {
             messageApi.error('Empty slide. Cannot perform action');
             return;
         }
 
+        // Start compiling
+        setLoading(true);
+        messageApi.open({
+            key: messageKey,
+            type: 'loading', 
+            content: 'Preparing presentation...',
+        });
+
         try {
             const linkPresentation = await compileSlides(fileName, size, backgroundColor, frame);
+            
+            messageApi.open({
+                key: messageKey,
+                type: 'success',
+                content: 'Preparing completed. Your presentation will be opened in a new tab.',
+                duration: 2,
+            });
+            setLoading(false);
 
-            console.log(linkPresentation);
-            messageApi.success('Compiling successfully. Your presentation will be opened in a new tab.');
             window.open(linkPresentation);
         } catch (err) {
             messageApi.error(`${err}`);
+            setLoading(false);
         }
     }
 
-    const modeMenu = [
-        { value: 'design', icon: <IconOutline icon={DesignIcon} /> },
-        { value: 'animation', icon: <IconOutline icon={AnimationIcon} /> },
-    ];
-
-    const modeMenuEvt = (key: SegmentedValue) => {
-        if (key == 'design') {
-            dispatch(setSidebarRightSize(vogues.common.sidebarClose));
-            dispatch(setMode('design'));
-        } else {
-            dispatch(setSidebarRightSize(vogues.common.sidebarRight));
-            dispatch(setMode('animation'));
-        }
-    };
-
     return (
         <>
-            <Segmented 
-                className='menu-segment'
-                options={modeMenu}
-                onChange={(value) => modeMenuEvt(value)}
-            />
-            <span className='menu-separator' />
             {contextHolder}
-            <Button icon={<FundProjectionScreenOutlined />} onClick={fetchApi} className="header-cta-right" type="text" shape='round' style={{ marginRight: vogues.common.editorMargin }}>
+            <Button 
+                icon={<FundProjectionScreenOutlined />} 
+                onClick={fetchApi} 
+                className="header-cta-right" 
+                type="text" shape='round' 
+                loading={loading}
+            >
                 <h4>Present</h4>
             </Button>
         </>

@@ -7,16 +7,12 @@
 */
 
 import SVGPathCommander from 'svg-path-commander';
-import { RenderContext, ShapePlugin } from '@app/wireframes/interface';
-import { theme } from '@app/const';
+import { LineCurve, LineNode, LinePivot, LineEdge, RenderContext, ShapePlugin } from '@app/wireframes/interface';
+import { shapes } from '@app/const';
 
-type NodeType = 'None' | 'Arrow' | 'Triangle';
-type EgdeType = 'Linear' | 'Quadratic';
-type CurveType = 'Up' | 'Down';
-type PivotType = 'Top Left' | 'Bottom Left';
 type Position = 'x1' | 'x2' | 'y1' | 'y2';
 
-const LINE_STYLE: { [index: string]: NodeType | EgdeType | CurveType | PivotType } = {
+const LINE_STYLE: { [index: string]: LineNode | LineEdge | LineCurve | LinePivot } = {
     None: 'None',
     Arrow: 'Arrow',
     Triangle: 'Triangle',
@@ -24,28 +20,27 @@ const LINE_STYLE: { [index: string]: NodeType | EgdeType | CurveType | PivotType
     Quadratic: 'Quadratic',
     Up: 'Up',
     Down: 'Down',
-    TopLeft: 'Top Left',
-    BottomLeft: 'Bottom Left',
+    TopLeft: 'Top',
+    BottomLeft: 'Bottom',
 };
 
 const DEFAULT_APPEARANCE = {
-    [theme.key.backgroundColor]: 0xEEEEEE,
-    [theme.key.fontSize]: theme.common.fontSize,
-    [theme.key.foregroundColor]: 0,
-    [theme.key.strokeColor]: theme.common.borderColor,
-    [theme.key.strokeThickness]: 2,
-    [theme.key.textAlignment]: 'center',
-    [theme.key.text]: '',
-    [theme.key.lineStart]: LINE_STYLE.None,
-    [theme.key.lineEnd]: LINE_STYLE.Arrow,
-    [theme.key.lineType]: LINE_STYLE.Linear,
-    [theme.key.lineCurve]: LINE_STYLE.Down,
-    [theme.key.linePivot]: LINE_STYLE.TopLeft,
+    [shapes.key.fontSize]: shapes.common.fontSize,
+    [shapes.key.foregroundColor]: 0,
+    [shapes.key.strokeColor]: shapes.common.borderColor,
+    [shapes.key.strokeThickness]: 2,
+    [shapes.key.textAlignment]: 'center',
+    [shapes.key.text]: '',
+    [shapes.key.lineStart]: LINE_STYLE.None,
+    [shapes.key.lineEnd]: LINE_STYLE.Arrow,
+    [shapes.key.lineType]: LINE_STYLE.Linear,
+    [shapes.key.lineCurve]: LINE_STYLE.Down,
+    [shapes.key.linePivot]: LINE_STYLE.TopLeft,
 };
 
 export class Line implements ShapePlugin {
     public identifier(): string {
-        return 'Line';
+        return shapes.id.line;
     }
 
     public defaultAppearance() {
@@ -75,33 +70,36 @@ export class Line implements ShapePlugin {
         const height = ctx.shape.strokeThickness * 6;
         const width = ctx.shape.strokeThickness * 4.5;
 
-        const lineType = ctx.shape.getAppearance(theme.key.lineType);
-        const isPivotTop = ctx.shape.getAppearance(theme.key.linePivot) == LINE_STYLE.TopLeft;
+        const lineType = ctx.shape.getAppearance(shapes.key.lineType);
+        const isPivotTop = ctx.shape.getAppearance(shapes.key.linePivot) == LINE_STYLE.TopLeft;
 
         if (lineType == LINE_STYLE.Quadratic) {
             // Quadratic line
-            const ctlDir = ctx.shape.getAppearance(theme.key.lineCurve) == LINE_STYLE.Down ? 1 : -1;
-            const ctlRad = shapeRad + ctlDir * Math.PI / 4;
+            const ctlCurve = ctx.shape.getAppearance(shapes.key.lineCurve) == LINE_STYLE.Down ? 1 : -1;
+            const ctlPivot = ctx.shape.getAppearance(shapes.key.linePivot) == LINE_STYLE.TopLeft ? 1 : -1;
+
+            const ctlRad = shapeRad + ctlCurve * Math.PI / 4;
 
             const pos: Record<Position, number> = {
                 x1: b.left + height * Math.cos(ctlRad),
-                x2: b.right - height * Math.cos(ctlRad - ctlDir * Math.PI / 2),
+                x2: b.right - height * Math.cos(ctlRad - ctlCurve * Math.PI / 2),
                 y1: isPivotTop 
                     ? b.top + height * Math.sin(ctlRad)
-                    : b.bottom - height * Math.sin(ctlRad - ctlDir * Math.PI / 2),
+                    : b.bottom - height * Math.sin(ctlRad - ctlCurve * Math.PI / 2),
                 y2: isPivotTop 
-                    ? b.bottom - height * Math.sin(ctlRad - ctlDir * Math.PI / 2) 
+                    ? b.bottom - height * Math.sin(ctlRad - ctlCurve * Math.PI / 2) 
                     : b.top + height * Math.sin(ctlRad),
             };
 
             // Control point, assuming isosceles triangle
             const ctlLen = Math.sqrt(((pos.x2 - pos.x1) ** 2 + (pos.y2 - pos.y1) ** 2) / 2);
             const ctlX = pos.x1 + ctlLen * Math.cos(ctlRad);
-            const ctlY = pos.y1 + ctlLen * Math.sin(ctlRad);
+            const ctlY = pos.y1 + ctlPivot * ctlLen * Math.sin(ctlRad);
 
             const path = `M${pos.x1} ${pos.y1} Q${ctlX} ${ctlY} ${pos.x2} ${pos.y2} Q${ctlX} ${ctlY} ${pos.x1} ${pos.y1} z`;
+
             this.createEdge(ctx, path);
-            this.createNode(ctx, pos, ctlRad - ctlDir * Math.PI, ctlRad - ctlDir * Math.PI / 2, height, width, isPivotTop);
+            this.createNode(ctx, pos, ctlRad - ctlCurve * Math.PI, ctlRad - ctlCurve * Math.PI / 2, height, width, isPivotTop);
 
         } else if (lineType == LINE_STYLE.Linear) {
             // Linear line
@@ -129,16 +127,16 @@ export class Line implements ShapePlugin {
     }
 
     private createNode(ctx: RenderContext, pos: Record<Position, number>, xRad: number, yRad: number, height: number, width: number, isPivotTop: boolean) {
-        const startType = ctx.shape.getAppearance(theme.key.lineStart);
-        const endType = ctx.shape.getAppearance(theme.key.lineEnd);
+        const startType = ctx.shape.getAppearance(shapes.key.lineStart);
+        const endType = ctx.shape.getAppearance(shapes.key.lineEnd);
 
         const rotatingDegree = (radian: number) => {
             const relativeRad = isPivotTop ? radian : -radian;
             return 90 + Math.round(relativeRad * 180 / Math.PI);
         };
 
-        const shapeEdge = (x: number, y: number, rotating: number, type: NodeType) => {
-            const SHAPES: Record<NodeType, string> = {
+        const shapeEdge = (x: number, y: number, rotating: number, type: LineNode) => {
+            const SHAPES: Record<LineNode, string> = {
                 'Triangle': `M${x} ${y} l-${width / 2} 0 l${width / 2}-${height} l${width / 2} ${height} z`,
                 'Arrow': `M${x} ${y} c-${width / 4} 0-${width / 2} ${height / 4}-${width / 2} ${height / 4} l${width / 2}-${height} l${width / 2} ${height} c0 0-${width / 4}-${height / 4}-${width / 2}-${height / 4} z`,
                 'None': `M${x} ${y} l0-${height} z`,

@@ -7,12 +7,12 @@
 */
 
 import { RenderContext, ShapePlugin, ShapeSource } from '@app/wireframes/interface';
-import { vogues, theme } from '@app/const';
+import { vogues, shapes } from '@app/const';
 
 const SOURCE = 'SOURCE';
 
 const DEFAULT_APPEARANCE = {
-    [theme.key.text]: true,
+    [shapes.key.text]: true,
 };
 
 export class Raster implements ShapePlugin {

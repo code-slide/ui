@@ -6,14 +6,14 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-import { Button, Dropdown, InputNumber, Tooltip } from 'antd';
+import { Button, Dropdown, Tooltip } from 'antd';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { ColorPicker, useEventCallback } from '@app/core';
 import { getColors, getDiagramId, getSelectionSet, selectColorTab, useStore } from '@app/wireframes/model';
 import { useAppearance, useColorAppearance } from '../actions';
-import { BorderWidthIcon, ColorBackgroundFill, ColorBorderFill, ColorTextFill, IconOutline } from '@app/icons/icon';
-import { vogues, theme } from '@app/const';
+import { BorderWidthIcon, ColorBackgroundFill, ColorBorderFill, IconOutline } from '@app/icons/icon';
+import { vogues, shapes } from '@app/const';
 
 export const VisualTool = React.memo(() => {
     const dispatch = useDispatch();
@@ -24,27 +24,15 @@ export const VisualTool = React.memo(() => {
 
     const [backgroundColor, setBackgroundColor] =
         useColorAppearance(selectedDiagramId, selectedSet,
-            theme.key.backgroundColor);
-
-    const [fontSize, setFontSize] =
-        useAppearance<number>(selectedDiagramId, selectedSet,
-            theme.key.fontSize);
-
-    const [foregroundColor, setForegroundColor] =
-        useColorAppearance(selectedDiagramId, selectedSet,
-            theme.key.foregroundColor);
+            shapes.key.backgroundColor);
 
     const [strokeColor, setStrokeColor] =
         useColorAppearance(selectedDiagramId, selectedSet,
-            theme.key.strokeColor);
+            shapes.key.strokeColor);
 
     const [strokeThickness, setStrokeThickness] =
         useAppearance<number>(selectedDiagramId, selectedSet,
-            theme.key.strokeThickness);
-
-    const [textAlignment, setTextAlignment] =
-        useAppearance<string>(selectedDiagramId, selectedSet,
-            theme.key.textAlignment);
+            shapes.key.strokeThickness);
 
     const doSelectColorTab = useEventCallback((key: string) => {
         dispatch(selectColorTab(key));
@@ -56,66 +44,6 @@ export const VisualTool = React.memo(() => {
 
     return (
         <>
-            <Tooltip mouseEnterDelay={1} title={ 'Font size' }>
-                <Dropdown 
-                    className='tool-menu-item'
-                    menu={{ 
-                        items: vogues.option.fontSize.map(value => (
-                            { key: value.toString(), label: value, value: value }
-                        )),
-                        onClick: (e) => setFontSize(Number(e.key)),
-                        selectable: true,
-                        defaultSelectedKeys: [`${fontSize.value}`],
-                    }}
-                    trigger={['click']}
-                >
-                    <InputNumber 
-                        size="small" 
-                        value={fontSize.value} 
-                        variant="filled" 
-                        style={{ width: 50 }}
-                        controls={false}    
-                        disabled={fontSize.empty}
-                        onChange={(e) => !e ? null : setFontSize(e)}
-                    />
-                </Dropdown>
-            </Tooltip>
-
-            <span className='menu-separator' />
-
-            <Tooltip mouseEnterDelay={1} title={ 'Text color' }>
-                <ColorPicker 
-                    activeColorTab={selectedColorTab} 
-                    disabled={foregroundColor.empty} 
-                    value={foregroundColor.value}
-                    onChange={setForegroundColor}
-                    onActiveColorTabChanged={doSelectColorTab}
-                    popoverPlacement='bottom'
-                    icon={<IconOutline icon={ColorTextFill} />}
-                    recentColors={recentColors} />
-            </Tooltip>
-
-            <span className='menu-separator' />
-
-            <Tooltip mouseEnterDelay={1} title={ `Align ${textAlignment.value}` }>
-                <Button
-                    className='tool-menu-item'
-                    type='text'
-                    onClick={() => {
-                        (textAlignment.value == 'left')
-                        ? setTextAlignment('center') : (textAlignment.value == 'center')
-                        ? setTextAlignment('right') : setTextAlignment('left')
-                    }}
-                >
-                    <i className={`icon-align-${
-                        (textAlignment.value == 'center')
-                        ? 'center' : (textAlignment.value == 'right')
-                        ? 'right' : 'left'}`} />
-                </Button>
-            </Tooltip>
-
-            <span className='menu-separator' />
-
             <Tooltip mouseEnterDelay={1} title={ 'Background color' }>
                 <ColorPicker 
                     activeColorTab={selectedColorTab} 

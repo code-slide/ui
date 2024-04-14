@@ -10,9 +10,8 @@ import { createAction, createReducer } from '@reduxjs/toolkit';
 import { message } from 'antd';
 import { NoticeType } from 'antd/es/message/interface';
 import { AnyAction, Dispatch, Middleware, Reducer } from 'redux';
-import { AnimationType, ModeType } from '@app/core';
+import { AnimationType, ModeType } from '@app/wireframes/interface';
 import { UIState } from './../internal';
-
 
 export const showToast =
     createAction('ui/infoToast', (content: string, type?: NoticeType, key?: string, delayed = 1000) => {
@@ -29,8 +28,8 @@ export const selectColorTab =
         return { payload: { tab } };
     });
 
-export const setSidebarRightSize =
-    createAction('ui/sizebarRightSize', (size: number) => {
+export const setSidebarSize =
+    createAction('ui/sizebarSize', (size: number) => {
         return { payload: { size } };
     });    
 
@@ -73,8 +72,8 @@ export function ui(initialState: UIState): Reducer<UIState> {
         .addCase(setZoom, (state, action) => {
             state.zoom = action.payload.zoom;
         })
-        .addCase(setSidebarRightSize, (state, action) => {
-            state.sidebarRightSize = action.payload.size;
+        .addCase(setSidebarSize, (state, action) => {
+            state.sidebarSize = action.payload.size;
         })
         .addCase(setMode, (state, action) => {
             state.selectedMode = action.payload.mode;

@@ -9,6 +9,8 @@
 import { Form, Modal } from 'antd';
 import * as React from 'react';
 
+export type ShapeModal = 'image' | 'shape' | '';
+
 type FormModalProps = {
     // Modal title
     title: string;

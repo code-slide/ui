@@ -6,6 +6,8 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
+import { LineCurve, LineNode, LinePivot } from "@app/wireframes/interface";
+
 export const vogues = {
     common: {
         dragSize: 12,
@@ -18,9 +20,9 @@ export const vogues = {
         offset: 1,
         maxImgSize: 300,
         shapeWidth: 38,
+        sidebarCode: 600,
         sidebarClose: 0,
-        sidebarLeft: 200,
-        sidebarRight: 500,
+        sidebarShape: 38,
         selectionThickness: 1,
         previewWidth: 128,
         previewHeight: 72,
@@ -39,5 +41,8 @@ export const vogues = {
     option: {
         strokeThickness: [0, 1, 2, 3, 4, 6, 8, 10],
         fontSize: [4, 6, 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40, 48, 60],
+        lineNode: new Array<LineNode>('None', 'Arrow', 'Triangle'),
+        lineCurve: new Array<LineCurve>('Up', 'Down'),
+        linePivot: new Array<LinePivot>('Top', 'Bottom'),
     }
 }

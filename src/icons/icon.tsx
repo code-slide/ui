@@ -56,6 +56,22 @@ export const ColorBorderFill = () => (
     </svg>
 );
 
+export const CurveUpRightIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconDefault} viewBox="0 -960 960 960" width={vogues.common.iconDefault}><path d="M696-192q0-104.4-39.6-196.2-39.6-91.8-108-160.2-68.4-68.4-160.2-108Q296.4-696 192-696v-51.999q115.154 0 216.304 43.7 101.15 43.699 176.723 119.272 75.573 75.573 119.272 176.723 43.7 101.15 43.7 216.304H696Z"/></svg>
+);
+
+export const CurveBotRightIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconDefault} viewBox="0 -960 960 960" width={vogues.common.iconDefault}><path d="M192-264q104.4-0 196.2-39.6q91.8-39.6 160.2-108q68.4-68.4 108-160.2Q696-663.6 696-768h51.999q0 115.154-43.7 216.304q-43.699 101.15-119.272 176.723q-75.573 75.573-176.723 119.272q-101.15 43.7-216.304 43.7V-264Z"/></svg>
+);
+
+export const CurveBotLeftIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconDefault} viewBox="0 -960 960 960" width={vogues.common.iconDefault}><path d="M255.231-710.462q0 104.4 39.6 196.2q39.6 91.8 108 160.2q68.4 68.4 160.2 108q91.8 39.6 196.2 39.6l0 51.999q-115.154 0-216.304-43.7q-101.15-43.699-176.723-119.272q-75.573-75.573-119.272-176.723q-43.7-101.15-43.7-216.304z"/></svg>
+);
+
+export const CurveUpLeftIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconDefault} viewBox="0 -960 960 960" width={vogues.common.iconDefault}><path d="M768-696q-104.4-0-196.2 39.6q-91.8 39.6-160.2 108q-68.4 68.4-108 160.2q-39.6 91.8-39.6 196.2l-51.999-0q0-115.154 43.7-216.304q43.699-101.15 119.272-176.723q75.573-75.573 176.723-119.272q101.15-43.7 216.304-43.7l-0 51.999 z"/></svg>
+);
+
 export const DesignIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconSmall} viewBox="0 -960 960 960" width={vogues.common.iconSmall}><path d="m365.154-494.845 92.693-92.308-67.078-67.693-47.154 46.154-36.153-36.153 46.539-47.154-72.54-71.54-92.308 92.308 176.001 176.386Zm305.692 305.307 92.308-92.308-70.54-71.539-47.154 46.538L609.307-343l46.539-47.154-68.309-67.693-92.692 92.693 176.001 175.616ZM686.461-744l57.154 57.154L686.461-744ZM295.077-164.001H164.001v-131.076l164.385-163.384-212.385-212.77 165.46-165.459L494.23-624.306l155.848-156.462q8.307-8.308 17.461-11.769 9.153-3.462 19.307-3.462 10.153 0 19.307 3.462 9.153 3.461 17.461 11.769l57.154 57.923q8.308 8.308 11.577 17.461 3.269 9.154 3.269 19.308 0 10.153-3.269 19.307-3.269 9.153-11.577 17.461L624.69-494.23l212 212.769-165.459 165.46-212.77-212.385-163.384 164.385ZM216-216h57.539l375.385-375.769-57.155-57.155L216-273.539V-216Zm404.846-405.231-29.077-27.693 57.155 57.155-28.078-29.462Z" /></svg>
 );
@@ -88,8 +104,36 @@ export const LinkIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconDefault} viewBox="0 -960 960 960" width={vogues.common.iconLarge}><path d="M440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm200 160v-80h160q50 0 85-35t35-85q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480q0 83-58.5 141.5T680-280H520Z" /></svg>
 );
 
-export const LineIcon = () => (
+export const LineUpIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconDefault} viewBox="0 -960 960 960" width={vogues.common.iconLarge}><path d="M255.231-255.231q-9.461-9.462-9.461-20.846t9.461-20.692l408.385-408q9.461-9.077 20.576-9.269 11.115-.192 20.51 9.202 9.528 9.529 9.528 20.913t-9.461 20.692l-408 408q-9.308 9.461-20.692 9.461t-20.846-9.461Z"/></svg>
+);
+
+export const LineDownIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconDefault} viewBox="0 -960 960 960" width={vogues.common.iconLarge}><path d="M255.231-680.462q9.462-9.461 20.846-9.461t20.692 9.461l408 408.385q9.077 9.461 9.269 20.576q0.192 11.115-9.202 20.51q-9.529 9.528-20.913 9.528t-20.692-9.461l-408-408q-9.461-9.308-9.461-20.692t9.461-20.846z"/></svg>
+);
+
+export const LineEndTriangleIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconDefault} viewBox="0 -960 960 960" width={vogues.common.iconDefault}><path d="M503.848-283.465v-170.536H117.54v-51.998h386.308v-170.536L819.766-480 503.848-283.465Zm51.998-93.459L720.692-480 555.846-583.076v206.152Zm0-103.076Z"/></svg>
+);
+
+export const LineEndNoneIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconDefault} viewBox="0 -960 960 960" width={vogues.common.iconDefault}><path d="M767.867-394.001q-28.262 0-50.564-17-22.303-17-30.55-43H106.001v-51.998h580.307q8.282-26 30.618-43t50.641-17q36.233 0 61.332 24.868 25.1 24.868 25.1 60.884 0 36.016-24.978 61.131-24.978 25.115-61.154 25.115Z"/></svg>
+);
+
+export const LineEndArrowIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconDefault} viewBox="0 -960 960 960" width={vogues.common.iconDefault}><path d="m503.848-283.465 101.614-170.536H106.001v-51.998h499.461L503.848-676.535 819.766-480 503.848-283.465Z"/></svg>
+);
+
+export const LineStartTriangleIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconDefault} viewBox="0 -960 960 960" width={vogues.common.iconDefault}><path d="M456.152-283.465 140.234-480l315.918-196.535v170.536H842.46v51.998H456.152v170.536Zm-51.998-93.459v-206.152L239.308-480l164.846 103.076Zm0-103.076Z"/></svg>
+);
+
+export const LineStartNoneIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconDefault} viewBox="0 -960 960 960" width={vogues.common.iconDefault}><path d="M192.433-394.001q-36.233 0-61.332-24.868-25.1-24.868-25.1-60.884 0-36.016 24.978-61.131 24.978-25.115 61.154-25.115 28.262 0 50.564 17 22.303 17 30.55 43h580.752v51.998H273.692q-8.282 26-30.618 43t-50.641 17Z"/></svg>
+);
+
+export const LineStartArrowIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconDefault} viewBox="0 -960 960 960" width={vogues.common.iconDefault}><path d="M456.152-283.465 140.234-480l315.918-196.535-101.614 170.536h499.461v51.998H354.538l101.614 170.536Z"/></svg>
 );
 
 export const RectangleIcon = () => (

@@ -103,7 +103,7 @@ export const FileHeader = () => {
                 className='loading-action-button'
                 menu={{ items: menu, onClick: menuEvt }}
                 trigger={['click']}>
-                <Button type="text" size='middle'>
+                <Button type="text" size='middle' shape='round'>
                     <h4>{(name.length < 25) ? name : `${name.substring(0, 25)}...`}</h4>
                 </Button>
             </Dropdown>

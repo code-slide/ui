@@ -7,16 +7,16 @@
 */
 
 import { RenderContext, ShapePlugin, ShapeSource } from '@app/wireframes/interface';
-import { theme } from '@app/const';
+import { shapes } from '@app/const';
 
 const DEFAULT_APPEARANCE = {
-    [theme.key.foregroundColor]: 0,
-    [theme.key.text]: true,
+    [shapes.key.foregroundColor]: 0,
+    [shapes.key.text]: true,
 };
 
 export class Icon implements ShapePlugin {
     public identifier(): string {
-        return 'Icon';
+        return shapes.id.icon;
     }
 
     public defaultAppearance() {
@@ -34,8 +34,8 @@ export class Icon implements ShapePlugin {
             return {
                 renderer: this.identifier(),
                 appearance: { 
-                    [theme.key.text]: text, 
-                    [theme.key.iconFontFamily]: fontFamily,
+                    [shapes.key.text]: text, 
+                    [shapes.key.iconFontFamily]: fontFamily,
                 },
             };
         }
@@ -54,7 +54,7 @@ export class Icon implements ShapePlugin {
 
         ctx.renderer2.text(config, ctx.rect, p => {
             p.setForegroundColor(ctx.shape);
-            p.setFontFamily(ctx.shape.getAppearance(theme.key.iconFontFamily) || 'FontAwesome');
+            p.setFontFamily(ctx.shape.getAppearance(shapes.key.iconFontFamily) || 'FontAwesome');
         });
     }
 }

@@ -11,7 +11,7 @@ import { Keys, Vec2, sizeInPx } from '@app/core';
 import { Diagram, DiagramItem } from '@app/wireframes/model';
 import { InteractionHandler, InteractionService, SvgEvent } from './interaction-service';
 import { getSelectedCell, getTableAttributes } from '../shapes/dependencies';
-import { texts, theme } from '@app/const';
+import { texts, shapes } from '@app/const';
 
 export interface TextAdornerProps {
     // The current zoom value.
@@ -118,7 +118,7 @@ export class TextAdorner extends React.PureComponent<TextAdornerProps> implement
             return;
         }
 
-        if (this.selectedShape.renderer == 'Table') {
+        if (this.selectedShape.renderer == shapes.id.table) {
             const newText = this.textareaElement.value
                 .replace(texts.common.tableDelimiterRow, '&#59;')
                 .replace(texts.common.tableDelimiterCol, '&#44;');
@@ -133,14 +133,14 @@ export class TextAdorner extends React.PureComponent<TextAdornerProps> implement
                     fullText.push(e.join(','));
                 })
 
-                this.props.onChangeItemsAppearance(this.props.selectedDiagram, [this.selectedShape], theme.key.text, fullText.join(texts.common.tableDelimiterRow));
+                this.props.onChangeItemsAppearance(this.props.selectedDiagram, [this.selectedShape], shapes.key.text, fullText.join(texts.common.tableDelimiterRow));
             }
         } else {
             const newText = this.textareaElement.value;
             const oldText = this.selectedShape.text;
 
             if (newText !== oldText) {
-                this.props.onChangeItemsAppearance(this.props.selectedDiagram, [this.selectedShape], theme.key.text, newText);
+                this.props.onChangeItemsAppearance(this.props.selectedDiagram, [this.selectedShape], shapes.key.text, newText);
             }
         }
         this.hide();
@@ -159,7 +159,7 @@ export class TextAdorner extends React.PureComponent<TextAdornerProps> implement
         let content: string, sizeX: number, sizeY: number, positionX: number, positionY: number;
         const transform = shape.transform;
 
-        if (shape.renderer == 'Table') {
+        if (shape.renderer == shapes.id.table) {
             // Size
             const parseTable = getTableAttributes(shape.text);
             sizeX = shape.transform.aabb.width / parseTable.columnCount;

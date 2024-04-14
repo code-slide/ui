@@ -10,7 +10,7 @@ import * as svg from '@svgdotjs/svg.js';
 import * as React from 'react';
 import { isModKey, Rect2, Subscription, SVGHelper, Vec2 } from '@app/core';
 import { calculateSelection, Diagram, DiagramItem, Transform } from '@app/wireframes/model';
-import { vogues, theme } from '@app/const';
+import { vogues, shapes } from '@app/const';
 import { InteractionHandler, InteractionService, SvgEvent } from './interaction-service';
 import { PreviewEvent } from './preview';
 import { OverlayManager } from '../contexts/OverlayContext';
@@ -236,7 +236,7 @@ export class SelectionAdorner extends React.Component<SelectionAdornerProps> imp
     protected renderLineCount(item: DiagramItem, bounds: Transform) {
         // Determine line breaks for textbox based on width and fontsize
         // This assumes that every char has the same width
-        if (item.renderer == 'Textbox') {
+        if (item.renderer == shapes.id.textbox) {
             const lineHeight = item.fontSize * 1.5;
             const wordWidth = bounds.aabb.width / item.fontSize * 2;
             const lines = item.text.split("\n");
@@ -252,12 +252,12 @@ export class SelectionAdorner extends React.Component<SelectionAdornerProps> imp
     }
 
     protected renderSelectedCell(item: DiagramItem, bounds: Transform) {
-        if (item.renderer == 'Table') {
+        if (item.renderer == shapes.id.table) {
             const parseTable = getTableAttributes(item.text);
             const sizeX = bounds.aabb.width / parseTable.columnCount;
             const sizeY = bounds.aabb.height / parseTable.rowCount;
-            const rowIndex = item.getAppearance(theme.key.tableSelectedX);
-            const colIndex = item.getAppearance(theme.key.tableSelectedY);
+            const rowIndex = item.getAppearance(shapes.key.tableSelectedX);
+            const colIndex = item.getAppearance(shapes.key.tableSelectedY);
 
             this.props.overlayManager.showGrid(bounds, parseTable.columnCount, parseTable.rowCount);
             this.props.overlayManager.showBox(bounds, sizeX * rowIndex, sizeY * colIndex, sizeX, sizeY);
@@ -265,7 +265,7 @@ export class SelectionAdorner extends React.Component<SelectionAdornerProps> imp
     }
 
     protected changeSelectedCell(shape: DiagramItem, position: Vec2, aabb: Rect2) {
-        if (shape.renderer == 'Table') {
+        if (shape.renderer == shapes.id.table) {
             const parseTable = getTableAttributes(shape.text);
             const sizeX = aabb.width / parseTable.columnCount;
             const sizeY = aabb.height / parseTable.rowCount;
@@ -274,8 +274,8 @@ export class SelectionAdorner extends React.Component<SelectionAdornerProps> imp
                 {'x': shape.transform.left, 'y': shape.transform.top},
                 {'x': sizeX, 'y': sizeY},
                 {'x': parseTable.columnCount, 'y': parseTable.rowCount});
-            this.props.onChangeItemsAppearance(this.props.selectedDiagram, [shape], theme.key.tableSelectedX, cell.indexCol);
-            this.props.onChangeItemsAppearance(this.props.selectedDiagram, [shape], theme.key.tableSelectedY, cell.indexRow);
+            this.props.onChangeItemsAppearance(this.props.selectedDiagram, [shape], shapes.key.tableSelectedX, cell.indexCol);
+            this.props.onChangeItemsAppearance(this.props.selectedDiagram, [shape], shapes.key.tableSelectedY, cell.indexRow);
         }
     }
 

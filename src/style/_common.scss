@@ -45,20 +45,26 @@ body {
     }
 }
 
-.header-cta-right {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 2px;
-    background-color: $color-theme-blue-lightest;
-
-    h4 {
-        margin-bottom: 0;
+.header-cta {
+    &-right,
+    &-left {
+        display: inline-flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 2px;
+    
+        h4 {
+            margin-bottom: 0;
+        }
     }
-}
 
-.header-cta-right:hover {
-    background-color: $color-border;
+    &-right {
+        background-color: $color-theme-blue-lightest;
+    }
+
+    &-right:hover {
+        background-color: $color-border;
+    }
 }
 
 .ant-layout {
@@ -305,6 +311,14 @@ header {
         height: 1rem;
         margin-left: .5rem;
         margin-right: .5rem;
+        width: 1px;
+    }
+
+    &-span {
+        display: inline-block;
+        height: 1rem;
+        margin-left: .25rem;
+        margin-right: .25rem;
         width: 1px;
     }
 

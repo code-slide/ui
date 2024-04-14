@@ -18,14 +18,14 @@ import type { MenuProps } from 'antd';
 export const ZoomTool = React.memo(() => {
     const dispatch = useDispatch();
     const editorSize = useStore(getEditor).size;
-    const sidebarRightSize = useStore(s => s.ui.sidebarRightSize);
+    const sidebarSize = useStore(s => s.ui.sidebarSize);
     const [zoomValue, setZoomValue] = useState('Fit');
 
     const zoomPad = {
-        vertical: vogues.common.editorMargin * 2 + 10 * 3 + vogues.common.headerHeight + vogues.common.shapeWidth + (vogues.common.previewHeight + vogues.common.editorMargin + vogues.common.previewPadBot) + vogues.common.selectionThickness * 4,
-        horizontal: vogues.common.editorMargin * 2 + 13 * 2 + 10 * 2 + vogues.common.shapeWidth + vogues.common.selectionThickness * 4,
+        vertical: vogues.common.editorMargin * 2 + vogues.common.editorPad  * 3 + vogues.common.headerHeight + vogues.common.shapeWidth + (vogues.common.previewHeight + vogues.common.editorMargin + vogues.common.previewPadBot) + vogues.common.selectionThickness * 4,
+        horizontal: vogues.common.editorMargin * 4 + vogues.common.editorPad * 2 + vogues.common.sidebarShape + vogues.common.selectionThickness * 4,
     }
-    const [areaSize, setAreaSize] = useState(new Vec2(window.innerWidth - zoomPad.horizontal - sidebarRightSize, window.innerHeight - zoomPad.vertical));
+    const [areaSize, setAreaSize] = useState(new Vec2(window.innerWidth - zoomPad.horizontal - sidebarSize, window.innerHeight - zoomPad.vertical));
 
     const isZoom = (key: string) => {
         setZoomValue(key);
@@ -33,7 +33,7 @@ export const ZoomTool = React.memo(() => {
     };
 
     const getWindowSize = () => {
-        setAreaSize(new Vec2(window.innerWidth - zoomPad.horizontal - sidebarRightSize, window.innerHeight - zoomPad.vertical));
+        setAreaSize(new Vec2(window.innerWidth - zoomPad.horizontal - sidebarSize, window.innerHeight - zoomPad.vertical));
     }
     
     // Get area size value on resizing window
@@ -55,7 +55,7 @@ export const ZoomTool = React.memo(() => {
             isZoom(zoomValue);
         }
 
-    }, [sidebarRightSize, editorSize]);
+    }, [sidebarSize, editorSize]);
 
     const getZoomValue = (value: string) => {
         switch (value) {

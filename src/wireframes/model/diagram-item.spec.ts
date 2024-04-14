@@ -14,12 +14,12 @@ import { DiagramItem } from './diagram-item';
 import { Transform } from './transform';
 
 describe('DiagramItem', () => {
-    const item_1 = DiagramItem.createShape({ id: '1', renderer: 'Button' });
+    const item_1 = DiagramItem.createShape({ id: '1', renderer: shapes.id.button });
 
     it('should instantiate with factory method', () => {
         expect(item_1).toBeDefined();
         expect(item_1.id).toBeDefined();
-        expect(item_1.renderer).toBe('Button');
+        expect(item_1.renderer).toBe(shapes.id.button);
     });
 
     it('should return original item when already unlocked', () => {
@@ -166,7 +166,7 @@ describe('DiagramItem', () => {
 
     const shape1 = DiagramItem.createShape({ 
         id: '1',
-        renderer: 'Button',
+        renderer: shapes.id.button,
         transform: new Transform(
             new Vec2(100, 100),
             new Vec2(100, 50),
@@ -176,7 +176,7 @@ describe('DiagramItem', () => {
 
     const shape2 = DiagramItem.createShape({ 
         id: '2',
-        renderer: 'Button',
+        renderer: shapes.id.button,
         transform: new Transform(
             new Vec2(200, 100),
             new Vec2(100, 50),

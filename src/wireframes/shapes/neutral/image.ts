@@ -7,20 +7,20 @@
 */
 
 import { RenderContext, ShapePlugin } from '@app/wireframes/interface';
-import { theme } from '@app/const';
+import { shapes } from '@app/const';
 
 const DEFAULT_APPEARANCE = {
-    [theme.key.backgroundColor]: 0xFFFFFF,
-    [theme.key.strokeColor]: theme.common.borderColor,
-    [theme.key.strokeThickness]: theme.common.borderThickness,
-    [theme.key.text]: '',
-    [theme.key.imageUrl]: '',
-    [theme.key.aspectRatio]: true,
+    [shapes.key.backgroundColor]: 0xFFFFFF,
+    [shapes.key.strokeColor]: shapes.common.borderColor,
+    [shapes.key.strokeThickness]: shapes.common.borderThickness,
+    [shapes.key.text]: '',
+    [shapes.key.imageUrl]: '',
+    [shapes.key.aspectRatio]: true,
 };
 
 export class Image implements ShapePlugin {
     public identifier(): string {
-        return 'Image';
+        return shapes.id.image;
     }
 
     public defaultAppearance() {
@@ -32,10 +32,10 @@ export class Image implements ShapePlugin {
     }
 
     public render(ctx: RenderContext) {
-        const url = ctx.shape.getAppearance(theme.key.imageUrl);
+        const url = ctx.shape.getAppearance(shapes.key.imageUrl);
 
         if (url) {
-            const aspectRatio = ctx.shape.getAppearance(theme.key.aspectRatio);
+            const aspectRatio = ctx.shape.getAppearance(shapes.key.aspectRatio);
             ctx.renderer2.raster(url, ctx.rect, aspectRatio);
         } else {
             this.createText(ctx);

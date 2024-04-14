@@ -14,7 +14,7 @@ import { alignItems, AlignmentMode, buildAlignment, createClassReducer, Diagram,
 describe('AlignmentReducer', () => {
     const shape1 = DiagramItem.createShape({
         id: '1', 
-        renderer: 'Button', 
+        renderer: shapes.id.button, 
         transform: new Transform(
             new Vec2(100, 100),
             new Vec2(20, 20),
@@ -23,7 +23,7 @@ describe('AlignmentReducer', () => {
 
     const shape2 = DiagramItem.createShape({
         id: '2', 
-        renderer: 'Button', 
+        renderer: shapes.id.button, 
         transform: new Transform(
             new Vec2(200, 200),
             new Vec2(40, 40),
@@ -32,7 +32,7 @@ describe('AlignmentReducer', () => {
 
     const shape3 = DiagramItem.createShape({
         id: '3', 
-        renderer: 'Button', 
+        renderer: shapes.id.button, 
         transform: new Transform(
             new Vec2(300, 300),
             new Vec2(80, 80),

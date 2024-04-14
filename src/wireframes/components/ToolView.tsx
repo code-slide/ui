@@ -1,71 +1,76 @@
-import { DiagramItem, setAnimation, getDiagram, useStore, changeFrames, parseFrames } from '@app/wireframes/model';
+import { DiagramItem, setAnimation } from '@app/wireframes/model';
 import { ClipboardTool } from './tools/ClipboardTool';
 import { TableTool } from './tools/TableTool';
-import { GroupingTool } from './tools/GroupingTool';
 import './styles/ToolView.scss';
-import { GraphicTool, HistoryTool, VisualTool, ZoomTool } from './tools';
-import { Button, Segmented, message } from 'antd';
-import { SelectOutlined } from '@ant-design/icons';
+import { GraphicTool, HistoryTool, LineTool, TextTool, VisualTool, ZoomTool } from './tools';
+import { Segmented } from 'antd';
 import { useDispatch } from 'react-redux';
 import { SegmentedValue } from "antd/es/segmented";
+import { shapes } from '@app/const';
+import { ModeType } from '../interface';
 
-export interface ToolDesignViewProps {
+export interface ToolViewProps {
+    // Application's mode
+    mode: ModeType;
+
+    // Item
     item: DiagramItem | null;
+
+    // Group
     set: DiagramItem[] | null;
 }
 
-export const ToolDesignView = (props: ToolDesignViewProps) => {
+export const ToolView = (props: ToolViewProps) => {
     const { item, set } = props;
-
-    return (
-        <div className='tool-container'>
-            <div className='tool-menu'>
-                <HistoryTool />
-                <span className='menu-separator' />
-                <ZoomTool />
-                <span className='menu-separator' />
-
-                {(set != null && set.length > 1) && 
-                    <>
-                        <GroupingTool />
-                        <span className='menu-separator' />
-                    </>
-                }
-
-                <ClipboardTool canCopy={(set != null && set.length > 1) || item != null} />
-
-                {(item != null) && 
-                    <>
-                        <span className='menu-separator' />
-                        <VisualTool />
-                    </>
-                }
-
-                {(item != null && item.renderer == 'Table') && 
-                    <>
-                        <span className='menu-separator' />
-                        <TableTool />
-                    </>
-                }
-
-                {(item != null && (item.renderer == 'Image' || item.renderer == 'Graphic')) && 
-                    <>
-                        <span className='menu-separator' />
-                        <GraphicTool />
-                    </>
-                }
-            </div>
-        </div>
-    )
-};
-
-export const ToolAnimationView = () => {
     const dispatch = useDispatch();
-    const diagram = useStore(getDiagram);
-    const [messageApi, contextHolder] = message.useMessage();
 
-    if (!diagram) {
-        return null;
+    const MoreTools = (props: {item: DiagramItem}) => {
+        const renderer = props.item.renderer;
+
+        if (renderer == shapes.id.table) {
+            return (
+                <>
+                    <span className='menu-separator' />
+                    <TextTool />
+                    <span className='menu-separator' />
+                    <VisualTool />
+                    <span className='menu-separator' />
+                    <TableTool />
+                </>
+            )
+        } else if (renderer == shapes.id.image || renderer == shapes.id.graphic) {
+            return (
+                <>
+                    <span className='menu-separator' />
+                    <GraphicTool />
+                </>
+            )
+        } else if (renderer == shapes.id.textbox || renderer == shapes.id.equation) {
+            return (
+                <>
+                    <span className='menu-separator' />
+                    <TextTool />
+                </>
+            )
+        } else if (renderer == shapes.id.line) {
+            return (
+                <>
+                    <span className='menu-separator' />
+                    <TextTool />
+                    <span className='menu-separator' />
+                    <VisualTool />
+                    <span className='menu-separator' />
+                    <LineTool lineType={props.item.appearance.get(shapes.key.lineType)}  />
+                </>
+            )
+        } else {
+            return (
+                <>
+                    <span className='menu-separator' />
+                    <VisualTool />
+                </>
+            )
+        }
     }
 
     const modeMenu = [
@@ -77,40 +82,24 @@ export const ToolAnimationView = () => {
         if (key == 'script' || key == 'output')
             dispatch(setAnimation(key));
     }
-    
-    const fetchFrames = async () => {
-        const script = diagram.script;
-
-        if (!script) {
-            messageApi.error('Empty script. Cannot perform action');
-            return;
-        };
-
-        try {
-            const frames = await parseFrames(script);
-            dispatch(changeFrames(diagram.id, frames));
-            messageApi.success('Script is loaded successfully');
-        } catch (error) {
-            messageApi.error(`${error}`);
-        }
-    }
 
     return (
         <div className='tool-container'>
-            {contextHolder}
+            <div className='tool-menu'>
+                <HistoryTool />
+                <span className='menu-separator' />
+                <ZoomTool />
+                <span className='menu-separator' />
+                <ClipboardTool canCopy={(set != null && set.length > 1) || item != null} />
+                { (item != null) && <MoreTools item={item} /> }
+            </div>
+
             <Segmented 
+                style={{ display: props.mode == 'design' ? 'none' : '' }}
                 className='menu-segment'
                 options={modeMenu}
                 onChange={(value) => modeMenuEvt(value)}
             />
-            <Button 
-                type='text' shape='round'
-                className="header-cta-right"
-                icon={<SelectOutlined />}
-                onClick={fetchFrames}
-                style={{ marginRight: 0 }}>
-                    <h4>Load script</h4>
-            </Button>
         </div>
     )
 };

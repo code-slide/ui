@@ -8,7 +8,7 @@
 
 import { ImmutableList, ImmutableMap, MathHelper, Record, Rotation } from '@app/core/utils';
 import { Shape } from '@app/wireframes/interface';
-import { theme } from '@app/const';
+import { shapes } from '@app/const';
 import { Configurable } from './configurables';
 import { Constraint } from './constraints';
 import { Diagram } from './diagram';
@@ -151,51 +151,51 @@ export class DiagramItem extends Record<Props> implements Shape {
     }
 
     public get fontSize(): number {
-        return this.getAppearance(theme.key.fontSize) || 10;
+        return this.getAppearance(shapes.key.fontSize) || 10;
     }
 
     public get fontFamily(): string {
-        return this.getAppearance(theme.key.fontFamily) || 'inherit';
+        return this.getAppearance(shapes.key.fontFamily) || 'inherit';
     }
 
     public get backgroundColor(): string {
-        return this.getAppearance(theme.key.backgroundColor);
+        return this.getAppearance(shapes.key.backgroundColor);
     }
 
     public get foregroundColor(): string {
-        return this.getAppearance(theme.key.foregroundColor);
+        return this.getAppearance(shapes.key.foregroundColor);
     }
 
     public get iconFontFamily(): string {
-        return this.getAppearance(theme.key.iconFontFamily);
+        return this.getAppearance(shapes.key.iconFontFamily);
     }
 
     public get link(): string {
-        return this.getAppearance(theme.key.link);
+        return this.getAppearance(shapes.key.link);
     }
 
     public get opacity(): number {
-        return this.getAppearance(theme.key.opacity);
+        return this.getAppearance(shapes.key.opacity);
     }
 
     public get strokeColor(): string {
-        return this.getAppearance(theme.key.strokeColor);
+        return this.getAppearance(shapes.key.strokeColor);
     }
 
     public get strokeThickness(): number {
-        return this.getAppearance(theme.key.strokeThickness);
+        return this.getAppearance(shapes.key.strokeThickness);
     }
 
     public get text(): string {
-        return this.getAppearance(theme.key.text);
+        return this.getAppearance(shapes.key.text);
     }
 
     public get textAlignment(): string {
-        return this.getAppearance(theme.key.textAlignment);
+        return this.getAppearance(shapes.key.textAlignment);
     }
 
     public get textDisabled(): boolean {
-        return this.getAppearance(theme.key.text);
+        return this.getAppearance(shapes.key.text);
     }
 
     public getAppearance(key: string) {

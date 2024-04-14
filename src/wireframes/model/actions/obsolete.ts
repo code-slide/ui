@@ -10,7 +10,7 @@
 
 import { AnyAction, createAction } from '@reduxjs/toolkit';
 import { MathHelper } from '@app/core/utils';
-import { vogues, theme } from '@app/const';
+import { vogues, shapes } from '@app/const';
 import { addShape } from './items';
 import { createDiagramAction, DiagramRef } from './utils';
 
@@ -57,12 +57,12 @@ export function migrateOldAction(action: AnyAction) {
         const { diagramId, fontFamily, position, shapeId, text } = action.payload;
 
         return addShape(diagramId,
-            'Icon',
+            shapes.id.icon,
             {
                 position,
                 appearance: {
-                    [theme.key.text]: text,
-                    [theme.key.fontFamily]: fontFamily,
+                    [shapes.key.text]: text,
+                    [shapes.key.fontFamily]: fontFamily,
                 },
             },
             shapeId);
