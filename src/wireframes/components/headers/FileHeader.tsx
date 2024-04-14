@@ -68,7 +68,7 @@ export const FileHeader = () => {
         {
             key: texts.common.settings,
             label: texts.common.settings,
-            icon: <MenuIcon icon='icon-save' />,
+            icon: <MenuIcon icon='icon-cog' />,
             className: 'loading-action-item',
         },
         {

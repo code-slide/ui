@@ -77,7 +77,7 @@ export const changeColor =
     });
 
 export const changeRevealConfig =
-    createAction('editor/revealConfig', (config: string) => {
+    createAction('editor/revealConfig', (config: {[id: string]: any}) => {
         return { payload:  { config } };
     });
 

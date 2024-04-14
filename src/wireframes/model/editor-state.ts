@@ -37,7 +37,7 @@ type Props = {
     color: Color;
 
     // The reveal.js' configuration
-    revealConfig: string;
+    revealConfig: {[id: string]: any};
 };
 
 export type InitialEditorProps = {
@@ -122,7 +122,7 @@ export class EditorState extends Record<Props> {
         return this.set('color', color);
     }
 
-    public changeReveal(config: string) {
+    public changeReveal(config: {[id: string]: any}) {
         return this.set('revealConfig', config);
     }
 

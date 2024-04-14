@@ -14,7 +14,7 @@ import { default as RevealEditor } from 'react-simple-code-editor';
 import { changeRevealConfig, getEditor, useStore } from '@app/wireframes/model';
 
 import 'prismjs/themes/prism.css';
-import { Button, Space } from 'antd';
+import { Button, Space, message } from 'antd';
 import { vogues } from '@app/const';
 
 export const PresentProperties = React.memo(() => {
@@ -22,9 +22,10 @@ export const PresentProperties = React.memo(() => {
     const editor = useStore(getEditor);
     const [revealScr, setRevealScr] = useState('');
     const [isScrChange, setIsScrChange] = useState(false);
+    const [messageApi, contextHolder] = message.useMessage();
 
     useEffect(() => {
-        setRevealScr(editor.revealConfig);
+        setRevealScr(JSON.stringify(editor.revealConfig, null, 4));
     }, [editor.revealConfig]);
 
     const handleSrcChange = (value: string) => {
@@ -33,17 +34,27 @@ export const PresentProperties = React.memo(() => {
     }
 
     const handleSrcSave = () => {
-        setIsScrChange(false);
-        dispatch(changeRevealConfig(revealScr));
+        // Validate input
+        try {
+            const revealJson = JSON.parse(revealScr);
+            setIsScrChange(false);
+            dispatch(changeRevealConfig(revealJson));
+        } catch (e) {
+            messageApi.open({
+                type: 'error',
+                content: 'Cannot parse JSON. Please format correctly.',
+            });
+        }
     }
 
     const handleSrcCancel = () => {
         setIsScrChange(false);
-        setRevealScr(editor.revealConfig);
+        setRevealScr(JSON.stringify(editor.revealConfig, null, 4));
     }
 
     return (
         <>
+            {contextHolder}
             <p>For more config options, please visit <a href='https://revealjs.com/config/'>https://revealjs.com/config/</a></p>
             <div style={{
                 borderRadius: 20,
@@ -74,7 +85,6 @@ export const PresentProperties = React.memo(() => {
                     <h4>Save</h4>
                 </Button>
             </Space>
-            
         </>
     )
 })

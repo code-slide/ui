@@ -91,12 +91,13 @@ export const PresentHeader = React.memo(() => {
             fileName: editor.id,
             backgroundColor: editor.color.toString(),
             size: [editor.size.x, editor.size.y],
+            config: editor.revealConfig,
             frame: frame2D,
         };
     }
 
     const fetchApi = async () => {
-        const { fileName, size, backgroundColor, frame } = getSlides();
+        const { fileName, size, backgroundColor, config, frame } = getSlides();
         
         if (!html) {
             messageApi.error('Empty slide. Cannot perform action');
@@ -112,7 +113,7 @@ export const PresentHeader = React.memo(() => {
         });
 
         try {
-            const linkPresentation = await compileSlides(fileName, size, backgroundColor, frame);
+            const linkPresentation = await compileSlides(fileName, size, backgroundColor, config, frame);
             
             messageApi.open({
                 key: messageKey,

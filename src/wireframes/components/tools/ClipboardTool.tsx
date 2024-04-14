@@ -9,7 +9,7 @@
 import { ActionMenuButton, useClipboard } from '../actions';
 import { Diagram, getDiagram, useStore } from '@app/wireframes/model';
 
-export interface ClipboardMenuProps {
+interface ClipboardMenuProps {
     canCopy: boolean
 }
 
@@ -25,7 +25,7 @@ export const ClipboardTool = (props: ClipboardMenuProps) => {
     );
 };
 
-export const ClipboardToolInner = ({ canCopy }: ClipboardMenuProps & { diagram: Diagram }) => {
+const ClipboardToolInner = ({ canCopy }: ClipboardMenuProps & { diagram: Diagram }) => {
     const forClipboard = useClipboard();
 
     return (

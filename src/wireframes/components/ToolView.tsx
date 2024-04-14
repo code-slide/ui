@@ -2,7 +2,7 @@ import { DiagramItem, setAnimation } from '@app/wireframes/model';
 import { ClipboardTool } from './tools/ClipboardTool';
 import { TableTool } from './tools/TableTool';
 import './styles/ToolView.scss';
-import { GraphicTool, HistoryTool, LineTool, TextTool, VisualTool, ZoomTool } from './tools';
+import { AlignmentTool, GraphicTool, HistoryTool, LineTool, OrderingTool, TextTool, VisualTool, ZoomTool } from './tools';
 import { Segmented } from 'antd';
 import { useDispatch } from 'react-redux';
 import { SegmentedValue } from "antd/es/segmented";
@@ -86,12 +86,16 @@ export const ToolView = (props: ToolViewProps) => {
     return (
         <div className='tool-container'>
             <div className='tool-menu'>
-                <HistoryTool />
-                <span className='menu-separator' />
-                <ZoomTool />
-                <span className='menu-separator' />
-                <ClipboardTool canCopy={(set != null && set.length > 1) || item != null} />
-                { (item != null) && <MoreTools item={item} /> }
+                <div className='tool-scroll'>
+                    <HistoryTool />
+                    <span className='menu-separator' />
+                    <ZoomTool />
+                    <span className='menu-separator' />
+                    <ClipboardTool canCopy={(set != null && set.length > 1) || item != null} />
+                    { (item != null) && <MoreTools item={item} /> }
+                    { (set != null && set.length > 1) && <AlignmentTool /> }
+                    { (item != null) && <OrderingTool /> }
+                </div>
             </div>
 
             <Segmented 

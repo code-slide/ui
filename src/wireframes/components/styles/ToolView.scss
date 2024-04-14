@@ -31,13 +31,18 @@
 
     &-menu {
         display: flex;
-        flex-direction: row;
-        background-color: $color-border;
+        background-color: #e8e8e8;
         border: 0;
         border-radius: 20px;
         padding: 3px 10px;
-        align-items: center;
         flex-grow: 1;
+        overflow-x: scroll;
+    }
+
+    &-scroll {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
 
     &-menu-item {

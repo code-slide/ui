@@ -91,7 +91,7 @@ export const TextTool = React.memo(() => {
                         ? setTextAlignment('right') : setTextAlignment('left')
                     }}
                 >
-                    <i className={`icon-align-${
+                    <i className={`icon-format_align_${
                         (textAlignment.value == 'center')
                         ? 'center' : (textAlignment.value == 'right')
                         ? 'right' : 'left'}`} />

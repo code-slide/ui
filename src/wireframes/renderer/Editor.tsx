@@ -15,7 +15,6 @@ import { Diagram, DiagramItem, Transform } from '@app/wireframes/model';
 import { useOverlayContext } from './../contexts/OverlayContext';
 import { CanvasView } from './CanvasView';
 import { NavigateAdorner } from './NavigateAdorner';
-import { QuickbarAdorner } from './QuickbarAdorner';
 import { RenderLayer } from './RenderLayer';
 import { SelectionAdorner } from './SelectionAdorner';
 import { TextAdorner } from './TextAdorner';
@@ -211,16 +210,6 @@ export const Editor = React.memo((props: EditorProps) => {
                             onChangeItemsAppearance={onChangeItemsAppearance}
                             selectedDiagram={diagram}
                             selectedItems={selectedItems}
-                            zoom={zoom}
-                        />
-                    }
-
-                    {onTransformItems &&
-                        <QuickbarAdorner
-                            previewStream={renderPreview.current}
-                            selectedDiagram={diagram}
-                            selectedItems={selectedItems}
-                            viewSize={viewSize}
                             zoom={zoom}
                         />
                     }

@@ -57,7 +57,7 @@ export const parseFrames = async (script: string) => {
     return frames;
 }
 
-export const compileSlides = async (fileName: string, size: number[], backgroundColor: string, frame: string[][]) => {
+export const compileSlides = async (fileName: string, size: number[], backgroundColor: string, config: {[id: string]: any}, frame: string[][]) => {
     const response = await fetch(`${SERVER_URL}/compiler`, {
         method: 'POST',
         headers: {
@@ -67,6 +67,7 @@ export const compileSlides = async (fileName: string, size: number[], background
             fileName: fileName,
             size: size,
             backgroundColor: backgroundColor,
+            config: config,
             frame: frame,
         })
     })

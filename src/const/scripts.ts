@@ -9,6 +9,6 @@
 export const scripts = {
     common: {
         animation: '',
-        reveal: '{\n\thash: true,\n\tbackgroundTransition: "none"\n}',
+        reveal: { hash: true, backgroundTransition: "none" }
     }
 }
