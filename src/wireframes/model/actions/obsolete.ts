@@ -10,7 +10,7 @@
 
 import { AnyAction, createAction } from '@reduxjs/toolkit';
 import { MathHelper } from '@app/core/utils';
-import { DefaultAppearance } from '@app/wireframes/interface';
+import { vogues, shapes } from '@app/const';
 import { addShape } from './items';
 import { createDiagramAction, DiagramRef } from './utils';
 
@@ -37,8 +37,6 @@ export const addVisual =
     createAction('items/addVisual', (diagram: DiagramRef, renderer: string, x: number, y: number, appearance?: object, shapeId?: string, width?: number, height?: number) => {
         return { payload: createDiagramAction(diagram, { shapeId: shapeId || MathHelper.nextId(), renderer, position: { x, y }, appearance, width, height }) };
     });
-    
-const MAX_IMAGE_SIZE = 300;
 
 export function migrateOldAction(action: AnyAction) {
     if (addVisual.match(action)) {
@@ -59,12 +57,12 @@ export function migrateOldAction(action: AnyAction) {
         const { diagramId, fontFamily, position, shapeId, text } = action.payload;
 
         return addShape(diagramId,
-            'Icon',
+            shapes.id.icon,
             {
                 position,
                 appearance: {
-                    [DefaultAppearance.TEXT]: text,
-                    [DefaultAppearance.FONT_FAMILY]: fontFamily,
+                    [shapes.key.text]: text,
+                    [shapes.key.fontFamily]: fontFamily,
                 },
             },
             shapeId);
@@ -74,15 +72,15 @@ export function migrateOldAction(action: AnyAction) {
         let w = size.w;
         let h = size.h;
 
-        if (w > MAX_IMAGE_SIZE || h > MAX_IMAGE_SIZE) {
+        if (w > vogues.common.maxImgSize || h > vogues.common.maxImgSize) {
             const ratio = w / h;
 
             if (ratio > 1) {
-                w = MAX_IMAGE_SIZE;
-                h = MAX_IMAGE_SIZE / ratio;
+                w = vogues.common.maxImgSize;
+                h = vogues.common.maxImgSize / ratio;
             } else {
-                w = MAX_IMAGE_SIZE * ratio;
-                h = MAX_IMAGE_SIZE;
+                w = vogues.common.maxImgSize * ratio;
+                h = vogues.common.maxImgSize;
             }
         }
 

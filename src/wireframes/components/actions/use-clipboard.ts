@@ -9,12 +9,11 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { ClipboardCopyEvent, ClipboardPasteEvent, useClipboard as useClipboardProvider } from '@app/core';
-import { texts } from '@app/texts';
+import { texts, vogues } from '@app/const';
 import { DiagramItemSet, getDiagram, getSelectedItems, pasteItems, removeItems, Serializer, useStore } from '@app/wireframes/model';
 import { UIAction } from './shared';
 
-const OFFSET = 1;
-const PREFIX = 'my-draft:';
+const prefix = `${texts.common.prefix}:`;
 
 export function useClipboard() {
     const dispatch = useDispatch();
@@ -27,10 +26,10 @@ export function useClipboard() {
         onPaste: (event: ClipboardPasteEvent) => {
             const text = (event.items[0] as any)['text'] as string;
     
-            if (selectedDiagram && text && text.indexOf(PREFIX) === 0) {
-                offset.current += OFFSET;
+            if (selectedDiagram && text && text.indexOf(prefix) === 0) {
+                offset.current += vogues.common.offset;
     
-                dispatch(pasteItems(selectedDiagram, text.substring(PREFIX.length), offset.current, offset.current));
+                dispatch(pasteItems(selectedDiagram, text.substring(prefix.length), offset.current, offset.current));
                 return true;
             }
     
@@ -43,7 +42,7 @@ export function useClipboard() {
                         selectedItems,
                         selectedDiagram);
     
-                event.clipboard.set(`${PREFIX}${JSON.stringify(Serializer.serializeSet(set))}`);
+                event.clipboard.set(`${prefix}${JSON.stringify(Serializer.serializeSet(set))}`);
     
                 if (event.isCut) {
                     dispatch(removeItems(selectedDiagram, selectedItems));

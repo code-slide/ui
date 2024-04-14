@@ -7,7 +7,8 @@
 */
 
 import { ImmutableList, ImmutableMap, MathHelper, Record, Rotation } from '@app/core/utils';
-import { DefaultAppearance, Shape } from '@app/wireframes/interface';
+import { Shape } from '@app/wireframes/interface';
+import { shapes } from '@app/const';
 import { Configurable } from './configurables';
 import { Constraint } from './constraints';
 import { Diagram } from './diagram';
@@ -150,51 +151,51 @@ export class DiagramItem extends Record<Props> implements Shape {
     }
 
     public get fontSize(): number {
-        return this.getAppearance(DefaultAppearance.FONT_SIZE) || 10;
+        return this.getAppearance(shapes.key.fontSize) || 10;
     }
 
     public get fontFamily(): string {
-        return this.getAppearance(DefaultAppearance.FONT_FAMILY) || 'inherit';
+        return this.getAppearance(shapes.key.fontFamily) || 'inherit';
     }
 
     public get backgroundColor(): string {
-        return this.getAppearance(DefaultAppearance.BACKGROUND_COLOR);
+        return this.getAppearance(shapes.key.backgroundColor);
     }
 
     public get foregroundColor(): string {
-        return this.getAppearance(DefaultAppearance.FOREGROUND_COLOR);
+        return this.getAppearance(shapes.key.foregroundColor);
     }
 
     public get iconFontFamily(): string {
-        return this.getAppearance(DefaultAppearance.ICON_FONT_FAMILY);
+        return this.getAppearance(shapes.key.iconFontFamily);
     }
 
     public get link(): string {
-        return this.getAppearance(DefaultAppearance.LINK);
+        return this.getAppearance(shapes.key.link);
     }
 
     public get opacity(): number {
-        return this.getAppearance(DefaultAppearance.OPACITY);
+        return this.getAppearance(shapes.key.opacity);
     }
 
     public get strokeColor(): string {
-        return this.getAppearance(DefaultAppearance.STROKE_COLOR);
+        return this.getAppearance(shapes.key.strokeColor);
     }
 
     public get strokeThickness(): number {
-        return this.getAppearance(DefaultAppearance.STROKE_THICKNESS);
+        return this.getAppearance(shapes.key.strokeThickness);
     }
 
     public get text(): string {
-        return this.getAppearance(DefaultAppearance.TEXT);
+        return this.getAppearance(shapes.key.text);
     }
 
     public get textAlignment(): string {
-        return this.getAppearance(DefaultAppearance.TEXT_ALIGNMENT);
+        return this.getAppearance(shapes.key.textAlignment);
     }
 
     public get textDisabled(): boolean {
-        return this.getAppearance(DefaultAppearance.TEXT_DISABLED);
+        return this.getAppearance(shapes.key.textDisable);
     }
 
     public getAppearance(key: string) {

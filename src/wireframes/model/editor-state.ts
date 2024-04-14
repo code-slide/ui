@@ -7,6 +7,7 @@
 */
 
 import { Color, ImmutableList, ImmutableMap, MathHelper, Record, Vec2 } from '@app/core/utils';
+import { scripts } from '@app/const';
 import { Diagram } from './diagram';
 import { UndoableState } from './undoable-state';
 
@@ -34,6 +35,9 @@ type Props = {
 
     // The color for all diagrams.
     color: Color;
+
+    // The reveal.js' configuration
+    revealConfig: string;
 };
 
 export type InitialEditorProps = {
@@ -51,6 +55,9 @@ export type InitialEditorProps = {
 
     // The color for all diagrams.
     color?: Color;
+
+    // The configuration for Reveal.js 
+    revealConfig?: string;
 };
 
 export class EditorState extends Record<Props> {
@@ -82,6 +89,10 @@ export class EditorState extends Record<Props> {
         return this.get('size');
     }
 
+    public get revealConfig() {
+        return this.get('revealConfig');
+    }
+
     public get orderedDiagrams(): ReadonlyArray<Diagram> {
         return this.diagramIds.values.map(x => this.diagrams.get(x)).filter(x => !!x) as Diagram[];
     }
@@ -96,6 +107,7 @@ export class EditorState extends Record<Props> {
             id: MathHelper.guid(),
             size: size || new Vec2(1280, 720),
             name: name || 'Untitled Presentation',
+            revealConfig: scripts.common.reveal,
         };
 
         return new EditorState(props);
@@ -111,6 +123,10 @@ export class EditorState extends Record<Props> {
 
     public changeColor(color: Color) {
         return this.set('color', color);
+    }
+
+    public changeReveal(config: string) {
+        return this.set('revealConfig', config);
     }
 
     public moveDiagram(diagramId: string, index: number) {

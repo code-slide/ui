@@ -13,7 +13,7 @@ import { Card, Dropdown, Tooltip } from 'antd';
 import { CopyOutlined, DeleteOutlined, FileAddOutlined, PlusOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 import { SVGHelper, Subscription, Vec2, useEventCallback } from '@app/core';
-import { texts } from '@app/texts';
+import { texts } from '@app/const';
 import { InteractionService } from '@app/wireframes/renderer/interaction-service';
 import { RenderLayer } from '@app/wireframes/renderer/RenderLayer';
 import { PreviewEvent } from '@app/wireframes/renderer/preview';

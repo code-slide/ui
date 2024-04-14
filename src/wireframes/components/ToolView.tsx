@@ -1,94 +1,80 @@
-import { DiagramItem, setAnimation, setSidebarLeftSize, getDiagram, useStore, changeFrames, parseFrames } from '@app/wireframes/model';
-import { ClipboardMenu } from './menu/ClipboardMenu';
-import { TableMenu } from './menu/TableMenu';
-import { GroupingMenu } from './menu/GroupingMenu';
+import { DiagramItem, setAnimation } from '@app/wireframes/model';
+import { ClipboardTool } from './tools/ClipboardTool';
+import { TableTool } from './tools/TableTool';
 import './styles/ToolView.scss';
-import { HistoryMenu, VisualMenu, ZoomMenu } from './menu';
-import { Button, Segmented, message } from 'antd';
-import { ArrowsAltOutlined, FullscreenExitOutlined, SelectOutlined } from '@ant-design/icons';
-import { useState } from 'react';
+import { AlignmentTool, GraphicTool, HistoryTool, LineTool, OrderingTool, TextTool, VisualTool, ZoomTool } from './tools';
+import { Segmented } from 'antd';
 import { useDispatch } from 'react-redux';
 import { SegmentedValue } from "antd/es/segmented";
+import { shapes } from '@app/const';
+import { ModeType } from '../interface';
 
-export interface ToolDesignViewProps {
+export interface ToolViewProps {
+    // Application's mode
+    mode: ModeType;
+
+    // Item
     item: DiagramItem | null;
+
+    // Group
     set: DiagramItem[] | null;
 }
 
-const FullscreenButton = () => {
-    const SIDEBAR_LEFT_WIDTH = 200; 
+export const ToolView = (props: ToolViewProps) => {
+    const { item, set } = props;
     const dispatch = useDispatch();
-    const [isFullscreen, setIsFullscreen] = useState(false);
 
-    const hideSidebar = () => {
-        if (isFullscreen) {
-            dispatch(setSidebarLeftSize(SIDEBAR_LEFT_WIDTH));
-            setIsFullscreen(!isFullscreen);
+    const MoreTools = (props: {item: DiagramItem}) => {
+        const renderer = props.item.renderer;
+
+        if (renderer == shapes.id.table) {
+            return (
+                <>
+                    <span className='menu-separator' />
+                    <TextTool />
+                    <span className='menu-separator' />
+                    <VisualTool />
+                    <span className='menu-separator' />
+                    <TableTool />
+                </>
+            )
+        } else if (renderer == shapes.id.image || renderer == shapes.id.graphic) {
+            return (
+                <>
+                    <span className='menu-separator' />
+                    <GraphicTool />
+                </>
+            )
+        } else if (renderer == shapes.id.textbox || renderer == shapes.id.equation) {
+            return (
+                <>
+                    <span className='menu-separator' />
+                    <TextTool />
+                </>
+            )
+        } else if (renderer == shapes.id.line) {
+            return (
+                <>
+                    <span className='menu-separator' />
+                    <TextTool />
+                    <span className='menu-separator' />
+                    <VisualTool />
+                    <span className='menu-separator' />
+                    <LineTool lineType={props.item.appearance.get(shapes.key.lineType)}  />
+                </>
+            )
         } else {
-            dispatch(setSidebarLeftSize(0));
-            setIsFullscreen(!isFullscreen);
+            return (
+                <>
+                    <span className='menu-separator' />
+                    <VisualTool />
+                </>
+            )
         }
     }
 
-    return (
-        <Button 
-            type='text' shape='circle' 
-            className='tool-toggle' 
-            icon={isFullscreen ? <FullscreenExitOutlined /> : <ArrowsAltOutlined />}
-            onClick={hideSidebar} />
-    )
-}
-
-export const ToolDesignView = (props: ToolDesignViewProps) => {
-    const { item, set } = props;
-
-    return (
-        <div className='tool-container'>
-            <FullscreenButton />
-            <div className='tool-menu'>
-                <HistoryMenu />
-                <span className='menu-separator' />
-                <ZoomMenu />
-                <span className='menu-separator' />
-
-                {(set != null && set.length > 1) && 
-                    <>
-                        <GroupingMenu />
-                        <span className='menu-separator' />
-                    </>
-                }
-
-                <ClipboardMenu canCopy={(set != null && set.length > 1) || item != null} />
-
-                {(item != null) && 
-                    <>
-                        <span className='menu-separator' />
-                        <VisualMenu />
-                    </>
-                }
-
-                {(item != null && item.renderer == 'Table') && 
-                    <>
-                        <span className='menu-separator' />
-                        <TableMenu />
-                    </>
-                }
-            </div>
-        </div>
-    )
-};
-
-export const ToolAnimationView = () => {
-    const dispatch = useDispatch();
-    const diagram = useStore(getDiagram);
-    const [messageApi, contextHolder] = message.useMessage();
-
-    if (!diagram) {
-        return null;
-    }
-
     const modeMenu = [
-        { value: 'script', label: 'Animation Script' },
+        { value: 'script', label: 'Script' },
         { value: 'output', label: 'Output' },
     ];
 
@@ -96,38 +82,28 @@ export const ToolAnimationView = () => {
         if (key == 'script' || key == 'output')
             dispatch(setAnimation(key));
     }
-    
-    const fetchFrames = async () => {
-        const script = diagram.script;
-
-        if (!script) {
-            messageApi.error('Empty script. Cannot perform action');
-            return;
-        };
-
-        try {
-            const frames = await parseFrames(script);
-            dispatch(changeFrames(diagram.id, frames));
-            messageApi.success('Script is loaded successfully');
-        } catch (error) {
-            messageApi.error(`${error}`);
-        }
-    }
 
     return (
         <div className='tool-container'>
+            <div className='tool-menu'>
+                <div className='tool-scroll'>
+                    <HistoryTool />
+                    <span className='menu-separator' />
+                    <ZoomTool />
+                    <span className='menu-separator' />
+                    <ClipboardTool canCopy={(set != null && set.length > 1) || item != null} />
+                    { (item != null) && <MoreTools item={item} /> }
+                    { (set != null && set.length > 1) && <AlignmentTool /> }
+                    { (item != null) && <OrderingTool /> }
+                </div>
+            </div>
+
             <Segmented 
+                style={{ display: props.mode == 'design' ? 'none' : '' }}
+                className='menu-segment'
                 options={modeMenu}
                 onChange={(value) => modeMenuEvt(value)}
             />
-            {contextHolder}
-            <Button 
-                type='text' shape='round'
-                className="header-cta-right"
-                icon={<SelectOutlined />}
-                onClick={fetchFrames}>
-                    <h4>Load script</h4>
-            </Button>
         </div>
     )
 };

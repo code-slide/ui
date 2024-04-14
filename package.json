@@ -1,6 +1,6 @@
 {
   "name": "codeslide.net",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.8.1",
@@ -21,6 +21,7 @@
     "mousetrap": "1.6.5",
     "net": "^1.0.2",
     "playwright": "^1.42.1",
+    "prismjs": "^1.29.0",
     "react": "^17.0.2",
     "react-color": "2.19.3",
     "react-dnd": "^16.0.1",
@@ -29,6 +30,7 @@
     "react-redux": "7.2.6",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
+    "react-simple-code-editor": "^0.13.1",
     "react-sizeme": "^3.0.2",
     "react-to-print": "^2.14.3",
     "redux": "4.1.2",
@@ -62,6 +64,7 @@
     "@types/marked": "^4.0.7",
     "@types/mousetrap": "1.6.9",
     "@types/node": "17.0.6",
+    "@types/prismjs": "^1.26.3",
     "@types/react": "^18.2.48",
     "@types/react-color": "3.0.6",
     "@types/react-dom": "^18.2.18",

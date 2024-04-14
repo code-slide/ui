@@ -10,6 +10,7 @@ import * as svg from '@svgdotjs/svg.js';
 import * as React from 'react';
 import { Rotation, Subscription, SVGHelper, Timer, Vec2 } from '@app/core';
 import { Diagram, DiagramItem, SnapManager, SnapMode, Transform } from '@app/wireframes/model';
+import { vogues } from '@app/const';
 import { OverlayManager } from './../contexts/OverlayContext';
 import { SVGRenderer2 } from './../shapes/utils/svg-renderer2';
 import { InteractionHandler, InteractionService, SvgEvent } from './interaction-service';
@@ -19,10 +20,6 @@ enum Mode { None, Resize, Move, Rotate }
 
 const DEBUG_SIDES = false;
 const DEBUG_DISTANCES = false;
-
-const TRANSFORMER_STROKE_COLOR = '#080';
-const TRANSFORMER_FILL_COLOR = '#0f0';
-const TRANSFORMER_NO_SHOW = 'rgba(0, 0, 0, 0)';
 
 export interface TransformAdornerProps {
     // The current zoom value.
@@ -55,8 +52,6 @@ export interface TransformAdornerProps {
     // A function to transform a set of items.
     onTransformItems: (diagram: Diagram, items: DiagramItem[], oldBounds: Transform, newBounds: Transform) => void;
 }
-
-const DRAG_SIZE = 12;
 
 export class TransformAdorner extends React.PureComponent<TransformAdornerProps> implements InteractionHandler {
     private allElements: svg.Element[];
@@ -508,13 +503,13 @@ export class TransformAdorner extends React.PureComponent<TransformAdornerProps>
         const rotation = this.transform.rotation.degree;
         const position = this.transform.position;
 
-        const adornerSize = DRAG_SIZE / this.props.zoom;
+        const adornerSize = vogues.common.dragSize / this.props.zoom;
 
         for (const resizeShape of this.resizeShapes) {
             const offset = (resizeShape as any)['offset'];
             const angle = (resizeShape as any)['angle'];
-            const width = (angle % 180 === 0) ? this.transform.size.x : (angle % 90 === 0) ? DRAG_SIZE : adornerSize; 
-            const height = (angle % 180 === 0) ? DRAG_SIZE : (angle % 90 === 0) ? this.transform.size.y : adornerSize;
+            const width = (angle % 180 === 0) ? this.transform.size.x : (angle % 90 === 0) ? vogues.common.dragSize : adornerSize; 
+            const height = (angle % 180 === 0) ? vogues.common.dragSize : (angle % 90 === 0) ? this.transform.size.y : adornerSize;
 
             const visible =
                 (offset.x === 0 || this.canResizeX) &&
@@ -574,7 +569,7 @@ export class TransformAdorner extends React.PureComponent<TransformAdornerProps>
     private createMoveShape() {
         const moveShape =
             this.props.adorners.rect(1)
-            .stroke({ color: TRANSFORMER_STROKE_COLOR, width: 1 }).fill('none');
+            .stroke({ color: vogues.color.selectionStroke, width: 1 }).fill('none');
 
         this.props.interactionService.setCursor(moveShape, 'move');
 
@@ -584,7 +579,7 @@ export class TransformAdorner extends React.PureComponent<TransformAdornerProps>
     // private createRotateShape() {
     //     const rotateShape =
     //         this.props.adorners.ellipse(DRAG_SIZE, DRAG_SIZE)
-    //             .stroke({ color: TRANSFORMER_STROKE_COLOR, width: 1 }).fill(TRANSFORMER_FILL_COLOR);
+    //             .stroke({ color: styles.color.selectionStroke, width: 1 }).fill(styles.color.selectionFill);
 
     //     this.props.interactionService.setCursor(rotateShape, 'pointer');
 
@@ -597,7 +592,7 @@ export class TransformAdorner extends React.PureComponent<TransformAdornerProps>
         const as = [ 0.0,  270,  90,   180];
 
         for (let i = 0; i < xs.length; i++) {
-            const resizeShape = this.props.adorners.rect(DRAG_SIZE, DRAG_SIZE).stroke({ color: 'none', width: 1 }).fill(TRANSFORMER_NO_SHOW);
+            const resizeShape = this.props.adorners.rect(vogues.common.dragSize, vogues.common.dragSize).stroke({ color: 'none', width: 1 }).fill(vogues.color.transparent);
 
             (resizeShape as any)['offset'] = new Vec2(xs[i], ys[i]);
             (resizeShape as any)['angle'] = as[i];
@@ -614,8 +609,8 @@ export class TransformAdorner extends React.PureComponent<TransformAdornerProps>
         const as = [315,  45,   215,  135];
 
         for (let i = 0; i < xs.length; i++) {
-            const resizeShape = this.props.adorners.rect(DRAG_SIZE/2, DRAG_SIZE/2)
-                .stroke({ color: TRANSFORMER_STROKE_COLOR, width: 1 }).fill(TRANSFORMER_FILL_COLOR);
+            const resizeShape = this.props.adorners.rect(vogues.common.dragSize/2, vogues.common.dragSize/2)
+                .stroke({ color: vogues.color.selectionStroke, width: 1 }).fill(vogues.color.selectionFill);
 
             (resizeShape as any)['offset'] = new Vec2(xs[i], ys[i]);
             (resizeShape as any)['angle'] = as[i];

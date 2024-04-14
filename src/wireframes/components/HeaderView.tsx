@@ -10,7 +10,7 @@ import * as React from 'react';
 import { Title } from '@app/core';
 import { getEditor, useStore } from '@app/wireframes/model';
 import { useLoading } from './actions';
-import { ArrangeMenu, FileMenu, PresentMenu } from './menu';
+import { ArrangeHeader, FileHeader, PresentHeader, IdHeader, ModeHeader, ScriptHeader } from './headers';
 import './styles/HeaderView.scss'
 
 export const HeaderView = React.memo(() => {
@@ -54,17 +54,22 @@ export const HeaderView = React.memo(() => {
     }, [tokenToWrite, editor]);
 
     return (
-        <>
+        <div className='header'>
             <div className='header-left'>
                 <CustomTitle />
-                <ArrangeMenu />
-                <FileMenu />
+                <ArrangeHeader />
+                <FileHeader />
+                <IdHeader />
             </div>
 
             <span style={{ float: 'right' }}>
-                <PresentMenu />
+                <ModeHeader />
+                <span className='menu-separator' />
+                <ScriptHeader />
+                <span className='menu-span' />
+                <PresentHeader />
             </span>
-        </>
+        </div>
     );
 });
 

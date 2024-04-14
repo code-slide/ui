@@ -11,7 +11,7 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { useEventCallback } from '@app/core';
-import { texts } from '@app/texts';
+import { texts } from '@app/const';
 import { alignItems, AlignmentMode, getDiagramId, getSelectedItems, orderItems, OrderMode, useStore } from '@app/wireframes/model';
 import { UIAction } from './shared';
 
@@ -73,17 +73,17 @@ export function useAlignment() {
     }
 
     return {
-        alignHorizontalCenter: useAlign(AlignmentMode.HorizontalCenter, texts.common.alignHorizontalCenter, 'icon-align-h-center'),
-        alignHorizontalLeft: useAlign(AlignmentMode.HorizontalLeft, texts.common.alignHorizontalLeft, 'icon-align-h-left'),
-        alignHorizontalRight: useAlign(AlignmentMode.HorizontalRight, texts.common.alignHorizontalRight, 'icon-align-h-right'),
-        alignVerticalBottom: useAlign(AlignmentMode.VerticalBottom, texts.common.alignVerticalBottom, 'icon-align-v-bottom'),
-        alignVerticalCenter: useAlign(AlignmentMode.VerticalCenter, texts.common.alignVerticalCenter, 'icon-align-v-center'),
-        alignVerticalTop: useAlign(AlignmentMode.VerticalTop, texts.common.alignVerticalTop, 'icon-align-v-top'),
-        bringForwards: useOrder(OrderMode.BringForwards, texts.common.bringForwards, 'icon-bring-forwards'),
-        bringToFront: useOrder(OrderMode.BringToFront, texts.common.bringToFront, 'icon-bring-to-front'),
+        alignHorizontalCenter: useAlign(AlignmentMode.HorizontalCenter, texts.common.alignHorizontalCenter, 'icon-align_horizontal_center'),
+        alignHorizontalLeft: useAlign(AlignmentMode.HorizontalLeft, texts.common.alignHorizontalLeft, 'icon-align_horizontal_left'),
+        alignHorizontalRight: useAlign(AlignmentMode.HorizontalRight, texts.common.alignHorizontalRight, 'icon-align_horizontal_right'),
+        alignVerticalBottom: useAlign(AlignmentMode.VerticalBottom, texts.common.alignVerticalBottom, 'icon-align_vertical_bottom'),
+        alignVerticalCenter: useAlign(AlignmentMode.VerticalCenter, texts.common.alignVerticalCenter, 'icon-align_vertical_center'),
+        alignVerticalTop: useAlign(AlignmentMode.VerticalTop, texts.common.alignVerticalTop, 'icon-align_vertical_top'),
+        bringForwards: useOrder(OrderMode.BringForwards, texts.common.bringForwards, 'icon-to_front'),
+        bringToFront: useOrder(OrderMode.BringToFront, texts.common.bringToFront, 'icon-flip_to_front'),
         distributeHorizontally: useDistribute(AlignmentMode.DistributeHorizontal, texts.common.distributeHorizontally, 'icon-distribute-h2'),
         distributeVertically: useDistribute(AlignmentMode.DistributeVertical, texts.common.distributeVertically, 'icon-distribute-v2'),
-        sendBackwards: useOrder(OrderMode.SendBackwards, texts.common.sendBackwards, 'icon-send-backwards'),
-        sendToBack: useOrder(OrderMode.SendToBack, texts.common.sendToBack, 'icon-send-to-back'),
+        sendBackwards: useOrder(OrderMode.SendBackwards, texts.common.sendBackwards, 'icon-to_back'),
+        sendToBack: useOrder(OrderMode.SendToBack, texts.common.sendToBack, 'icon-flip_to_back'),
     };
 }

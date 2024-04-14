@@ -12,6 +12,4 @@ export * from './ToolView';
 export * from './HeaderView';
 export * from './ShapeView';
 export * from './PagesView';
-export * from './PropertiesView';
-export * from './OutlineView';
 export * from './RecentView';

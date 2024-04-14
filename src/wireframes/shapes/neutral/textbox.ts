@@ -6,19 +6,19 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-import { DefaultAppearance, RenderContext, ShapePlugin } from '@app/wireframes/interface';
-import { CommonTheme } from './_theme';
+import { RenderContext, ShapePlugin } from '@app/wireframes/interface';
+import { shapes } from '@app/const';
 
 const DEFAULT_APPEARANCE = {
-    [DefaultAppearance.FONT_SIZE]: CommonTheme.CONTROL_FONT_SIZE,
-    [DefaultAppearance.FOREGROUND_COLOR]: CommonTheme.CONTROL_TEXT_COLOR,
-    [DefaultAppearance.TEXT_ALIGNMENT]: 'left',
-    [DefaultAppearance.TEXT]: '',
+    [shapes.key.fontSize]: shapes.common.fontSize,
+    [shapes.key.foregroundColor]: shapes.common.textColor,
+    [shapes.key.textAlignment]: 'left',
+    [shapes.key.text]: '',
 };
 
 export class Textbox implements ShapePlugin {
     public identifier(): string {
-        return 'Textbox';
+        return shapes.id.textbox;
     }
 
     public defaultAppearance() {

@@ -26,6 +26,12 @@ export type RendererWidth = number | Shape;
 export type Size = { x: number; y: number };
 export type TextConfig = { text: string; fontSize?: number; fontFamily?: string; alignment?: string; backgroundColor?: RendererColor };
 export type TextDecoration = 'underline' | 'none';
+export type ModeType = 'animation' | 'design';
+export type AnimationType = 'script' | 'output';
+export type LineNode = 'None' | 'Arrow' | 'Triangle';
+export type LineCurve = 'Up' | 'Down';
+export type LinePivot = 'Top' | 'Bottom';
+export type LineEdge = 'Linear' | 'Quadratic';
 
 export interface RenderContext {
     readonly shape: Shape;
@@ -139,21 +145,6 @@ export interface Shape {
 
     getAppearance(key: string): any;
 }
-
-export const DefaultAppearance = {
-    BACKGROUND_COLOR: 'FOREGROUND_COLOR',
-    FONT_FAMILY: 'FONT_FAMILY',
-    FONT_SIZE: 'FONT_SIZE',
-    FOREGROUND_COLOR: 'BACKGROUND_COLOR',
-    ICON_FONT_FAMILY: 'ICON_FONT_FAMILY', 
-    LINK: 'LINK',
-    OPACITY: 'OPACITY',
-    STROKE_COLOR: 'STROKE_COLOR',
-    STROKE_THICKNESS: 'STROKE_THICKNESS',
-    TEXT_ALIGNMENT: 'TEXT_ALIGNMENT',
-    TEXT_DISABLED: 'TEXT_DISABLED',
-    TEXT: 'TEXT',
-};
 
 export function getPageLink(id: string) {
     return `page://${id}`;

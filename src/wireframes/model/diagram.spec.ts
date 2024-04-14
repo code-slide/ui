@@ -6,15 +6,16 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
+import { shapes } from '@app/const';
 import { Diagram, DiagramItem, DiagramItemSet } from '@app/wireframes/model';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
 describe('Diagram', () => {
-    const shape1 = DiagramItem.createShape({ id: '1', renderer: 'Button' });
-    const shape2 = DiagramItem.createShape({ id: '2', renderer: 'Button' });
-    const shape3 = DiagramItem.createShape({ id: '3', renderer: 'Button' });
-    const shape4 = DiagramItem.createShape({ id: '4', renderer: 'Button' });
+    const shape1 = DiagramItem.createShape({ id: '1', renderer: shapes.id.button });
+    const shape2 = DiagramItem.createShape({ id: '2', renderer: shapes.id.button });
+    const shape3 = DiagramItem.createShape({ id: '3', renderer: shapes.id.button });
+    const shape4 = DiagramItem.createShape({ id: '4', renderer: shapes.id.button });
 
     const diagram_1 = Diagram.create({ id: '1' });
 

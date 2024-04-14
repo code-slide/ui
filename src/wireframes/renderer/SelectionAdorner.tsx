@@ -10,13 +10,11 @@ import * as svg from '@svgdotjs/svg.js';
 import * as React from 'react';
 import { isModKey, Rect2, Subscription, SVGHelper, Vec2 } from '@app/core';
 import { calculateSelection, Diagram, DiagramItem, Transform } from '@app/wireframes/model';
+import { vogues, shapes } from '@app/const';
 import { InteractionHandler, InteractionService, SvgEvent } from './interaction-service';
 import { PreviewEvent } from './preview';
 import { OverlayManager } from '../contexts/OverlayContext';
 import { getSelectedCell, getTableAttributes } from '../shapes/dependencies';
-
-const SELECTION_STROKE_COLOR = '#080';
-const SELECTION_STROKE_LOCK_COLOR = '#f00';
 
 export interface SelectionAdornerProps {
     // The current zoom value.
@@ -198,8 +196,8 @@ export class SelectionAdorner extends React.Component<SelectionAdornerProps> imp
 
             const color =
                 item.isLocked ?
-                    SELECTION_STROKE_LOCK_COLOR :
-                    SELECTION_STROKE_COLOR;
+                    vogues.color.selectionLock :
+                    vogues.color.selectionStroke;
                     
             // Use the inverted zoom level as stroke width to have a constant stroke style.
             marker.stroke({ color, width: strokeWidth });
@@ -238,7 +236,7 @@ export class SelectionAdorner extends React.Component<SelectionAdornerProps> imp
     protected renderLineCount(item: DiagramItem, bounds: Transform) {
         // Determine line breaks for textbox based on width and fontsize
         // This assumes that every char has the same width
-        if (item.renderer == 'Textbox') {
+        if (item.renderer == shapes.id.textbox) {
             const lineHeight = item.fontSize * 1.5;
             const wordWidth = bounds.aabb.width / item.fontSize * 2;
             const lines = item.text.split("\n");
@@ -254,12 +252,12 @@ export class SelectionAdorner extends React.Component<SelectionAdornerProps> imp
     }
 
     protected renderSelectedCell(item: DiagramItem, bounds: Transform) {
-        if (item.renderer == 'Table') {
+        if (item.renderer == shapes.id.table) {
             const parseTable = getTableAttributes(item.text);
             const sizeX = bounds.aabb.width / parseTable.columnCount;
             const sizeY = bounds.aabb.height / parseTable.rowCount;
-            const rowIndex = item.getAppearance('SELECTED_CELL_X');
-            const colIndex = item.getAppearance('SELECTED_CELL_Y');
+            const rowIndex = item.getAppearance(shapes.key.tableSelectedX);
+            const colIndex = item.getAppearance(shapes.key.tableSelectedY);
 
             this.props.overlayManager.showGrid(bounds, parseTable.columnCount, parseTable.rowCount);
             this.props.overlayManager.showBox(bounds, sizeX * rowIndex, sizeY * colIndex, sizeX, sizeY);
@@ -267,7 +265,7 @@ export class SelectionAdorner extends React.Component<SelectionAdornerProps> imp
     }
 
     protected changeSelectedCell(shape: DiagramItem, position: Vec2, aabb: Rect2) {
-        if (shape.renderer == 'Table') {
+        if (shape.renderer == shapes.id.table) {
             const parseTable = getTableAttributes(shape.text);
             const sizeX = aabb.width / parseTable.columnCount;
             const sizeY = aabb.height / parseTable.rowCount;
@@ -276,8 +274,8 @@ export class SelectionAdorner extends React.Component<SelectionAdornerProps> imp
                 {'x': shape.transform.left, 'y': shape.transform.top},
                 {'x': sizeX, 'y': sizeY},
                 {'x': parseTable.columnCount, 'y': parseTable.rowCount});
-            this.props.onChangeItemsAppearance(this.props.selectedDiagram, [shape], 'SELECTED_CELL_X', cell.indexCol);
-            this.props.onChangeItemsAppearance(this.props.selectedDiagram, [shape], 'SELECTED_CELL_Y', cell.indexRow);
+            this.props.onChangeItemsAppearance(this.props.selectedDiagram, [shape], shapes.key.tableSelectedX, cell.indexCol);
+            this.props.onChangeItemsAppearance(this.props.selectedDiagram, [shape], shapes.key.tableSelectedY, cell.indexRow);
         }
     }
 

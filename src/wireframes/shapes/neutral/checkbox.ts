@@ -6,10 +6,9 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-import { ConfigurableFactory, ConstraintFactory, DefaultAppearance, Rect2, RenderContext, ShapePlugin } from '@app/wireframes/interface';
-import { CommonTheme } from './_theme';
+import { ConstraintFactory, Rect2, RenderContext, ShapePlugin } from '@app/wireframes/interface';
+import { shapes } from '@app/const';
 
-const STATE = 'STATE';
 const STATE_NORMAL = 'Normal';
 const STATE_CHECKED = 'Checked';
 const STATE_INTERDEMINATE = 'Interdeminate';
@@ -18,19 +17,19 @@ const BOX_MARGIN = 4;
 const TEXT_POSITION_X = BOX_SIZE + 2 * BOX_MARGIN;
 
 const DEFAULT_APPEARANCE = {
-    [DefaultAppearance.BACKGROUND_COLOR]: CommonTheme.CONTROL_BACKGROUND_COLOR,
-    [DefaultAppearance.FONT_SIZE]: CommonTheme.CONTROL_FONT_SIZE,
-    [DefaultAppearance.FOREGROUND_COLOR]: CommonTheme.CONTROL_TEXT_COLOR,
-    [DefaultAppearance.STROKE_COLOR]: CommonTheme.CONTROL_BORDER_COLOR,
-    [DefaultAppearance.STROKE_THICKNESS]: CommonTheme.CONTROL_BORDER_THICKNESS,
-    [DefaultAppearance.TEXT_ALIGNMENT]: 'left',
-    [DefaultAppearance.TEXT]: 'Checkbox',
-    [STATE]: STATE_NORMAL,
+    [shapes.key.backgroundColor]: shapes.common.backgroundColor,
+    [shapes.key.fontSize]: shapes.common.fontSize,
+    [shapes.key.foregroundColor]: shapes.common.textColor,
+    [shapes.key.strokeColor]: shapes.common.borderColor,
+    [shapes.key.strokeThickness]: shapes.common.borderThickness,
+    [shapes.key.textAlignment]: 'left',
+    [shapes.key.text]: 'Checkbox',
+    [shapes.key.state]: STATE_NORMAL,
 };
 
 export class Checkbox implements ShapePlugin {
     public identifier(): string {
-        return 'Checkbox';
+        return shapes.id.checkbox;
     }
 
     public defaultAppearance() {
@@ -43,16 +42,6 @@ export class Checkbox implements ShapePlugin {
 
     public constraint(factory: ConstraintFactory) {
         return factory.textHeight(8);
-    }
-
-    public configurables(factory: ConfigurableFactory) {
-        return [
-            factory.selection(STATE, 'State', [
-                STATE_NORMAL,
-                STATE_CHECKED,
-                STATE_INTERDEMINATE,
-            ]),
-        ];
     }
 
     public render(ctx: RenderContext) {
@@ -72,7 +61,7 @@ export class Checkbox implements ShapePlugin {
             p.setBackgroundColor(ctx.shape);
         });
 
-        const state = ctx.shape.getAppearance(STATE);
+        const state = ctx.shape.getAppearance(shapes.key.state);
 
         if (state === STATE_INTERDEMINATE) {
             ctx.renderer2.rectangle(0, 0, bounds.deflate(4), p => {

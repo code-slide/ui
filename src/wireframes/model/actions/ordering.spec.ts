@@ -8,12 +8,13 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
+import { shapes } from '@app/const';
 import { buildOrdering, createClassReducer, Diagram, DiagramItem, EditorState, moveItems, orderItems, OrderMode } from '@app/wireframes/model';
 
 describe('OrderingReducer', () => {
-    const shape1 = DiagramItem.createShape({ id: '1', renderer: 'Button' });
-    const shape2 = DiagramItem.createShape({ id: '2', renderer: 'Button' });
-    const shape3 = DiagramItem.createShape({ id: '3', renderer: 'Button' });
+    const shape1 = DiagramItem.createShape({ id: '1', renderer: shapes.id.button });
+    const shape2 = DiagramItem.createShape({ id: '2', renderer: shapes.id.button });
+    const shape3 = DiagramItem.createShape({ id: '3', renderer: shapes.id.button });
 
     const diagram =
         Diagram.create({ id: '1' })

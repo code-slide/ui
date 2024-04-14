@@ -7,12 +7,8 @@
 */
 
 import * as svg from '@svgdotjs/svg.js';
-import { Color } from '@app/core';
+import { vogues } from '@app/const';
 import { SnapLine, SnapResult, Transform } from '@app/wireframes/model';
-
-const COLOR_RED = Color.RED.toString();
-const COLOR_BLUE = Color.RED.toString();
-const COLOR_PURPLE = '#a020f0';
 
 const MIN_VALUE = -1000;
 const MAX_VALUE = 1000;
@@ -62,8 +58,8 @@ export class InteractionOverlays {
                 const x = Math.round(position.x);
                 const y = Math.round(position.y);
 
-                this.renderLine(x, y, x + dx, y, COLOR_PURPLE, lineWidth);
-                // this.renderLabel(x + 0.5 * dx, y + labelOffset, line.diff.x.toString(), COLOR_PURPLE, 10, true, false, 2);
+                this.renderLine(x, y, x + dx, y, vogues.color.purple, lineWidth);
+                // this.renderLabel(x + 0.5 * dx, y + labelOffset, line.diff.x.toString(), styles.color.purple, 10, true, false, 2);
             }
         }
     }
@@ -85,43 +81,38 @@ export class InteractionOverlays {
                 const x = Math.round(position.x);
                 const y = Math.round(position.y);
 
-                this.renderLine(x, y, x, y + dy, COLOR_PURPLE, lineWidth);
-                // this.renderLabel(x + labelOffset, y + 0.5 * dy, line.diff.y.toString(), COLOR_PURPLE, 10, false, true, 2);
+                this.renderLine(x, y, x, y + dy, vogues.color.purple, lineWidth);
+                // this.renderLabel(x + labelOffset, y + 0.5 * dy, line.diff.y.toString(), styles.color.purple, 10, false, true, 2);
             }
         }
     }
 
     public showBox(transform: Transform, offsetX: number, offsetY: number, width: number, height: number) {
-        const STROKE_COLOR = '#080';
-        const STROKE_THICKNESS = 1;
-
         const left = transform.aabb.left + offsetX;
         const right = left + width;
         const top = transform.aabb.top + offsetY;
         const bottom = top + height;
 
-        this.renderLine(left, top, left, bottom, STROKE_COLOR, STROKE_THICKNESS);
-        this.renderLine(right, top, right, bottom, STROKE_COLOR, STROKE_THICKNESS);
-        this.renderLine(left, top, right, top, STROKE_COLOR, STROKE_THICKNESS);
-        this.renderLine(left, bottom, right, bottom, STROKE_COLOR, STROKE_THICKNESS);
+        this.renderLine(left, top, left, bottom, vogues.color.selectionStroke, vogues.common.selectionThickness);
+        this.renderLine(right, top, right, bottom, vogues.color.selectionStroke, vogues.common.selectionThickness);
+        this.renderLine(left, top, right, top, vogues.color.selectionStroke, vogues.common.selectionThickness);
+        this.renderLine(left, bottom, right, bottom, vogues.color.selectionStroke, vogues.common.selectionThickness);
     }
 
     public showGrid(transform: Transform, numCol: number, numRow: number) {
-        const STROKE_COLOR = '#c4ffc4';
-        const STROKE_THICKNESS = 1;
 
         for (let i = 1; i < numCol; i++) {
             const left = transform.aabb.left + transform.aabb.width / numCol * i;
             const top = transform.aabb.top;
             const bottom = top + transform.aabb.height;
-            this.renderLine(left, top, left, bottom, STROKE_COLOR, STROKE_THICKNESS);
+            this.renderLine(left, top, left, bottom, vogues.color.selectionFill, vogues.common.selectionThickness);
         }
 
         for (let i = 1; i < numRow; i++) {
             const top = transform.aabb.top + transform.aabb.height / numRow * i;
             const left = transform.aabb.left;
             const right = left + transform.aabb.width;
-            this.renderLine(left, top, right, top, STROKE_COLOR, STROKE_THICKNESS);
+            this.renderLine(left, top, right, top, vogues.color.selectionFill, vogues.common.selectionThickness);
         }
     }
 
@@ -239,7 +230,7 @@ export class InteractionOverlays {
 }
 
 function getLineColor(line: SnapLine) {
-    return line.isCenter ? COLOR_BLUE : COLOR_RED;
+    return line.isCenter ? vogues.color.blue : vogues.color.red;
 }
 
 function getLinePosition(line: SnapLine, lineWidth: number) {

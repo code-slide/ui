@@ -12,7 +12,7 @@ import { TooltipPlacement } from 'antd/lib/tooltip';
 import * as React from 'react';
 import { ColorResult, SketchPicker } from 'react-color';
 import { Color, ColorPalette } from '@app/core/utils';
-import { texts } from '@app/texts';
+import { texts } from '@app/const';
 import { ColorList } from './ColorList';
 import { useEventCallback } from './hooks';
 import './ColorPicker.scss';
@@ -138,12 +138,18 @@ export const ColorPicker = React.memo((props: ColorPickerProps) => {
     return (
         <Popover content={content} open={visible && !disabled} placement={placement} trigger='click' onOpenChange={setVisible}>
             { (!icon)
-                ? <Button disabled={disabled} className='color-picker-circle' type='text'>
+                ? <Button 
+                    className='color-picker-circle tool-menu-item' type='text'
+                    style={{ display: disabled ? 'none' : '' }}
+                >
                     <div className='color-picker-color'>
                         <div className='color-picker-color-inner' style={{ background: colorHex }}></div>
                     </div>
                 </Button>
-                : <Button disabled={disabled} className='color-picker-button' type='text' icon={icon} style={{ fill: colorHex }} />
+                : <Button 
+                    className='color-picker-button tool-menu-item' type='text' 
+                    icon={icon} style={{ fill: colorHex, display: disabled ? 'none' : '' }} 
+                />
             }
         </Popover>
     );

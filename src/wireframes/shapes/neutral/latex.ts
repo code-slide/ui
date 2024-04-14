@@ -6,19 +6,19 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-import { DefaultAppearance, RenderContext, ShapePlugin } from '@app/wireframes/interface';
-import { CommonTheme } from './_theme';
+import { RenderContext, ShapePlugin } from '@app/wireframes/interface';
+import { shapes } from '@app/const';
 
 const DEFAULT_APPEARANCE = {
-    [DefaultAppearance.FONT_SIZE]: CommonTheme.CONTROL_FONT_SIZE,
-    [DefaultAppearance.FOREGROUND_COLOR]: CommonTheme.CONTROL_TEXT_COLOR,
-    [DefaultAppearance.TEXT_ALIGNMENT]: 'left',
-    [DefaultAppearance.TEXT]: '',
+    [shapes.key.fontSize]: shapes.common.fontSize,
+    [shapes.key.foregroundColor]: shapes.common.textColor,
+    [shapes.key.textAlignment]: 'left',
+    [shapes.key.text]: 'Add equation',
 };
 
 export class Latex implements ShapePlugin {
     public identifier(): string {
-        return 'Equation';
+        return shapes.id.equation;
     }
 
     public defaultAppearance() {
@@ -30,6 +30,8 @@ export class Latex implements ShapePlugin {
     }
 
     public render(ctx: RenderContext) {
-        ctx.renderer2.equation(ctx.shape, ctx.rect, undefined);
+        ctx.renderer2.equation(ctx.shape, ctx.rect, p => {
+            p.setForegroundColor(ctx.shape);
+        });
     }
 }

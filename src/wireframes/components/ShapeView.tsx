@@ -10,13 +10,12 @@ import { Button, Dropdown, Form, Input } from 'antd';
 import type { MenuProps } from 'antd';
 import { getDiagramId, useStore, addShape } from '@app/wireframes/model';
 import * as React from 'react';
-import { ArrowIcon, CircleIcon, FunctionIcon, ImageIcon, RectangleIcon, TableIcon, TextIcon, TriangleIcon, ShapesIcon, LinkIcon, HeadingIcon, SubHeadingIcon, ParagraphIcon, DiamondIcon, VectorIcon, LineIcon, BezierIcon } from '@app/icons/icon';
+import { ArrowIcon, CircleIcon, FunctionIcon, ImageIcon, RectangleIcon, TableIcon, TextIcon, TriangleIcon, ShapesIcon, LinkIcon, HeadingIcon, SubHeadingIcon, ParagraphIcon, DiamondIcon, VectorIcon, LineUpIcon, BezierIcon } from '@app/icons/icon';
 import './styles/ShapeView.scss';
 import { useState } from 'react';
 import classNames from 'classnames';
-import { ModalForm } from './overlay/ModalForm';
-
-type ShapeModal = 'image' | 'shape' | '';
+import { FormModal, ShapeModal } from './modal/FormModal';
+import { shapes } from '@app/const';
 
 export const ShapeView = React.memo(() => {
     const dispatch = useDispatch();
@@ -32,12 +31,18 @@ export const ShapeView = React.memo(() => {
     const numCol = selectedCell % CELL_ATTR.cols + 1;
 
     const handleImageURLOk = (values: any) => {
-        createNewShape('Image', { 'IMAGE_URL': values.image_url })
+        const customAppearance: { [key: string]: any } = {};
+        customAppearance[shapes.key.imageUrl] = values.image_url;
+
+        createNewShape(shapes.id.image, customAppearance)
         setIsShapeModal('');
     };
 
     const handleCustomShapeOk = (values: any) => {
-        createNewShape('Graphic', { 'SVG_CODE': values.svg_code });
+        const customAppearance: { [key: string]: any } = {};
+        customAppearance[shapes.key.svgCode] = values.svg_code;
+
+        createNewShape(shapes.id.graphic, customAppearance);
         setIsShapeModal('');
     };
 
@@ -52,17 +57,25 @@ export const ShapeView = React.memo(() => {
         { key: 'Subheading', label: 'Subheading', icon: <SubHeadingIcon />, className: 'menu-shape', },
         { key: 'Paragraph', label: 'Paragraph', icon: <ParagraphIcon />, className: 'menu-shape', },
         { type: 'divider' },
-        { key: 'Equation', label: 'Equation', icon: <FunctionIcon />, className: 'menu-shape', }
+        { key: shapes.id.equation, label: shapes.id.equation, icon: <FunctionIcon />, className: 'menu-shape', }
     ];
     const textMenuEvt: MenuProps['onClick'] = ({ key }) => {
+        const customAppearance: { [key: string]: any } = {};
+        
         if (key == 'Heading') {
-            createNewShape('Textbox', { 'TEXT': 'Add a heading', 'FONT_SIZE': 60 })
+            customAppearance[shapes.key.text] = 'Add a heading';
+            customAppearance[shapes.key.fontSize] = 60;
+            createNewShape(shapes.id.textbox, customAppearance);
         } else if (key == 'Subheading') {
-            createNewShape('Textbox', { 'TEXT': 'Add a subheading', 'FONT_SIZE': 40 })
+            customAppearance[shapes.key.text] = 'Add a subheading';
+            customAppearance[shapes.key.fontSize] = 40;
+            createNewShape(shapes.id.textbox, customAppearance);
         } else if (key == 'Paragraph') {
-            createNewShape('Textbox', { 'TEXT': 'Add a paragraph', 'FONT_SIZE': 24 })
-        } else if (key == 'Equation') {
-            createNewShape('Equation')
+            customAppearance[shapes.key.text] = 'Add a paragraph';
+            customAppearance[shapes.key.fontSize] = 24;
+            createNewShape(shapes.id.textbox, customAppearance);
+        } else if (key == shapes.id.equation) {
+            createNewShape(shapes.id.equation)
         }
     };
 
@@ -85,9 +98,9 @@ export const ShapeView = React.memo(() => {
         }
     ];
     const cellMenuEvtClick: MenuProps['onClick'] = () => {
-        createNewShape('Table', { 
-            'TEXT': Array(numCol).join(',') + Array(numRow).join(';'),
-        });
+        const customAppearance: { [key: string]: any } = {};
+        customAppearance[shapes.key.text] = Array(numCol).join(',') + Array(numRow).join(';');
+        createNewShape(shapes.id.table, customAppearance);
     };
     const cellMenuEvtLeave: MenuProps['onMouseLeave'] = () => {
         setSelectedCell(0);
@@ -102,10 +115,14 @@ export const ShapeView = React.memo(() => {
         { key: 'Custom', label: 'Custom', icon: <VectorIcon />, className: 'menu-shape', },
     ];
     const shapeMenuEvt: MenuProps['onClick'] = ({ key }) => {
+        const customAppearance: { [key: string]: any } = {};
+
         if (key == 'Custom') {
             setIsShapeModal('shape');
         } else {
-            createNewShape('Shape', { 'FONT_SIZE': 24, 'SHAPE': key });
+            customAppearance[shapes.key.fontSize] = 24;
+            customAppearance[shapes.key.shape] = key;
+            createNewShape(shapes.id.shape, customAppearance);
         }
     };
 
@@ -114,11 +131,11 @@ export const ShapeView = React.memo(() => {
         { key: 'Curve', label: 'Curve', icon: <BezierIcon />, className: 'menu-shape', },
     ];
     const lineMenuEvt: MenuProps['onClick'] = ({ key }) => {
-        if (key == 'Curve') {
-            createNewShape('Line', { 'FONT_SIZE': 24, 'LINE_TYPE': 'Quadratic' });
-        } else {
-            createNewShape('Line', { 'FONT_SIZE': 24 });
-        }
+        const customAppearance: { [key: string]: any } = {};
+        customAppearance[shapes.key.fontSize] = 24;
+
+        if (key == 'Curve') customAppearance[shapes.key.lineType] = 'Quadratic'; 
+        createNewShape(shapes.id.line, customAppearance);
     };
 
     const imageMenu: MenuProps['items'] = [
@@ -182,7 +199,7 @@ export const ShapeView = React.memo(() => {
                 trigger={['click']}
             >
                 <Button className='item' type='text' >
-                    <LineIcon />
+                    <LineUpIcon />
                 </Button>
             </Dropdown>
 
@@ -200,7 +217,7 @@ export const ShapeView = React.memo(() => {
                 </Button>
             </Dropdown>
 
-            <ModalForm
+            <FormModal
                 title='Add Image'
                 okText='Add'
                 open={isShapeModal == 'image'}
@@ -215,7 +232,7 @@ export const ShapeView = React.memo(() => {
                 }
             />
 
-            <ModalForm
+            <FormModal
                 title='Add Custom Shape'
                 okText='Add'
                 open={isShapeModal == 'shape'}

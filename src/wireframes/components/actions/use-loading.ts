@@ -9,8 +9,9 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { useEventCallback, useOpenFile } from '@app/core';
-import { texts } from '@app/texts';
+import { texts } from '@app/const';
 import { downloadDiagramToFile, getDiagrams, loadDiagramFromFile, newDiagram, useStore } from '@app/wireframes/model';
+import { keys } from '@app/const';
 import { UIAction } from './shared';
 
 export function useLoading() {
@@ -23,7 +24,6 @@ export function useLoading() {
                 return true;
             }
         }
-
         return false;
     }, [diagrams]);
     
@@ -39,14 +39,11 @@ export function useLoading() {
         dispatch(downloadDiagramToFile());
     });
 
-    const doSaveToFile = useEventCallback(() => {
-    });
-
     const newDiagramAction: UIAction = React.useMemo(() => ({
         disabled: false,
         icon: 'icon-new',
         label: texts.common.newDiagram,
-        shortcut: 'MOD + N',
+        shortcut: keys.common.new,
         tooltip: texts.common.newDiagramTooltip,
         onAction: doNew,
     }), [doNew]);
@@ -54,19 +51,11 @@ export function useLoading() {
     const downloadDiagram: UIAction = React.useMemo(() => ({
         disabled: !canSave,
         icon: 'icon-floppy-o',
-        label: texts.common.downloadDiagramTooltip,
-        shortcut: 'MOD + S',
-        tooltip: texts.common.downloadDiagramTooltip,
+        label: texts.common.saveDiagramTooltip,
+        shortcut: keys.common.save,
+        tooltip: texts.common.saveDiagramTooltip,
         onAction: doDownload,
     }), [doDownload, canSave]);
-
-    const saveDiagramToFileAction: UIAction = React.useMemo(() => ({
-        disabled: !canSave,
-        icon: 'icon-save',
-        label: texts.common.saveDiagramToFileTooltip,
-        tooltip: texts.common.saveDiagramToFileTooltip,
-        onAction: doSaveToFile,
-    }), [doSaveToFile, canSave]);
 
     const openDiagramAction: UIAction = React.useMemo(() => ({
         disabled: false,
@@ -76,5 +65,5 @@ export function useLoading() {
         onAction: openHandler,
     }), [openHandler]);
 
-    return { newDiagram: newDiagramAction, openDiagramAction, downloadDiagram, saveDiagramToFile: saveDiagramToFileAction };
+    return { newDiagram: newDiagramAction, openDiagramAction, downloadDiagram };
 }

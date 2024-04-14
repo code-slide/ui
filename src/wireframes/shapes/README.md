@@ -27,17 +27,15 @@ When you create a new shape you have to execute the following steps:
 The following example is a toggle button. The main responsibility of the shape is to render the SVG statements using an imperative approach. The render method is called whenever a change is changed. Then a diff process makes the necessary changes to update the SVG elements, to destroy them or to add new elements.
 
 ```
-const STATE = 'STATE';
 const STATE_NORMAL = 'Normal';
 const STATE_CHECKED = 'Checked';
 
 const DEFAULT_APPEARANCE = {};
-[DefaultAppearance.FOREGROUND_COLOR]: 0x238b45,
-[DefaultAppearance.BACKGROUND_COLOR]: 0xbdbdbd,
-[DefaultAppearance.TEXT_DISABLED]: true,
-[DefaultAppearance.STROKE_COLOR]: 0xffffff,
-[DefaultAppearance.STROKE_THICKNESS]: 4,
-[STATE]: STATE_CHECKED,
+[theme.key.foregroundColor]: 0x238b45,
+[theme.key.backgroundColor]: 0xbdbdbd,
+[theme.key.text]: true,
+[theme.key.strokeColor]: 0xffffff,
+[theme.key.strokeThickness]: 4,
 
 export class Toggle implements ShapePlugin {
     public identifier(): string {
@@ -50,15 +48,6 @@ export class Toggle implements ShapePlugin {
 
     public defaultSize() {
         return { x: 60, y: 30 };
-    }
-
-    public configurables(factory: ConfigurableFactory) {
-        return [
-            factory.selection(STATE, 'State', [
-                STATE_NORMAL,
-                STATE_CHECKED,
-            ]),
-        ];
     }
 
     public render(ctx: RenderContext) {

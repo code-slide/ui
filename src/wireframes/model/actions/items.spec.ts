@@ -8,6 +8,7 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
+import { shapes } from '@app/const';
 import { Vec2 } from '@app/core/utils';
 import { addShape, buildItems, calculateSelection, createClassReducer, Diagram, DiagramItem, DiagramItemSet, EditorState, lockItems, pasteItems, removeItems, renameItems, RendererService, selectItems, Serializer, unlockItems } from '@app/wireframes/model';
 import { Button } from '@app/wireframes/shapes/neutral/button';
@@ -17,9 +18,9 @@ import { AbstractControl } from '@app/wireframes/shapes/utils/abstract-control';
 
 describe('ItemsReducer', () => {
     const groupId = 'group-1';
-    const shape1 = DiagramItem.createShape({ id: '1', renderer: 'Button' });
-    const shape2 = DiagramItem.createShape({ id: '2', renderer: 'Button' });
-    const shape3 = DiagramItem.createShape({ id: '3', renderer: 'Button' });
+    const shape1 = DiagramItem.createShape({ id: '1', renderer: shapes.id.button });
+    const shape2 = DiagramItem.createShape({ id: '2', renderer: shapes.id.button });
+    const shape3 = DiagramItem.createShape({ id: '3', renderer: shapes.id.button });
 
     let diagram =
         Diagram.create({ id: '1' })
@@ -105,7 +106,7 @@ describe('ItemsReducer', () => {
     it('should add shape and select this shape', () => {
         const shapeId = 'shape';
 
-        const action = addShape(diagram, 'Button', { position: { x: 100, y: 20 } }, shapeId);
+        const action = addShape(diagram, shapes.id.button, { position: { x: 100, y: 20 } }, shapeId);
 
         const state_1 = EditorState.create().addDiagram(diagram);
         const state_2 = reducer(state_1, action);
@@ -122,7 +123,7 @@ describe('ItemsReducer', () => {
     it('should add shape with default properties and select this shape', () => {
         const shapeId = 'shape';
 
-        const action = addShape(diagram, 'Button', { position: { x: 100, y: 20 }, appearance: { text1: 'text1', text2: 'text2' } }, shapeId);
+        const action = addShape(diagram, shapes.id.button, { position: { x: 100, y: 20 }, appearance: { text1: 'text1', text2: 'text2' } }, shapeId);
 
         const state_1 = EditorState.create().addDiagram(diagram)!;
         const state_2 = reducer(state_1, action);

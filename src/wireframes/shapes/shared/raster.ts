@@ -6,13 +6,13 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-import { DefaultAppearance, RenderContext, ShapePlugin, ShapeSource } from '@app/wireframes/interface';
+import { RenderContext, ShapePlugin, ShapeSource } from '@app/wireframes/interface';
+import { vogues, shapes } from '@app/const';
 
-const MAX_IMAGE_SIZE = 300;
 const SOURCE = 'SOURCE';
 
 const DEFAULT_APPEARANCE = {
-    [DefaultAppearance.TEXT_DISABLED]: true,
+    [shapes.key.text]: true,
 };
 
 export class Raster implements ShapePlugin {
@@ -32,15 +32,15 @@ export class Raster implements ShapePlugin {
         if (source.type === 'Image') {
             let { width: w, height: h, source: data } = source.image;
 
-            if (w > MAX_IMAGE_SIZE || h > MAX_IMAGE_SIZE) {
+            if (w > vogues.common.maxImgSize || h > vogues.common.maxImgSize) {
                 const ratio = w / h;
 
                 if (ratio > 1) {
-                    w = MAX_IMAGE_SIZE;
-                    h = MAX_IMAGE_SIZE / ratio;
+                    w = vogues.common.maxImgSize;
+                    h = vogues.common.maxImgSize / ratio;
                 } else {
-                    h = MAX_IMAGE_SIZE;
-                    w = MAX_IMAGE_SIZE * ratio;
+                    h = vogues.common.maxImgSize;
+                    w = vogues.common.maxImgSize * ratio;
                 }
             }
 

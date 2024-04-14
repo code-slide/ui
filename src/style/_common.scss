@@ -30,7 +30,9 @@ body {
 }
 
 .header-left {
-    @include fixed(null, null, null, 13px);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .header-toolbar {
@@ -41,35 +43,28 @@ body {
         border: 0 !important;
         height: fit-content;
     }
+}
 
+.header-cta {
+    &-right,
     &-left {
-        margin: 10px 13px 10px 10px;
+        display: inline-flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 2px;
+    
+        h4 {
+            margin-bottom: 0;
+        }
     }
 
     &-right {
-        margin: 10px 0;
+        background-color: $color-theme-blue-lightest;
     }
-}
 
-.header-cta-right {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 2px;
-    margin-right: 13px;
-    background-color: $color-theme-blue-lightest;
-
-    h4 {
-        margin-bottom: 0;
+    &-right:hover {
+        background-color: $color-border;
     }
-}
-
-.editor-content {
-    margin: 10px 13px 10px 10px;
-}
-
-.header-cta-right:hover {
-    background-color: $color-border;
 }
 
 .ant-layout {
@@ -136,11 +131,6 @@ tspan {
 
     &-left {
         border-radius: 20px;
-        margin: 10px 5px 10px 13px;
-    }
-
-    &-right {
-        margin: 0 13px 10px 5px;
     }
 
     &-shape {
@@ -150,7 +140,7 @@ tspan {
             flex-flow: column;
             height: fit-content;
             border-radius: 20px;
-            margin: 0 10px;
+            margin: 0 10px 0 0;
         }
 
         .ant-layout-sider-children,
@@ -264,6 +254,7 @@ tspan {
 //
 .property {
     & {
+        justify-content: center;
         margin-bottom: .5rem;
     }
 
@@ -285,6 +276,11 @@ tspan {
         .ant-checkbox-wrapper {
             margin-top: .25rem;
         }
+    }
+
+    &-color {
+        align-self: center;
+        width: 300px;
     }
 }
 
@@ -318,6 +314,14 @@ header {
         width: 1px;
     }
 
+    &-span {
+        display: inline-block;
+        height: 1rem;
+        margin-left: .25rem;
+        margin-right: .25rem;
+        width: 1px;
+    }
+
     &-item,
     &-item > button {
         & {
@@ -334,6 +338,12 @@ header {
         &:disabled {
             opacity: .4;
         }
+    }
+
+    &-segment {
+        gap: 3px;
+        border-radius: 14px;
+        padding: 3px 4px;
     }
 }
 

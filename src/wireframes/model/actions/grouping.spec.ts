@@ -9,6 +9,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { buildGrouping, createClassReducer, Diagram, DiagramItem, EditorState, groupItems, ungroupItems } from '@app/wireframes/model';
+import { shapes } from '@app/const';
 
 describe('GroupingReducer', () => {
     const state =
@@ -31,8 +32,8 @@ describe('GroupingReducer', () => {
 
         const diagram =
             Diagram.create({ id: '1' })
-                .addShape(DiagramItem.createShape({ id: id1, renderer: 'Button' }))
-                .addShape(DiagramItem.createShape({ id: id2, renderer: 'Button' }));
+                .addShape(DiagramItem.createShape({ id: id1, renderer: shapes.id.button }))
+                .addShape(DiagramItem.createShape({ id: id2, renderer: shapes.id.button }));
 
         const groupId = 'group-1';
 
@@ -58,12 +59,12 @@ describe('GroupingReducer', () => {
 
         let diagram =
             Diagram.create({ id: '1' })
-                .addShape(DiagramItem.createShape({ id: id1, renderer: 'Button' }))
-                .addShape(DiagramItem.createShape({ id: id2, renderer: 'Button' }))
-                .addShape(DiagramItem.createShape({ id: id3, renderer: 'Button' }))
+                .addShape(DiagramItem.createShape({ id: id1, renderer: shapes.id.button }))
+                .addShape(DiagramItem.createShape({ id: id2, renderer: shapes.id.button }))
+                .addShape(DiagramItem.createShape({ id: id3, renderer: shapes.id.button }))
                 .addShape(DiagramItem.createShape({ id: id4, renderer: 'btn' }));
 
-        const shapes = diagram.items;
+        const shapeGroup = diagram.items;
 
         diagram = diagram.group(groupId1, [id1, id2]);
         diagram = diagram.group(groupId2, [id3, id4]);
@@ -78,7 +79,7 @@ describe('GroupingReducer', () => {
 
         const newDiagram = state_2.diagrams.get(diagram.id)!;
 
-        const ids = shapes.keys;
+        const ids = shapeGroup.keys;
 
         expect(newDiagram.selectedIds.values).toEqual(ids);
         expect(newDiagram.rootIds.values).toEqual(ids);

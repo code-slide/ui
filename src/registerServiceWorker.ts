@@ -9,7 +9,7 @@
 /* eslint-disable no-console */
 
 import { Store } from 'redux';
-import { texts } from '@app/texts';
+import { texts } from '@app/const';
 import { showToast } from '@app/wireframes/model';
 
 export function registerServiceWorker(store: Store) {
