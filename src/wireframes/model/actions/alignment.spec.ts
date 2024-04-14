@@ -7,6 +7,7 @@
 */
 
 import { Rotation, Vec2 } from '@app/core/utils';
+import { shapes } from '@app/const';
 import { alignItems, AlignmentMode, buildAlignment, createClassReducer, Diagram, DiagramItem, EditorState, Transform } from '@app/wireframes/model';
 
 /* eslint-disable @typescript-eslint/naming-convention */

@@ -13,7 +13,7 @@ import { Color, ColorPicker, useEventCallback } from '@app/core';
 import { texts } from '@app/const';
 import { changeColor, changeSize, getColors, getEditor, useStore } from '@app/wireframes/model';
 
-export const DiagramProperties = React.memo(() => {
+export const DiagramSetting = React.memo(() => {
     const dispatch = useDispatch();
     const editor = useStore(getEditor);
     const editorSize = editor.size;

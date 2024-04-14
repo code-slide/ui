@@ -8,7 +8,7 @@
 
 
 import { Modal, Layout, Segmented, Divider } from 'antd';
-import { ColorProperties, DiagramProperties, PresentProperties } from '../properties';
+import { ColorSetting, DiagramSetting, PresentSetting } from '../settings';
 import { texts } from '@app/const';
 import { SegmentedOptions } from 'antd/es/segmented';
 import { useState } from 'react';
@@ -48,11 +48,11 @@ export const SettingModal: React.FC<SettingModalProps> = (props: SettingModalPro
         switch (value) {
             default:
             case 'diagram':
-                return <DiagramProperties />;
+                return <DiagramSetting />;
             case 'palette':
-                return <ColorProperties />;
+                return <ColorSetting />;
             case 'presentation':
-                return <PresentProperties />;
+                return <PresentSetting />;
         }     
     }
 

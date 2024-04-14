@@ -9,6 +9,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { buildGrouping, createClassReducer, Diagram, DiagramItem, EditorState, groupItems, ungroupItems } from '@app/wireframes/model';
+import { shapes } from '@app/const';
 
 describe('GroupingReducer', () => {
     const state =
@@ -63,7 +64,7 @@ describe('GroupingReducer', () => {
                 .addShape(DiagramItem.createShape({ id: id3, renderer: shapes.id.button }))
                 .addShape(DiagramItem.createShape({ id: id4, renderer: 'btn' }));
 
-        const shapes = diagram.items;
+        const shapeGroup = diagram.items;
 
         diagram = diagram.group(groupId1, [id1, id2]);
         diagram = diagram.group(groupId2, [id3, id4]);
@@ -78,7 +79,7 @@ describe('GroupingReducer', () => {
 
         const newDiagram = state_2.diagrams.get(diagram.id)!;
 
-        const ids = shapes.keys;
+        const ids = shapeGroup.keys;
 
         expect(newDiagram.selectedIds.values).toEqual(ids);
         expect(newDiagram.rootIds.values).toEqual(ids);

@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import { Color, ColorPicker } from '@app/core';
 import { changeColors, getColors, useStore } from '@app/wireframes/model';
 
-export const ColorProperties = () => {
+export const ColorSetting = () => {
     const dispatch = useDispatch();
     const recentColors = useStore(getColors);
 

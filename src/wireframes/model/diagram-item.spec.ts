@@ -9,6 +9,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { ImmutableMap, Rotation, Vec2 } from '@app/core/utils';
+import { shapes } from '@app/const';
 import { Diagram } from './diagram';
 import { DiagramItem } from './diagram-item';
 import { Transform } from './transform';

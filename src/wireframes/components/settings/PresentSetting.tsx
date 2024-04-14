@@ -17,7 +17,7 @@ import 'prismjs/themes/prism.css';
 import { Button, Space, message } from 'antd';
 import { vogues } from '@app/const';
 
-export const PresentProperties = React.memo(() => {
+export const PresentSetting = React.memo(() => {
     const dispatch = useDispatch();
     const editor = useStore(getEditor);
     const [revealScr, setRevealScr] = useState('');
@@ -25,7 +25,7 @@ export const PresentProperties = React.memo(() => {
     const [messageApi, contextHolder] = message.useMessage();
 
     useEffect(() => {
-        setRevealScr(JSON.stringify(editor.revealConfig, null, 4));
+        setRevealScr(editor.revealConfig);
     }, [editor.revealConfig]);
 
     const handleSrcChange = (value: string) => {
@@ -38,7 +38,7 @@ export const PresentProperties = React.memo(() => {
         try {
             const revealJson = JSON.parse(revealScr);
             setIsScrChange(false);
-            dispatch(changeRevealConfig(revealJson));
+            dispatch(changeRevealConfig(JSON.stringify(revealJson, null, 4)));
         } catch (e) {
             messageApi.open({
                 type: 'error',

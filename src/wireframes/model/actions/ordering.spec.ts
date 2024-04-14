@@ -8,6 +8,7 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
+import { shapes } from '@app/const';
 import { buildOrdering, createClassReducer, Diagram, DiagramItem, EditorState, moveItems, orderItems, OrderMode } from '@app/wireframes/model';
 
 describe('OrderingReducer', () => {

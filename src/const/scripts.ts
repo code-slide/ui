@@ -9,6 +9,6 @@
 export const scripts = {
     common: {
         animation: '',
-        reveal: { hash: true, backgroundTransition: "none" }
+        reveal: JSON.stringify({ hash: true, backgroundTransition: "none" }, null, 4)
     }
 }

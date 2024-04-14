@@ -6,6 +6,7 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
+import { shapes } from '@app/const';
 import { Diagram, DiagramItem, DiagramItemSet } from '@app/wireframes/model';
 
 /* eslint-disable @typescript-eslint/naming-convention */

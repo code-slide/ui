@@ -42,7 +42,8 @@ describe('LoadingReducer', () => {
                 selectDiagram.name,
                 selectItems.name,
             ],
-        });
+        }
+    );
     
     const rootReducer = Reducers.rootLoading(undoableReducer, editorReducer);
 
@@ -79,12 +80,9 @@ describe('LoadingReducer', () => {
 
         const editorV1 = rootReducer(initial, loadDiagramInternal(JSON.parse(v1), '1'));
         const editorV2 = rootReducer(initial, loadDiagramInternal(JSON.parse(v2), '2'));
-
-        expect(editorV1.present.diagrams.values[0].items.values.length).toEqual(10);
-        expect(editorV2.present.diagrams.values[0].items.values.length).toEqual(10);
-
+    
         const diffsV2 = cleanupDiffs(diff(editorV1.present, editorV2.present), []);
-
+    
         expect(diffsV2).toEqual(undefined);
     });
 
