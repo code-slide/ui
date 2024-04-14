@@ -195,7 +195,7 @@ export class DiagramItem extends Record<Props> implements Shape {
     }
 
     public get textDisabled(): boolean {
-        return this.getAppearance(shapes.key.text);
+        return this.getAppearance(shapes.key.textDisable);
     }
 
     public getAppearance(key: string) {
