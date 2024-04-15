@@ -17,7 +17,7 @@ export const vogues = {
         iconSmall: 16,
         iconDefault: 18,
         iconLarge: 20,
-        offset: 1,
+        offset: 20,
         maxImgSize: 300,
         shapeWidth: 38,
         sidebarCode: 600,

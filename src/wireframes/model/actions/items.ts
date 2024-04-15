@@ -98,24 +98,29 @@ export function buildItems(builder: ActionReducerMapBuilder<EditorState>) {
             const { diagramId, itemId, id } = action.payload;
             
             return state.updateDiagram(diagramId, diagram => {
-                // Get current shape
+                // If current id is the same as new id, return
+                if (itemId === id) return diagram;
+
+                // If new id is already existed, throw error
+                if (diagram.items.has(id)) throw new Error(`Cannot perform action! Item with id ${id} already existed.`);
+
+                // If shape is not existed, return
                 const shape = diagram.items.get(itemId);
                 if (!shape) return diagram;
 
                 // Dublicate item with assigning new id
-                let { id: defaultId, newDiagram } = IDHelper.nextId(diagram, shape.renderer);
                 const newProps = {
-                    id: id || defaultId,
+                    id: id,
                     renderer: shape.renderer,
                     appearance: shape.appearance,
                     transform: shape.transform,
                 };
                 const newShape = DiagramItem.createShape(newProps);
-                newDiagram = newDiagram.addShape(newShape).selectItems([id]);
+                diagram = diagram.addShape(newShape).selectItems([id]);
 
                 // Remove old item
-                const set = DiagramItemSet.createFromDiagram([itemId], newDiagram);
-                return newDiagram.removeItems(set!);
+                const set = DiagramItemSet.createFromDiagram([itemId], diagram);
+                return diagram.removeItems(set!);
             });
         })
         .addCase(renameItems, (state, action) => {
@@ -139,7 +144,7 @@ export function buildItems(builder: ActionReducerMapBuilder<EditorState>) {
 
                 diagram = diagram.updateItems(set.allShapes.map(x => x.id), item => {
                     const boundsOld = item.bounds(diagram);
-                    const boundsNew = boundsOld.moveBy(boundsOld.size.mul(new Vec2(offsetByX, offsetByY)));
+                    const boundsNew = boundsOld.moveBy(new Vec2(offsetByX, offsetByY));
 
                     return item.transformByBounds(boundsOld, boundsNew);
                 });

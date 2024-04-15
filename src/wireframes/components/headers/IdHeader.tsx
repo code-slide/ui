@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getDiagram, getSelectedItems, replaceId, useStore } from '@app/wireframes/model';
-import { Button, Input, Space } from "antd";
+import { Button, Input, Space, message } from "antd";
 import { useState } from "react";
 import '../styles/HeaderView.scss'
 import { useDispatch } from 'react-redux';
@@ -13,6 +13,7 @@ export const IdHeader = () => {
     const id = !selectedItem ? '' : selectedItem.id;
     const [newId, setNewId] = useState<string>(id);
     const [isUpdate, setIsUpdate] = useState<boolean>(false);
+    const [messageApi, contextHolder] = message.useMessage();
 
     const updateId = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNewId(e.target.value);
@@ -25,7 +26,12 @@ export const IdHeader = () => {
     };
 
     const acceptUpdateId = () => {
-        dispatch(replaceId(diagram!, id, newId));
+        try {
+            dispatch(replaceId(diagram!, id, newId));
+        } catch (e) {
+            if (e instanceof Error) messageApi.error(e.message);
+            cancelUpdateId();
+        }
     };
 
     React.useEffect(() => {
@@ -35,6 +41,7 @@ export const IdHeader = () => {
     if (!selectedItem) return <></>;
     return (
         <>
+            {contextHolder}
             <span className='menu-separator' />
             <Space.Compact className='shape-id'>
                 <Input value={newId} className='shape-input' variant='borderless' onChange={updateId} />
