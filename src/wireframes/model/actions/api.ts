@@ -77,8 +77,8 @@ export const compileSlides = async (fileName: string, title: string, size: numbe
 
     const data = await response.json();
 
-    const linkSlide = `${SERVER_URL}/${data.slidePath}/${data.fileName}`;
-    const linkPdf = `${SERVER_URL}/${data.pdfPath}/${data.fileName}`;
+    const linkSlide = `${SERVER_URL}/${data.slidePath}`;
+    const linkPdf = `${SERVER_URL}/${data.pdfPath}`;
     
     return { linkSlide, linkPdf };
 }

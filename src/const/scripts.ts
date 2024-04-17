@@ -16,6 +16,7 @@ export const scripts = {
             backgroundTransition: "none",
             width: vogues.common.canvasWidth,
             height: vogues.common.canvasHeight,
+            pdfMaxPagesPerSlide: 1
         }, null, 4)
     }
 }
