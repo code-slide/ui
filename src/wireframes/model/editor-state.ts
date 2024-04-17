@@ -7,7 +7,7 @@
 */
 
 import { Color, ImmutableList, ImmutableMap, MathHelper, Record, Vec2 } from '@app/core/utils';
-import { scripts } from '@app/const';
+import { scripts, vogues } from '@app/const';
 import { Diagram } from './diagram';
 import { UndoableState } from './undoable-state';
 
@@ -105,8 +105,8 @@ export class EditorState extends Record<Props> {
             diagrams: ImmutableMap.of(diagrams),
             diagramIds: ImmutableList.of(diagramIds),
             id: MathHelper.guid(),
-            size: size || new Vec2(1280, 720),
-            name: name || 'Untitled Presentation',
+            size: size || new Vec2(vogues.common.canvasWidth, vogues.common.canvasHeight),
+            name: name || vogues.common.projectName,
             revealConfig: scripts.common.reveal,
         };
 

@@ -10,6 +10,8 @@ import { LineCurve, LineNode, LinePivot } from "@app/wireframes/interface";
 
 export const vogues = {
     common: {
+        canvasWidth: 1280,
+        canvasHeight: 720,
         dragSize: 12,
         editorMargin: 13,
         editorPad: 10,
@@ -27,6 +29,7 @@ export const vogues = {
         previewWidth: 128,
         previewHeight: 72,
         previewPadBot: 20,
+        projectName: 'Untitled Presentation',
     },
     color: {
         blue: '#00f',

@@ -49,7 +49,7 @@ export const PresentSetting = React.memo(() => {
 
     const handleSrcCancel = () => {
         setIsScrChange(false);
-        setRevealScr(JSON.stringify(editor.revealConfig, null, 4));
+        setRevealScr(editor.revealConfig);
     }
 
     return (
