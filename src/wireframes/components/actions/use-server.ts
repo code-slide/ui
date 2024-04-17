@@ -1,11 +1,10 @@
-import { Diagram, changeFrames, compileSlides, generatePdf, getEditor, getFilteredDiagrams, parseFrames, useStore } from "@app/wireframes/model";
+import { Diagram, changeFrames, compileSlides, getEditor, getFilteredDiagrams, parseFrames, useStore } from "@app/wireframes/model";
 import { AbstractControl } from "@app/wireframes/shapes/utils/abstract-control";
 import { getPlugin } from "@app/wireframes/shapes/utils/abstract-plugin";
 import * as svg from '@svgdotjs/svg.js';
 import { Color } from "@app/core/utils/color";
 import { shapes } from "@app/const";
 import { MessageInstance } from "antd/es/message/interface";
-import saveAs from "file-saver";
 import { useDispatch } from "react-redux";
 
 export function useServer() {
@@ -115,18 +114,17 @@ export function useServer() {
     const fetchPdf = async (messageApi: MessageInstance, messageKey: string) => {
         // Start compiling
         messageApi.open({ key: messageKey, type: 'loading', content: 'Exporting presentation...' });
-    
+
         try {
             const { linkPdf } = await fetchApi();
-            const blob = await generatePdf(linkPdf);
-            saveAs(blob, linkPdf);
+            window.open(linkPdf, '_blank');
         } catch (err) {
             messageApi.error(`${err}`);
         } finally {
             messageApi.open({
                 key: messageKey,
                 type: 'success',
-                content: `Export completed. Your presentation will be downloaded.`,
+                content: `Preparing completed. Your presentation will be opened in a new tab.`,
                 duration: 1,
             });
         }
