@@ -46,6 +46,15 @@ export const App = () => {
         }
     }, [dispatch]);
 
+    React.useEffect(() => {
+        const handleContextmenu = (e: MouseEvent) => { e.preventDefault() };
+        document.addEventListener('contextmenu', handleContextmenu);
+        
+        return function cleanup() {
+            document.removeEventListener('contextmenu', handleContextmenu)
+        }
+    }, [])
+
     return (
         <ConfigProvider
             theme={{
