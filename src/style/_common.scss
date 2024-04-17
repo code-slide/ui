@@ -342,8 +342,10 @@ header {
 
     &-segment {
         gap: 3px;
-        border-radius: 14px;
+        border-radius: 20px;
         padding: 3px 4px;
+        display: inline-flex;
+        background-color: $color-background;
     }
 }
 

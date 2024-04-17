@@ -10,6 +10,9 @@ import { LineCurve, LineNode, LinePivot } from "@app/wireframes/interface";
 
 export const vogues = {
     common: {
+        canvasWidth: 1280,
+        canvasHeight: 720,
+        close: 0,
         dragSize: 12,
         editorMargin: 13,
         editorPad: 10,
@@ -17,16 +20,16 @@ export const vogues = {
         iconSmall: 16,
         iconDefault: 18,
         iconLarge: 20,
-        offset: 1,
+        offset: 20,
         maxImgSize: 300,
         shapeWidth: 38,
         sidebarCode: 600,
-        sidebarClose: 0,
         sidebarShape: 38,
         selectionThickness: 1,
         previewWidth: 128,
         previewHeight: 72,
         previewPadBot: 20,
+        projectName: 'Untitled Presentation',
     },
     color: {
         blue: '#00f',
@@ -37,6 +40,7 @@ export const vogues = {
         selectionLock: '#f00',
         selectionStroke: '#080',
         transparent: 'rgba(0, 0, 0, 0)',
+        white: '#fff',
     },
     option: {
         strokeThickness: [0, 1, 2, 3, 4, 6, 8, 10],

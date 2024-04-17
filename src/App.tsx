@@ -25,6 +25,7 @@ export const App = () => {
     const selectedItem = useStore(getSelectedShape);
     const selectedSet = useStore(getSelectedItems);
     const sidebarWidth = useStore(s => s.ui.sidebarSize);
+    const footerHeight = useStore(s => s.ui.footerSize);
     const applicationMode = useStore(s => s.ui.selectedMode);
 
     const margin = {
@@ -85,7 +86,9 @@ export const App = () => {
                                         <ShapeView />
                                     </Layout.Sider>
 
-                                    <EditorView spacing={vogues.common.editorMargin} />
+                                    <Layout.Content >
+                                        <EditorView spacing={vogues.common.editorMargin} />
+                                    </Layout.Content>
                                 </Layout>
 
                                 <Layout.Sider 
@@ -97,7 +100,7 @@ export const App = () => {
                             </Layout>
                         </Layout>
 
-                        <Layout.Footer style={{ padding: 0 }} >
+                        <Layout.Footer style={{ padding: 0, display: footerHeight == 0 ? 'none' : '' }} >
                             <PagesView prevWidth={vogues.common.previewWidth} prevHeight={vogues.common.previewHeight} />
                         </Layout.Footer>
                     </Layout>

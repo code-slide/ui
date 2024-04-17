@@ -9,6 +9,7 @@
         line-height: 38px;
         justify-content: space-between;
         align-items: center;
+        overflow-x: scroll;
     }
 
     &-toggle {
@@ -36,7 +37,6 @@
         border-radius: 20px;
         padding: 3px 10px;
         flex-grow: 1;
-        overflow-x: scroll;
     }
 
     &-scroll {

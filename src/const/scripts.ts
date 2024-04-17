@@ -6,9 +6,17 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
+import { vogues } from "./vogues"
+
 export const scripts = {
     common: {
         animation: '',
-        reveal: JSON.stringify({ hash: true, backgroundTransition: "none" }, null, 4)
+        reveal: JSON.stringify({ 
+            hash: true, 
+            backgroundTransition: "none",
+            width: vogues.common.canvasWidth,
+            height: vogues.common.canvasHeight,
+            pdfMaxPagesPerSlide: 1
+        }, null, 4)
     }
 }

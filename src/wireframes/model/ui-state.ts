@@ -19,8 +19,11 @@ export interface UIState {
     // The info toast from any loading operation.
     infoToast?: string;
 
-    // The size for right sidebar
+    // The size for right sidebar.
     sidebarSize: number;
+
+    // The size for pages section.
+    footerSize: number;
 
     // The mode for the application.
     selectedMode: ModeType;
@@ -41,10 +44,11 @@ export interface UIStateInStore {
 
 export const createInitialUIState: () => UIState = () => {
     return {
+        footerSize: vogues.common.previewHeight,
         zoom: 1,
         selectedColor: 'palette',
         selectedMode: 'design',
         selectedAnimation: 'script',
-        sidebarSize: vogues.common.sidebarClose,
+        sidebarSize: vogues.common.close,
     };
 };

@@ -33,6 +33,11 @@ export const setSidebarSize =
         return { payload: { size } };
     });    
 
+export const setFooterSize =
+    createAction('ui/footerSize', (size: number) => {
+        return { payload: { size } };
+    });    
+
 export const setMode =
     createAction('ui/mode', (mode: ModeType) => {
         return { payload: { mode } };
@@ -74,6 +79,9 @@ export function ui(initialState: UIState): Reducer<UIState> {
         })
         .addCase(setSidebarSize, (state, action) => {
             state.sidebarSize = action.payload.size;
+        })
+        .addCase(setFooterSize, (state, action) => {
+            state.footerSize = action.payload.size;
         })
         .addCase(setMode, (state, action) => {
             state.selectedMode = action.payload.mode;

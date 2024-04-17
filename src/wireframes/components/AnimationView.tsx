@@ -21,13 +21,18 @@ export const AnimationView = () => {
     const dispatch = useDispatch();
     const diagram = useStore(getDiagram);
     const animation = useStore(s => s.ui.selectedAnimation);
+    const isFooter = useStore(s => s.ui.footerSize) == vogues.common.previewHeight ? 1 : 0;
 
-    const viewPadd = vogues.common.editorMargin * 2 + 10 * 3 + vogues.common.headerHeight + vogues.common.shapeWidth + (vogues.common.previewHeight + vogues.common.editorMargin + vogues.common.previewPadBot) + vogues.common.selectionThickness * 4;
+    const viewPadd = vogues.common.editorMargin * 2 + 10 * 3 + vogues.common.headerHeight + vogues.common.shapeWidth + isFooter *  (vogues.common.previewHeight + vogues.common.editorMargin + vogues.common.previewPadBot) + vogues.common.selectionThickness * 4;
     const [viewHeight, setViewHeight] = useState(window.innerHeight - viewPadd);
 
     useEffect(() => {
         window.addEventListener('resize', () => setViewHeight(window.innerHeight - viewPadd));
     }, []);
+
+    useEffect(() => {
+        setViewHeight(window.innerHeight - viewPadd);
+    }, [isFooter]);
 
     if (!diagram) {
         return null;

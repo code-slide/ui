@@ -6,37 +6,56 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-import { Segmented } from "antd";
+import { Button, Tooltip } from "antd";
 import * as React from "react";
-import { setMode, setSidebarSize } from "@app/wireframes/model";
-import { AnimationIcon, DesignIcon, IconOutline } from "@app/icons/icon";
+import { setFooterSize, setMode, setSidebarSize, useStore } from "@app/wireframes/model";
+import { AnimationIcon, PageIcon, IconOutline } from "@app/icons/icon";
 import { useDispatch } from "react-redux";
-import { SegmentedValue } from "antd/es/segmented";
 import { vogues } from "@app/const";
 
 export const ModeHeader = React.memo(() => {
     const dispatch = useDispatch();
+    const isAnimationOn = useStore(s => s.ui.sidebarSize) !== vogues.common.close;
+    const isPageOn = useStore(s => s.ui.footerSize) !== vogues.common.close;
 
-    const modeMenu = [
-        { value: 'design', icon: <IconOutline icon={DesignIcon} /> },
-        { value: 'animation', icon: <IconOutline icon={AnimationIcon} /> },
-    ];
+    const togglePagePanel = () => {
+        if (isPageOn) {
+            dispatch(setFooterSize(vogues.common.close));
+        } else {
+            dispatch(setFooterSize(vogues.common.previewHeight));
+        }
+    }
 
-    const modeMenuEvt = (key: SegmentedValue) => {
-        if (key == 'design') {
-            dispatch(setSidebarSize(vogues.common.sidebarClose));
+    const toggleAnimationPanel = () => {
+        if (isAnimationOn) {
+            dispatch(setSidebarSize(vogues.common.close));
             dispatch(setMode('design'));
         } else {
             dispatch(setSidebarSize(vogues.common.sidebarCode));
             dispatch(setMode('animation'));
         }
-    };
+    }
 
     return (
-        <Segmented 
-            className='menu-segment'
-            options={modeMenu}
-            onChange={(value) => modeMenuEvt(value)}
-        />
+        <>
+            <div className="menu-segment">
+                <Tooltip title={`${isPageOn ? 'Hide' : 'Show'} Pages Panel`} >
+                    <Button
+                        type="text" shape="circle"
+                        icon={<IconOutline icon={PageIcon} />}
+                        style={{ backgroundColor: isPageOn ? vogues.color.white : ''}}
+                        onClick={togglePagePanel}
+                    />
+                </Tooltip>
+                <Tooltip title={`Open ${isAnimationOn ? 'Animation' : 'Design'} Mode`}>
+                    <Button
+                        type="text" shape="circle"
+                        icon={<IconOutline icon={AnimationIcon} />}
+                        style={{ backgroundColor: isAnimationOn ? vogues.color.white : ''}}
+                        onClick={toggleAnimationPanel}
+                    />
+                </Tooltip>
+            </div>
+        </>
     )
 });
