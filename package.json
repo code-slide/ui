@@ -1,6 +1,6 @@
 {
   "name": "codeslide.net",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.8.1",

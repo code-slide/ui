@@ -76,6 +76,23 @@ export const compileSlides = async (fileName: string, title: string, size: numbe
     if (!response.ok) throw Error(response.statusText);
 
     const data = await response.json();
-    const link = `${SERVER_URL}/${data.link}`;
-    return link;
+
+    const linkSlide = `${SERVER_URL}/${data.slidePath}/${data.fileName}`;
+    const linkPdf = `${SERVER_URL}/${data.pdfPath}/${data.fileName}`;
+    
+    return { linkSlide, linkPdf };
+}
+
+export const generatePdf = async (link: string) => {
+    const response = await fetch(link, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/pdf',
+        },
+    });
+
+    if (!response.ok) throw Error(response.statusText);
+
+    const pdf = await response.blob();
+    return pdf;
 }

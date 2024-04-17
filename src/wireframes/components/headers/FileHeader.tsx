@@ -7,9 +7,9 @@
 */
 
 import { changeName, getEditor, useStore } from '@app/wireframes/model';
-import { Button, Dropdown, Form, Input } from 'antd';
+import { Button, Dropdown, Form, Input, message } from 'antd';
 import { useEffect, useState } from 'react';
-import { useLoading } from '../actions';
+import { useLoading, useServer } from '../actions';
 import { texts } from '@app/const/texts';
 import { useDispatch } from 'react-redux';
 import { FormModal, SettingModal } from '../modal';
@@ -19,9 +19,12 @@ import { MenuIcon } from '@app/style/icomoon/icomoon_icon';
 export const FileHeader = () => {
     const dispatch = useDispatch();
     const forLoading = useLoading();
+    const forServer = useServer();
     const editor = useStore(getEditor);
+    const [messageApi, contextHolder] = message.useMessage();
     const [isRename, setIsRename] = useState(false);
     const [isSettings, setIsSettings] = useState(false);
+    const messageKey = 'GENERATE';
 
     // Get editor's name
     let name = editor.name;
@@ -81,6 +84,13 @@ export const FileHeader = () => {
             className: 'loading-action-item',
             disabled: forLoading.downloadDiagram.disabled,
         },
+        {
+            key: texts.common.saveDiagramToFileTooltip,
+            label: texts.common.saveDiagramToFileTooltip,
+            icon: <MenuIcon icon='icon-save' />,
+            className: 'loading-action-item',
+            disabled: forLoading.downloadDiagram.disabled,
+        },
     ];
 
     const menuEvt: MenuProps['onClick'] = ({key}) => {
@@ -94,11 +104,14 @@ export const FileHeader = () => {
             dispatch(forLoading.openDiagramAction.onAction);
         } else if (key == forLoading.downloadDiagram.label) {
             dispatch(forLoading.downloadDiagram.onAction);
+        } else if (texts.common.saveDiagramToFileTooltip) {
+            dispatch(forServer.pdf(messageApi, messageKey));
         } 
     }
 
     return (
         <>
+            {contextHolder}
             <Dropdown
                 className='loading-action-button'
                 menu={{ items: menu, onClick: menuEvt }}
