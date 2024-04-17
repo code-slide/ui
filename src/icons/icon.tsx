@@ -164,6 +164,10 @@ export const TriangleIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconDefault} viewBox="0 -960 960 960" width={vogues.common.iconLarge}><path d="m96-192 384-576 384 576H96Zm134-72h500L480-638 230-264Zm250-187Z" /></svg>
 );
 
+export const PageIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconSmall} viewBox="0 -960 960 960" width={vogues.common.iconSmall}><path d="M480-164.157 152.31-418.771l49.076-37.691L480-240.771l278.614-215.691 49.076 37.691L480-164.157Zm0-177.383L152.31-596.154 480-850.767l327.69 254.613L480-341.54Zm0-254.614Zm0 178 230-178-230-178-230 178 230 178Z"/></svg>
+)
+
 export const ParagraphIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" height={vogues.common.iconSmall} viewBox="0 -960 960 960" width={vogues.common.iconLarge}><path d="m171-288 144-384h69l144 384h-66l-34-98H273l-35 98h-67Zm121-154h115l-56-159h-3l-56 159Zm358 164q-47 0-73.5-24.5T550-370q0-41 30.5-66t80.5-25q21 0 42 4t32 10v-14q0-24-19-40t-48-16q-21 0-37.5 8.5T600-483l-41-32q17-25 46.5-38.5T670-567q58 0 90 28.5t32 81.5v169h-57v-31h-3q-16 21-35.5 31T650-278Zm10-50q32 0 53-21.5t21-52.5q-14-8-29.5-12t-32.5-4q-29 0-46 13t-17 34q0 20 14 31.5t37 11.5Z" /></svg>
 );

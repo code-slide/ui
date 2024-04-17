@@ -12,6 +12,7 @@ export const vogues = {
     common: {
         canvasWidth: 1280,
         canvasHeight: 720,
+        close: 0,
         dragSize: 12,
         editorMargin: 13,
         editorPad: 10,
@@ -23,7 +24,6 @@ export const vogues = {
         maxImgSize: 300,
         shapeWidth: 38,
         sidebarCode: 600,
-        sidebarClose: 0,
         sidebarShape: 38,
         selectionThickness: 1,
         previewWidth: 128,
@@ -40,6 +40,7 @@ export const vogues = {
         selectionLock: '#f00',
         selectionStroke: '#080',
         transparent: 'rgba(0, 0, 0, 0)',
+        white: '#fff',
     },
     option: {
         strokeThickness: [0, 1, 2, 3, 4, 6, 8, 10],
