@@ -6,7 +6,7 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-import { changeName, getEditor, useStore } from '@app/wireframes/model';
+import { changeName, getEditor, setIsTourOpen, useStore } from '@app/wireframes/model';
 import { Button, Dropdown, Form, Input, message } from 'antd';
 import { useEffect, useState } from 'react';
 import { useLoading, useServer } from '../actions';
@@ -91,6 +91,21 @@ export const FileHeader = () => {
             className: 'loading-action-item',
             disabled: forLoading.downloadDiagram.disabled,
         },
+        {
+            type: 'divider',
+        },
+        {
+            key: texts.common.walkthrough,
+            label: texts.common.walkthrough,
+            icon: <MenuIcon icon='icon-graduation-cap' />,
+            className: 'loading-action-item',
+        },
+        {
+            key: texts.common.documentation,
+            label: texts.common.documentation,
+            icon: <MenuIcon icon='icon-help_outline' />,
+            className: 'loading-action-item',
+        },
     ];
 
     const menuEvt: MenuProps['onClick'] = ({key}) => {
@@ -104,9 +119,13 @@ export const FileHeader = () => {
             dispatch(forLoading.openDiagramAction.onAction);
         } else if (key == forLoading.downloadDiagram.label) {
             dispatch(forLoading.downloadDiagram.onAction);
-        } else if (texts.common.saveDiagramToFileTooltip) {
+        } else if (key == texts.common.saveDiagramToFileTooltip) {
             dispatch(forServer.pdf(messageApi, messageKey));
-        } 
+        } else if (key == texts.common.documentation) {
+            window.open('https://github.com/code-slide/ui/wiki');
+        } else if (key == texts.common.walkthrough) {
+            dispatch(setIsTourOpen(true));
+        }
     }
 
     return (

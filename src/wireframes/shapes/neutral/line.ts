@@ -85,10 +85,10 @@ export class Line implements ShapePlugin {
                 x2: b.right - height * Math.cos(ctlRad - ctlCurve * Math.PI / 2),
                 y1: isPivotTop 
                     ? b.top + height * Math.sin(ctlRad)
-                    : b.bottom - height * Math.sin(ctlRad - ctlCurve * Math.PI / 2),
+                    : b.bottom - height * Math.sin(ctlRad),
                 y2: isPivotTop 
                     ? b.bottom - height * Math.sin(ctlRad - ctlCurve * Math.PI / 2) 
-                    : b.top + height * Math.sin(ctlRad),
+                    : b.top + height * Math.sin(ctlRad - ctlCurve * Math.PI / 2),
             };
 
             // Control point, assuming isosceles triangle

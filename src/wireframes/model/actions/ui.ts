@@ -53,6 +53,11 @@ export const filterDiagrams =
         return { payload: { filter } };
     });
 
+export const setIsTourOpen =
+    createAction('ui/isTourOpen', (isOpen: boolean) => {
+        return { payload: { isOpen } };
+    });
+
 export function toastMiddleware() {
     const middleware: Middleware = () => (next: Dispatch<AnyAction>) => (action: any) => {
         if (showToast.match(action)) {
@@ -91,5 +96,8 @@ export function ui(initialState: UIState): Reducer<UIState> {
         })
         .addCase(selectColorTab, (state, action) => {
             state.selectedColor = action.payload.tab;
+        })
+        .addCase(setIsTourOpen, (state, action) => {
+            state.isTourOpen = action.payload.isOpen;
         }));
 }

@@ -13,7 +13,11 @@ import { useLoading } from './actions';
 import { ArrangeHeader, FileHeader, PresentHeader, IdHeader, ModeHeader } from './headers';
 import './styles/HeaderView.scss'
 
-export const HeaderView = React.memo(() => {
+interface HeaderViewProps {
+    refs: React.MutableRefObject<null>[];
+}
+
+export const HeaderView  = React.memo((props: HeaderViewProps) => {
     const forLoading = useLoading();
     const editor = useStore(s => s.editor);
     const tokenToWrite = useStore(s => s.loading.tokenToWrite);
@@ -58,14 +62,20 @@ export const HeaderView = React.memo(() => {
             <div className='header-left'>
                 <CustomTitle />
                 <ArrangeHeader />
-                <FileHeader />
+                <span ref={props.refs[0]}>
+                    <FileHeader />
+                </span>
                 <IdHeader />
             </div>
 
             <span style={{ float: 'right' }}>
-                <ModeHeader />
+                <span ref={props.refs[1]}>
+                    <ModeHeader />
+                </span>
                 <span className='menu-separator' />
-                <PresentHeader />
+                <span ref={props.refs[2]}>
+                    <PresentHeader />
+                </span>
             </span>
         </div>
     );
