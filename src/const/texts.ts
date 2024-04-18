@@ -82,7 +82,7 @@ export const texts = {
         renameTooltip: 'Rename presentation',
         removeTooltip: 'Delete selected items',
         saveDiagram: 'Download',
-        saveDiagramToFileTooltip: 'Export',
+        saveDiagramToFileTooltip: 'Export to PDF',
         saveDiagramTooltip: 'Download',
         savingDiagram: 'Saving presentation...',
         savingDiagramDone: 'Saving presentation completed successfully.',
