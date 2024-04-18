@@ -10,7 +10,6 @@ import { ActionReducerMapBuilder, createAction } from '@reduxjs/toolkit';
 import { Color, MathHelper, Vec2 } from '@app/core/utils';
 import { Diagram, EditorState } from './../internal';
 import { createDiagramAction, DiagramRef } from './utils';
-import { s } from 'vitest/dist/reporters-5f784f42.js';
 
 export const addDiagram =
     createAction('diagram/add', (diagramId?: string, index?: number) => {
