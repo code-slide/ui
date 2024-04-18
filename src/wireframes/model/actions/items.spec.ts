@@ -10,7 +10,7 @@
 
 import { shapes } from '@app/const';
 import { Vec2 } from '@app/core/utils';
-import { addShape, buildItems, calculateSelection, createClassReducer, Diagram, DiagramItem, DiagramItemSet, EditorState, lockItems, pasteItems, removeItems, renameItems, RendererService, selectItems, Serializer, unlockItems } from '@app/wireframes/model';
+import { addShape, buildItems, calculateSelection, createClassReducer, Diagram, DiagramItem, DiagramItemSet, EditorState, lockItems, pasteItems, removeItems, renameItems, RendererService, replaceId, selectItems, Serializer, unlockItems } from '@app/wireframes/model';
 import { Button } from '@app/wireframes/shapes/neutral/button';
 import { Icon } from '@app/wireframes/shapes/shared/icon';
 import { Raster } from '@app/wireframes/shapes/shared/raster';
@@ -218,5 +218,27 @@ describe('ItemsReducer', () => {
         const itemIds = calculateSelection([shape3], selectedDiagram, true, true);
 
         expect(itemIds).toEqual([groupId]);
+    });
+
+    it('should replace current id with new id', () => {
+        const action = replaceId(diagram, shape1, 'new-id');
+
+        const state_1 = EditorState.create().addDiagram(diagram);
+        const state_2 = reducer(state_1, action);
+
+        const newShape = state_2.diagrams.get(diagram.id)!.items.get('new-id')!;
+
+        expect(newShape).toBeDefined();
+    });
+
+    it('should not replace id if existed', () => {
+        const action = replaceId(diagram, shape1, shape2.id);
+
+        const state_1 = EditorState.create().addDiagram(diagram);
+        const state_2 = reducer(state_1, action);
+
+        const newShape = state_2.diagrams.get(diagram.id)!.items.get(shape1.id)!;
+
+        expect(newShape).toBeDefined();
     });
 });

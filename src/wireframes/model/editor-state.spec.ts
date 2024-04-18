@@ -144,4 +144,17 @@ describe('EditorState', () => {
 
         expect(state_2).toBe(state_1);
     });
+
+    it('should change project name', () => {
+        const state_2 = state_1.changeName('New Name');
+
+        expect(state_2.name).toBe('New Name');
+    });
+
+    it('should change reveal config', () => {
+        const config = JSON.stringify({config: 'config'});
+        const state_2 = state_1.changeReveal(config);
+
+        expect(state_2.revealConfig).toBe(config);
+    });
 });

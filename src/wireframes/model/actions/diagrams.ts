@@ -10,6 +10,7 @@ import { ActionReducerMapBuilder, createAction } from '@reduxjs/toolkit';
 import { Color, MathHelper, Vec2 } from '@app/core/utils';
 import { Diagram, EditorState } from './../internal';
 import { createDiagramAction, DiagramRef } from './utils';
+import { s } from 'vitest/dist/reporters-5f784f42.js';
 
 export const addDiagram =
     createAction('diagram/add', (diagramId?: string, index?: number) => {
@@ -136,7 +137,17 @@ export function buildDiagrams(builder: ActionReducerMapBuilder<EditorState>) {
         .addCase(updateNextId, (state, action) => {
             const { diagramId, renderer, count } = action.payload;
 
+            const diagram = state.diagrams.get(diagramId);
+            if (count < (diagram?.nextIds.get(renderer) ?? 0)) {
+                return state;
+            }
+
             return state.updateDiagram(diagramId, diagram => diagram.updateNextId(renderer, count));
+        })
+        .addCase(changeRevealConfig, (state, action) => {
+            const { config } = action.payload;
+
+            return state.changeReveal(config);
         })
         .addCase(duplicateDiagram, (state, action) => {
             const { diagramId, index } = action.payload;

@@ -98,11 +98,10 @@ export function buildItems(builder: ActionReducerMapBuilder<EditorState>) {
             const { diagramId, itemId, id } = action.payload;
             
             return state.updateDiagram(diagramId, diagram => {
-                // If current id is the same as new id, return
-                if (itemId === id) return diagram;
-
-                // If new id is already existed, throw error
-                if (diagram.items.has(id)) throw new Error(`Cannot perform action! Item with id ${id} already existed.`);
+                // If current id is the same as new id or new id is already existed, return
+                if (itemId === id || diagram.items.has(id)) {
+                    return diagram;
+                }
 
                 // If shape is not existed, return
                 const shape = diagram.items.get(itemId);
