@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?nhzet0');
-  src:  url('fonts/icomoon.eot?nhzet0#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?nhzet0') format('truetype'),
-    url('fonts/icomoon.woff?nhzet0') format('woff'),
-    url('fonts/icomoon.svg?nhzet0#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?713dey');
+  src:  url('fonts/icomoon.eot?713dey#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?713dey') format('truetype'),
+    url('fonts/icomoon.woff?713dey') format('woff'),
+    url('fonts/icomoon.svg?713dey#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -13,6 +13,7 @@
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
+  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -24,6 +25,27 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-graduation-cap:before {
+  content: "\e908";
+}
+.icon-sidebar-right:before {
+  content: "\e90e";
+}
+.icon-sidebar-left:before {
+  content: "\e90f";
+}
+.icon-distribute-h2:before {
+  content: "\e90a";
+}
+.icon-distribute-v2:before {
+  content: "\e90b";
+}
+.icon-distribute-h:before {
+  content: "\e90c";
+}
+.icon-distribute-v:before {
+  content: "\e90d";
+}
 .icon-flip_to_front:before {
   content: "\e900";
 }
@@ -78,23 +100,8 @@
 .icon-undo:before {
   content: "\e166";
 }
-.icon-sidebar-right:before {
-  content: "\e90e";
-}
-.icon-sidebar-left:before {
-  content: "\e90f";
-}
-.icon-distribute-h2:before {
-  content: "\e90a";
-}
-.icon-distribute-v2:before {
-  content: "\e90b";
-}
-.icon-distribute-h:before {
-  content: "\e90c";
-}
-.icon-distribute-v:before {
-  content: "\e90d";
+.icon-help_outline:before {
+  content: "\e909";
 }
 .icon-new:before {
   content: "\e924";
