@@ -89,7 +89,6 @@ export const texts = {
         savingDiagram: 'Saving presentation...',
         savingDiagramDone: 'Saving presentation completed successfully.',
         savingDiagramFailed: 'Saving presentation failed with internal error.',
-        savingDiagramDoneUrl: (fullUrl: string) => `Saving presentation completed under ${fullUrl}.`,
         sendBackwards: 'Send Backwards',
         sendToBack: 'Send to Back',
         settings: 'Settings',
