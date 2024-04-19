@@ -51,7 +51,8 @@
     "test:cv": "vitest --coverage",
     "test:ci": "vitest run --coverage --browser.name=chromium --browser.provider=playwright --browser.headless",
     "storybook": "storybook dev -p 6006",
-    "chromatic": "npx chromatic --project-token=chpt_fb075605340d316"
+    "chromatic": "npx chromatic --project-token=chpt_fb075605340d316",
+    "fix-coverage-paths": "replace-in-file '/home/runner/work/ui/ui/' './' coverage/coverage-final.json coverage/clover.xml"
   },
   "devDependencies": {
     "@codecov/vite-plugin": "^0.0.1-beta.6",
@@ -92,6 +93,7 @@
     "eslint-plugin-sort-keys-fix": "^1.1.2",
     "eslint-plugin-storybook": "^0.6.15",
     "jsdom": "^24.0.0",
+    "replace-in-file": "^7.1.0",
     "sass": "^1.72.0",
     "storybook": "^7.5.1",
     "typescript": "^5.2.2",

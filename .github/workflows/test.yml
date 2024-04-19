@@ -27,13 +27,14 @@ jobs:
       - name: Run Tests 
         run: npm run test:ci
 
-      - name: Run Tests Again
-        run: npm run test:ci
+      - name: Fix coverage paths
+        run: npm run fix-coverage-paths
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.1.1
+        uses: codecov/codecov-action@v4.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          slug: code-slide/ui
 
       - name: Run Build 
         run: npm run build
