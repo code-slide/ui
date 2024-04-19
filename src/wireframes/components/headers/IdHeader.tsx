@@ -26,11 +26,16 @@ export const IdHeader = () => {
     };
 
     const acceptUpdateId = () => {
-        try {
-            dispatch(replaceId(diagram!, id, newId));
-        } catch (e) {
-            if (e instanceof Error) messageApi.error(e.message);
+        dispatch(replaceId(diagram!, id, newId));
+        setIsUpdate(false);
+    };
+
+    const handleUpdateId = () => {
+        if (diagram!.items.has(newId)) {
+            messageApi.error(`Cannot change ID. ${newId} is assigning to another shape.`);
             cancelUpdateId();
+        } else {
+            acceptUpdateId();
         }
     };
 
@@ -52,7 +57,7 @@ export const IdHeader = () => {
                             className='shape-cta'
                             type='text'
                             icon={<CheckOutlined />}
-                            onClick={acceptUpdateId} />
+                            onClick={handleUpdateId} />
                         : <></>
                 }
             </Space.Compact>

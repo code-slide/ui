@@ -48,14 +48,14 @@ export const setAnimation =
         return { payload: { animation } };
     });
 
-export const filterDiagrams =
-    createAction('ui/diagrams/filter', (filter: string) => {
-        return { payload: { filter } };
-    });
-
 export const setIsTourOpen =
     createAction('ui/isTourOpen', (isOpen: boolean) => {
         return { payload: { isOpen } };
+    });
+
+export const filterDiagrams =
+    createAction('ui/diagrams/filter', (filter: string) => {
+        return { payload: { filter } };
     });
 
 export function toastMiddleware() {

@@ -277,4 +277,37 @@ describe('Diagram', () => {
 
         expect(diagram_3.rootIds.values).toEqual([shape1.id, shape3.id, shape2.id]);
     });
+
+    it('should update next id', () => {
+        const diagram_2 = diagram_1
+            .updateNextId('Textbox', 10)
+            .updateNextId('Shape', 12)
+            .updateNextId('Group', 20);
+
+        expect(diagram_2.nextIds.get('Textbox')).toBe(10);
+        expect(diagram_2.nextIds.get('Shape')).toBe(12);
+        expect(diagram_2.nextIds.get('Group')).toBe(20);
+    });
+
+    it('should set new frames', () => {
+        const frame_1 = [['Shape1']];
+        const frame_2 = [['Shape3', 'Shape4']];
+
+        const diagram_2 = diagram_1.setFrames(frame_1);
+        const diagram_3 = diagram_1.setFrames(frame_2);
+
+        expect(diagram_2.frames).toEqual(frame_1);
+        expect(diagram_3.frames).toEqual(frame_2);
+    });
+
+    it('should modify animation script', () => {
+        const script_1 = '<Python> \n print("<1> Shape1")';
+        const script_2 = '<1> Shape2';
+
+        const diagram_2 = diagram_1.setScript(script_1);
+        const diagram_3 = diagram_1.setScript(script_2);
+
+        expect(diagram_2.script).toEqual(script_1);
+        expect(diagram_3.script).toEqual(script_2);
+    });
 });

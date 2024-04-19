@@ -6,7 +6,7 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-import { ImmutableList, ImmutableMap, MathHelper, Record, Rotation } from '@app/core/utils';
+import { IDHelper, ImmutableList, ImmutableMap, MathHelper, Record, Rotation } from '@app/core/utils';
 import { Shape } from '@app/wireframes/interface';
 import { shapes } from '@app/const';
 import { Configurable } from './configurables';
@@ -202,11 +202,11 @@ export class DiagramItem extends Record<Props> implements Shape {
         return this.appearance.get(key);
     }
 
-    public static createGroup(setup: InitialGroupProps = {}) {
+    public static createGroup(setup: InitialGroupProps = {}, diagram?: Diagram) {
         const { id, childIds, isLocked, name, rotation } = setup;
 
         const props: GroupProps & ItemProps = {
-            id: id || MathHelper.nextId(),
+            id: id || (typeof(diagram) !== 'undefined' ? IDHelper.nextId(diagram, 'Group').id : MathHelper.nextId()),
             childCache: {},
             childIds: ImmutableList.of(childIds),
             isLocked,
@@ -218,11 +218,11 @@ export class DiagramItem extends Record<Props> implements Shape {
         return new DiagramItem(props as any);
     }
 
-    public static createShape(setup: InitialShapeProps) {
+    public static createShape(setup: InitialShapeProps, diagram?: Diagram) {
         const { id, appearance, configurables, constraint, isLocked, name, renderer, transform } = setup;
 
         const props: ShapeProps & ItemProps = {
-            id: id || MathHelper.nextId(),
+            id: id || (typeof(diagram) !== 'undefined' ? IDHelper.nextId(diagram, renderer).id : MathHelper.nextId()),
             appearance: ImmutableMap.of(appearance),
             configurables,
             constraint,

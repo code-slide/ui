@@ -6,7 +6,25 @@
  * Copyright (c) Do Duc Quan. All rights reserved.
 */
 
-import { ColorConfigurable, SelectionConfigurable, SliderConfigurable } from '@app/wireframes/model';
+import { ColorConfigurable, NumberConfigurable, SelectionConfigurable, SliderConfigurable, TextConfigurable, ToggleConfigurable } from '@app/wireframes/model';
+
+describe('TextConfigurable', () => {
+    it('should instantiate', () => {
+        const configurable = new TextConfigurable('MyName', 'MyLabel');
+
+        expect(configurable).toBeDefined();
+    });
+});
+
+
+describe('ToggleConfigurable', () => {
+    it('should instantiate', () => {
+        const configurable = new ToggleConfigurable('MyName', 'MyLabel');
+
+        expect(configurable).toBeDefined();
+    });
+});
+
 
 describe('SelectionConfigurable', () => {
     it('should instantiate', () => {
@@ -30,6 +48,24 @@ describe('SliderConfigurable', () => {
 
     it('should instantiate default', () => {
         const configurable = new SliderConfigurable('MyName', 'MyLabel');
+
+        expect(configurable).toBeDefined();
+        expect(configurable.min).toBe(0);
+        expect(configurable.max).toBe(100);
+    });
+});
+
+describe('NumberConfigurable', () => {
+    it('should instantiate', () => {
+        const configurable = new NumberConfigurable('MyName', 'MyLabel', 10, 20);
+
+        expect(configurable).toBeDefined();
+        expect(configurable.min).toBe(10);
+        expect(configurable.max).toBe(20);
+    });
+
+    it('should instantiate default', () => {
+        const configurable = new NumberConfigurable('MyName', 'MyLabel');
 
         expect(configurable).toBeDefined();
         expect(configurable.min).toBe(0);

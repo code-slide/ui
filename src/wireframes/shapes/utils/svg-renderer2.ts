@@ -11,11 +11,10 @@
 import * as svg from '@svgdotjs/svg.js';
 import { marked } from 'marked';
 import { Rect } from 'react-measure';
+import katex from 'katex';
 import { escapeHTML, Rect2, sizeInPx, SVGHelper, Types } from '@app/core';
 import { RendererColor, RendererElement, RendererOpacity, RendererText, RendererWidth, Shape, ShapeFactory, ShapeFactoryFunc, ShapeProperties, ShapePropertiesFunc, TextConfig, TextDecoration } from '@app/wireframes/interface';
 import { AbstractRenderer2 } from './abstract-renderer';
-
-import katex from 'katex';
 
 export * from './abstract-renderer';
 
@@ -135,7 +134,7 @@ class Factory implements ShapeFactory {
     public textMultiline(config: RendererText, bounds: Rect2, properties?: ShapePropertiesFunc, allowMarkdown?: boolean) {
         return this.new('foreignObject', () => SVGHelper.createText(), p => {
             p.setBackgroundColor('transparent');
-            p.setText(config?.text?.replace(/\n/g, '<br />'), allowMarkdown);
+            p.setText(config?.text, allowMarkdown);
             p.setFontSize(config);
             p.setFontFamily(config);
             p.setAlignment(config);
@@ -270,7 +269,7 @@ class Factory implements ShapeFactory {
 }
 
 export class SVGRenderer2 extends Factory implements AbstractRenderer2 {
-    private measureDiv: HTMLDivElement;
+    private readonly measureDiv: HTMLDivElement;
 
     public static readonly INSTANCE = new SVGRenderer2();
 
@@ -428,7 +427,7 @@ class Properties implements ShapeProperties {
             const div = element.node.children[0] as HTMLDivElement;
 
             if (div?.nodeName === 'DIV') {
-                const textOrHtml = marked.parseInline(value);
+                const textOrHtml = marked.parseInline(value) as string;
 
                 if (textOrHtml.indexOf('&') >= 0 || textOrHtml.indexOf('<') >= 0) {
                     div.innerHTML = textOrHtml;
@@ -454,16 +453,12 @@ class Properties implements ShapeProperties {
             const div = element.node.children[0] as HTMLDivElement;
 
             if (div?.nodeName === 'DIV') {
-                var textOrHtml = katex.renderToString(value, {
+                const kaText = katex.renderToString(value, {
                     throwOnError: false,
                     output: 'html',
                 });
 
-                if (textOrHtml.indexOf('&') >= 0 || textOrHtml.indexOf('<') >= 0) {
-                    div.innerHTML = textOrHtml;
-                } else {
-                    div.innerText = textOrHtml;
-                }
+                div.innerHTML = kaText;
             }
         },
         'text-alignment': (value, element) => {

@@ -136,7 +136,17 @@ export function buildDiagrams(builder: ActionReducerMapBuilder<EditorState>) {
         .addCase(updateNextId, (state, action) => {
             const { diagramId, renderer, count } = action.payload;
 
+            const diagram = state.diagrams.get(diagramId);
+            if (count < (diagram?.nextIds.get(renderer) ?? 0)) {
+                return state;
+            }
+
             return state.updateDiagram(diagramId, diagram => diagram.updateNextId(renderer, count));
+        })
+        .addCase(changeRevealConfig, (state, action) => {
+            const { config } = action.payload;
+
+            return state.changeReveal(config);
         })
         .addCase(duplicateDiagram, (state, action) => {
             const { diagramId, index } = action.payload;
