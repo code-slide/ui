@@ -26,6 +26,9 @@ jobs:
 
       - name: Run Tests 
         run: npm run test:ci
+
+      - name: Run Tests Again
+        run: npm run test:ci
         
       - name: Upload storybook to Chromatic
         uses: chromaui/action@v1
