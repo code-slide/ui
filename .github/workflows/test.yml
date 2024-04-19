@@ -1,9 +1,9 @@
-name: Test
+name: Build & Test
 
 on:
   push:
-    branches:
-      - '!main'
+    branches-ignore:
+      - main
 
 jobs:
   build:
@@ -28,7 +28,9 @@ jobs:
         run: npm run test:ci
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4.0.1
+        uses: codecov/codecov-action@v4.1.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          slug: code-slide/ui
+
+      - name: Run Build 
+        run: npm run build
