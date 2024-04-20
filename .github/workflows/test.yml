@@ -27,6 +27,9 @@ jobs:
       - name: Run Tests 
         run: npm run test:ci
 
+      - name: Run Tests Again
+        run: npm run test:ci
+
       - name: Fix coverage paths
         run: npm run fix-coverage-paths
 
