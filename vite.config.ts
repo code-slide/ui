@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import { codecovVitePlugin } from "@codecov/vite-plugin";
+import autoprefixer from 'autoprefixer';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -26,4 +27,12 @@ export default defineConfig({
             uploadToken: process.env.CODECOV_TOKEN,
         }),
     ],
+
+    css: {
+        postcss: {
+          plugins: [
+            autoprefixer({}) // add options if needed
+          ],
+        }
+      }
 });
