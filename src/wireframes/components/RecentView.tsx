@@ -8,15 +8,15 @@
 
 import { Empty } from 'antd';
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
 import { useEventCallback } from '@app/core';
 import { texts } from '@app/const';
 import { loadDiagramFromServer, RecentDiagram, useStore } from '@app/wireframes/model';
+import { useAppDispatch } from '@app/store';
 import { RecentItem } from './menu';
 import './styles/RecentView.scss';
 
 export const RecentView = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const recent = useStore(x => x.loading.recentDiagrams);
 
     const doLoad = useEventCallback((item: RecentDiagram) => {

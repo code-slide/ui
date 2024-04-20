@@ -11,13 +11,13 @@ import { Button, Dropdown, Form, Input, message } from 'antd';
 import { useEffect, useState } from 'react';
 import { useLoading, useServer } from '../actions';
 import { texts } from '@app/const/texts';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@app/store';
 import { FormModal, SettingModal } from '../modal';
 import type { MenuProps } from 'antd';
 import { MenuIcon } from '@app/style/icomoon/icomoon_icon';
 
 export const FileHeader = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const forLoading = useLoading();
     const forServer = useServer();
     const editor = useStore(getEditor);
@@ -120,7 +120,7 @@ export const FileHeader = () => {
         } else if (key == forLoading.downloadDiagram.label) {
             dispatch(forLoading.downloadDiagram.onAction);
         } else if (key == texts.common.saveDiagramToFileTooltip) {
-            dispatch(forServer.pdf(messageApi, messageKey));
+            forServer.pdf(messageApi, messageKey);
         } else if (key == texts.common.documentation) {
             window.open('https://github.com/code-slide/ui/wiki');
         } else if (key == texts.common.walkthrough) {

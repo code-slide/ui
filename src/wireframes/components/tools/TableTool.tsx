@@ -9,16 +9,19 @@
 import { DeleteColumnOutlined, DeleteRowOutlined, InsertRowAboveOutlined, InsertRowBelowOutlined, InsertRowLeftOutlined, InsertRowRightOutlined } from '@ant-design/icons';
 import { useEventCallback } from '@app/core';
 import { Button, Tooltip } from 'antd';
-import { useStore, getSelectedShape, changeItemsAppearance, getDiagram } from '@app/wireframes/model';
+import { useStore, getSelection, changeItemsAppearance, getDiagram } from '@app/wireframes/model';
 import * as React from 'react';
 import { getAddToTable, getRemoveFromTable } from '@app/wireframes/shapes/neutral/table';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@app/store';
 import { texts, shapes } from '@app/const';
 
 export const TableTool = React.memo(() => {
-    const dispatch = useDispatch();
-    const selectedItem = useStore(getSelectedShape);
+    const dispatch = useAppDispatch();
+    const selectedItems = useStore(getSelection);
     const selectedDiagram = useStore(getDiagram);
+
+    if (selectedItems.selection.size !== 1) return;
+    const selectedItem = useStore(getSelection).selectedItems[0];
 
     const modifyTable = useEventCallback((mode: string, type: string) => {
         if (selectedItem && selectedDiagram) {

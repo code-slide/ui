@@ -9,29 +9,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
 import { useEventCallback } from '@app/core';
 import { texts } from '@app/const';
-import { alignItems, AlignmentMode, getDiagramId, getSelectedItems, orderItems, OrderMode, useStore } from '@app/wireframes/model';
+import { useAppDispatch } from '@app/store';
+import { alignItems, AlignmentMode, getDiagramId, getSelection, orderItems, OrderMode, useStore } from '@app/wireframes/model';
 import { UIAction } from './shared';
 
 export function useAlignment() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const selectedDiagramId = useStore(getDiagramId);
-    const selectedItems = useStore(getSelectedItems);
-    const canAlign = selectedItems.length > 1;
-    const canDistribute = selectedItems.length > 2;
-    const canOrder = selectedItems.length > 0;
+    const selectedItems = useStore(getSelection);
+    const canAlign = selectedItems.selection.size > 1;
+    const canDistribute = selectedItems.selection.size > 2;
+    const canOrder = selectedItems.selection.size > 0;
 
     const doAlign = useEventCallback((mode: AlignmentMode) => {
         if (selectedDiagramId) {
-            dispatch(alignItems(mode, selectedDiagramId, selectedItems));
+            dispatch(alignItems(mode, selectedDiagramId, selectedItems.selectedItems));
         }
     });
 
     const doOrder = useEventCallback((mode: OrderMode) => {
         if (selectedDiagramId) {
-            dispatch(orderItems(mode, selectedDiagramId, selectedItems));
+            dispatch(orderItems(mode, selectedDiagramId, selectedItems.selectedItems));
         }
     });
 

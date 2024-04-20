@@ -8,8 +8,8 @@
 
 import { Button, Form, Input, Tooltip } from 'antd';
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
-import { Diagram, changeItemsAppearance, getDiagram, getSelectedShape, useStore } from '@app/wireframes/model';
+import { useAppDispatch } from '@app/store';
+import { Diagram, changeItemsAppearance, getDiagram, useStore, getSelection } from '@app/wireframes/model';
 import { useEffect, useState } from 'react';
 import { AspectRatioIcon, IconOutline, LinkIcon, VectorIcon } from '@app/icons/icon';
 import { texts, shapes } from '@app/const';
@@ -27,10 +27,13 @@ interface ChangeProps {
 }
 
 export const GraphicTool = React.memo(() => {
-    const dispatch = useDispatch();
-    const selectedItem = useStore(getSelectedShape);
+    const dispatch = useAppDispatch();
+    const selectedItems = useStore(getSelection);
     const selectedDiagram = useStore(getDiagram);
 
+    if (selectedItems.selection.size != 1) return;
+
+    const selectedItem = selectedItems.selectedItems[0];
     const [isKeepAspect, setIsKeepAspect] = useState(!selectedItem ? true : selectedItem.getAppearance(shapes.key.aspectRatio));
 
     useEffect(() => {
@@ -60,7 +63,7 @@ export const GraphicTool = React.memo(() => {
 });
 
 const SourceTool = (props: ChangeProps) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [isShapeModal, setIsShapeModal] = useState<ShapeModal>('');
     
     const handleChange = (key: string, value: string) => {

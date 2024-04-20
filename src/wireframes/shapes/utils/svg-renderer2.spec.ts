@@ -366,7 +366,7 @@ describe('SVGRenderer2', () => {
                 });
             });
 
-            expect((svgGroup.get(0).node.children[0]).textContent).toEqual('Text');
+            expect((svgGroup.get(0).node.children[0] as HTMLDivElement).innerText).toEqual('Text');
         });
 
         it('should render text from shape', () => {
@@ -376,7 +376,7 @@ describe('SVGRenderer2', () => {
                 });
             });
 
-            expect((svgGroup.get(0).node.children[0]).textContent).toEqual('Text');
+            expect((svgGroup.get(0).node.children[0] as HTMLDivElement).innerText).toEqual('Text');
         });
     });
 

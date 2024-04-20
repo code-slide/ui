@@ -13,7 +13,7 @@ const DEFAULT_APPEARANCE = {
     [shapes.key.fontSize]: shapes.common.fontSize,
     [shapes.key.foregroundColor]: shapes.common.textColor,
     [shapes.key.textAlignment]: 'left',
-    [shapes.key.text]: 'Text',
+    [shapes.key.text]: '',
 };
 
 export class Textbox implements ShapePlugin {

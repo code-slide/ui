@@ -10,7 +10,7 @@
 /* eslint-disable one-var-declaration-per-line */
 
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@app/store';
 import { Color, Types, useEventCallback } from '@app/core';
 import { changeItemsAppearance, DiagramItemSet } from '@app/wireframes/model';
 
@@ -39,6 +39,10 @@ export type UniqueConverter<TInput> = { parse: (value: any) => TInput; write: (v
 
 const DEFAULT_CONVERTER = {
     parse: (value: any) => {
+        if (value === 'undefined') {
+            return undefined!;
+        }
+
         return value;
     },
     write: (value: any) => {
@@ -48,6 +52,10 @@ const DEFAULT_CONVERTER = {
 
 const COLOR_CONVERTER: UniqueConverter<Color> = {
     parse: (value: any) => {
+        if (value === 'undefined') {
+            return undefined!;
+        }
+
         return Color.fromValue(value);
     },
     write: (value: Color) => {
@@ -69,7 +77,7 @@ export function useAppearance<T>(selectedDiagramId: RefDiagramId, selectedSet: R
 }
 
 export function useAppearanceCore<T>(selectedDiagramId: RefDiagramId, selectedSet: RefDiagramItemSet, key: string, converter: UniqueConverter<T>, allowUndefined = false, force = false): Result<T> {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const value = React.useMemo(() => {
         if (!selectedSet) {
@@ -78,8 +86,12 @@ export function useAppearanceCore<T>(selectedDiagramId: RefDiagramId, selectedSe
 
         let value: T | undefined, empty = true;
 
-        for (const shape of selectedSet.allShapes) {
-            const appearance = shape.appearance.get(key);
+        for (const item of selectedSet.nested.values()) {
+            if (item.type === 'Group') {
+                continue;
+            }
+
+            const appearance = item.appearance.get(key);
 
             if (!Types.isUndefined(appearance) || allowUndefined) {
                 empty = false;
@@ -99,7 +111,7 @@ export function useAppearanceCore<T>(selectedDiagramId: RefDiagramId, selectedSe
 
     const doChangeAppearance = useEventCallback((value: T) => {
         if (selectedDiagramId && selectedSet) {
-            dispatch(changeItemsAppearance(selectedDiagramId, selectedSet.allShapes, key, converter.write(value), force));
+            dispatch(changeItemsAppearance(selectedDiagramId, selectedSet.deepEditableItems, key, converter.write(value), force));
         }
     });
 

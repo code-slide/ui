@@ -8,7 +8,7 @@
 
 import { ActionReducerMapBuilder, createAction } from '@reduxjs/toolkit';
 import { Color, Types } from '@app/core/utils';
-import { DiagramItemSet, EditorState, RendererService, Transform } from './../internal';
+import { EditorState, RendererService, Transform } from './../internal';
 import { createItemsAction, DiagramRef, ItemsRef } from './utils';
 
 export const changeColors =
@@ -41,7 +41,7 @@ export function buildAppearance(builder: ActionReducerMapBuilder<EditorState>) {
                     }
 
                     const appearance = item.appearance.mutate(mutator => {
-                        for (const [key, value] of Object.entries(item.appearance.raw)) {
+                        for (const [key, value] of item.appearance.entries) {
                             if (key.endsWith('COLOR')) {
                                 const parsedColor = Color.fromValue(value);
 
@@ -62,9 +62,7 @@ export function buildAppearance(builder: ActionReducerMapBuilder<EditorState>) {
             return state.updateDiagram(diagramId, diagram => {
                 const { key, value } = appearance;
 
-                const set = DiagramItemSet.createFromDiagram(itemIds, diagram);
-
-                return diagram.updateItems(set.allShapes.map(x => x.id), item => {
+                return diagram.updateItems(itemIds, item => {
                     const rendererInstance = RendererService.get(item.renderer);
 
                     if (!rendererInstance) {
@@ -84,11 +82,9 @@ export function buildAppearance(builder: ActionReducerMapBuilder<EditorState>) {
 
             return state.updateDiagram(diagramId, diagram => {
                 const boundsOld = Transform.fromJS(action.payload.oldBounds);
-                const boundsNew = Transform.fromJS(action.payload.newBounds);
+                const boundsNew = Transform.fromJS(action.payload.newBounds);;
 
-                const set = DiagramItemSet.createFromDiagram(itemIds, diagram);
-
-                return diagram.updateItems(set.allItems.map(x => x.id), item => {
+                return diagram.updateItems(itemIds, item => {
                     return item.transformByBounds(boundsOld, boundsNew);
                 });
             });

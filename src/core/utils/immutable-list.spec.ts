@@ -18,9 +18,11 @@ describe('ImmutableList', () => {
     });
 
     it('should cache empty instance', () => {
-        const list = ImmutableList.of([]);
+        const list_1 = ImmutableList.of([]);
+        const list_2 = ImmutableList.of(undefined);
 
-        expect(list).toBe(ImmutableList.empty());
+        expect(list_1).toBe(ImmutableList.empty());
+        expect(list_2).toBe(ImmutableList.empty());
     });
 
     it('should instantiate from array of items', () => {
@@ -30,6 +32,13 @@ describe('ImmutableList', () => {
         expect(list_1.at(0)).toBe(1);
         expect(list_1.at(1)).toBe(2);
         expect(list_1.at(2)).toBe(3);
+    });
+
+    it('should instantiate from another ImmutableList', () => {
+        const list_1 = ImmutableList.of([1, 2, 3]);
+        const list_2 = ImmutableList.of(list_1);
+
+        expect(list_1).toBe(list_2);
     });
 
     it('should add indexes', () => {
@@ -188,5 +197,14 @@ describe('ImmutableList', () => {
         const list_a = ImmutableList.of([1, 2, 3]);
 
         expect(list_a.equals(null!)).toBeFalsy();
+    });
+
+    it('should modify list only if remove item (-> undefined)', () => {
+        const list = ImmutableList.of([1, 2, 3]);
+
+        expect(list.set(2, undefined).values).toEqual([1, 2, undefined]);
+        expect(list.set(1, 2)).toBe(list);
+        expect(list.set(-1, 4)).toBe(list);
+        expect(list.set(4, 4)).toBe(list);
     });
 });

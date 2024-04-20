@@ -26,6 +26,9 @@ jobs:
 
       - name: Run Tests 
         run: npm run test:ci
+
+      - name: Run Tests Again
+        run: npm run test:ci
         
       - name: Upload storybook to Chromatic
         uses: chromaui/action@v1
@@ -36,6 +39,7 @@ jobs:
         uses: codecov/codecov-action@v4.1.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          slug: code-slide/ui
         
       - name: Run Build 
         run: npm run build

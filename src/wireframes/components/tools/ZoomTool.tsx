@@ -8,15 +8,15 @@
 
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useStore, getEditor, setZoom } from '@app/wireframes/model';
 import { Button, Dropdown } from 'antd';
 import { Vec2 } from '@app/core';
 import { vogues } from '@app/const';
+import { useAppDispatch } from '@app/store';
 import type { MenuProps } from 'antd';
 
 export const ZoomTool = React.memo(() => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const editorSize = useStore(getEditor).size;
     const sidebarWidth = useStore(s => s.ui.sidebarSize);
     const isFooter = useStore(s => s.ui.footerSize) == vogues.common.previewHeight ? 1 : 0;

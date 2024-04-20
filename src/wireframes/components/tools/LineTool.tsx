@@ -8,7 +8,7 @@
 
 import { Button, Tooltip } from 'antd';
 import * as React from 'react';
-import { getDiagramId, getSelectionSet, useStore } from '@app/wireframes/model';
+import { getDiagramId, getSelection, useStore } from '@app/wireframes/model';
 import { useAppearance } from '../actions';
 import { IconOutline, CurveBotLeftIcon, CurveUpRightIcon, LineDownIcon, LineEndArrowIcon, LineEndNoneIcon, LineEndTriangleIcon, LineStartArrowIcon, LineStartNoneIcon, LineStartTriangleIcon, LineUpIcon, CurveBotRightIcon, CurveUpLeftIcon } from '@app/icons/icon';
 import { shapes } from '@app/const';
@@ -16,7 +16,7 @@ import { LineCurve, LineEdge, LineNode, LinePivot } from '@app/wireframes/interf
 
 export const LineTool = React.memo((props: {lineType: LineEdge}) => {
     const selectedDiagramId = useStore(getDiagramId);
-    const selectedSet = useStore(getSelectionSet);
+    const selectedSet = useStore(getSelection);
 
     const [lineStart, setLineStart] = useAppearance<LineNode>(selectedDiagramId, selectedSet, shapes.key.lineStart);
     const [lineEnd, setLineEnd] = useAppearance<LineNode>(selectedDiagramId, selectedSet, shapes.key.lineEnd);

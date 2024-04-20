@@ -16,6 +16,8 @@ describe('Vec2', () => {
         expect(v.y).toBe(20);
 
         expect(v.toString()).toBe('(10, 20)');
+        expect(v.getX()).toBe('10');
+        expect(v.getY()).toBe('20');
     });
 
     it('should make valid equal comparisons', () => {

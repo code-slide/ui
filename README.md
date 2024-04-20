@@ -1,5 +1,8 @@
 # codeslide.net: A presentation tool for simplified sequential animations
 
+[![Build & Deploy](https://github.com/code-slide/ui/actions/workflows/build.yml/badge.svg)](https://github.com/code-slide/ui/actions/workflows/build.yml)
+[![codecov](https://codecov.io/gh/code-slide/ui/graph/badge.svg?token=WLF3XX4XNP)](https://codecov.io/gh/code-slide/ui)
+
 This project is to integrate coding capabilities into a presentation creation tool. Ideal for streamlining the process, especially when dealing with multiple items on a slide.
 
 Try it out at: https://www.codeslide.net/

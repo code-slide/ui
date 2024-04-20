@@ -46,12 +46,20 @@ export module Types {
         return value && typeof value === 'object' && value.constructor === RegExp;
     }
 
+    export function isMap(value: any): value is Map<any, any> {
+        return value instanceof Map;
+    }
+
+    export function isSet(value: any): value is Set<any> {
+        return value instanceof Set;
+    }
+
     export function isDate(value: any): value is Date {
         return value instanceof Date;
     }
 
-    export function is<TClass>(x: any, c: new (...args: any[]) => TClass): x is TClass {
-        return x instanceof c;
+    export function is<TClass>(value: any, Constructor: new (...args: any[]) => TClass): value is TClass {
+        return value instanceof Constructor;
     }
 
     export function isArrayOfNumber(value: any): value is Array<number> {
@@ -107,6 +115,10 @@ export module Types {
             return equalsArray(lhs, rhs, options);
         } else if (Types.isObject(lhs) && Types.isObject(rhs)) {
             return equalsObject(lhs, rhs, options);
+        } else if (Types.isMap(lhs) && Types.isMap(rhs)) {
+            return equalsMap(lhs, rhs, options);
+        } else if (Types.isSet(lhs) && Types.isSet(rhs)) {
+            return equalsSet(lhs, rhs);
         }
 
         return false;
@@ -142,17 +154,37 @@ export module Types {
         return true;
     }
 
+    export function equalsMap<K, V>(lhs: Map<K, V>, rhs: Map<K, V>, options?: EqualsOptions) {
+        if (lhs.size !== rhs.size) {
+            return false;
+        }
+
+        for (const [key, value] of lhs) {
+            if (!equals(value, rhs.get(key), options)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    export function equalsSet<V>(lhs: Set<V>, rhs: Set<V>) {
+        if (lhs.size !== rhs.size) {
+            return false;
+        }
+
+        for (const value of lhs) {
+            if (!rhs.has(value)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     export function isValueObject(value: any) {
         return value && Types.isFunction(value.equals);
     }
 }
 
 type EqualsOptions = { lazyString?: boolean };
-
-export function without<T>(obj: { [key: string]: T }, key: string) {
-    const copy = { ...obj };
-
-    delete copy[key];
-
-    return copy;
-}

@@ -8,19 +8,19 @@
 
 import { Button, Dropdown, Tooltip } from 'antd';
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@app/store';
 import { ColorPicker, useEventCallback } from '@app/core';
-import { getColors, getDiagramId, getSelectionSet, selectColorTab, useStore } from '@app/wireframes/model';
+import { getColors, getDiagramId, getSelection, selectColorTab, useStore } from '@app/wireframes/model';
 import { useAppearance, useColorAppearance } from '../actions';
 import { BorderWidthIcon, ColorBackgroundFill, ColorBorderFill, IconOutline } from '@app/icons/icon';
 import { vogues, shapes } from '@app/const';
 
 export const VisualTool = React.memo(() => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const recentColors = useStore(getColors);
     const selectedColorTab = useStore(s => s.ui.selectedColor as any);
     const selectedDiagramId = useStore(getDiagramId);
-    const selectedSet = useStore(getSelectionSet);
+    const selectedSet = useStore(getSelection);
 
     const [backgroundColor, setBackgroundColor] =
         useColorAppearance(selectedDiagramId, selectedSet,

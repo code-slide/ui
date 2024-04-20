@@ -10,11 +10,11 @@ import { Button, Tooltip } from "antd";
 import * as React from "react";
 import { setFooterSize, setMode, setSidebarSize, useStore } from "@app/wireframes/model";
 import { AnimationIcon, PageIcon, IconOutline } from "@app/icons/icon";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from '@app/store';
 import { vogues } from "@app/const";
 
 export const ModeHeader = React.memo(() => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const isAnimationOn = useStore(s => s.ui.sidebarSize) !== vogues.common.close;
     const isPageOn = useStore(s => s.ui.footerSize) !== vogues.common.close;
 

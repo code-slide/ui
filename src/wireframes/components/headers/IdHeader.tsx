@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { getDiagram, getSelectedItems, replaceId, useStore } from '@app/wireframes/model';
+import { getDiagram, getSelection, replaceId, useStore } from '@app/wireframes/model';
 import { Button, Input, Space, message } from "antd";
 import { useState } from "react";
 import '../styles/HeaderView.scss'
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@app/store';
 import { CheckOutlined } from '@ant-design/icons';
 
 export const IdHeader = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const diagram = useStore(getDiagram);
-    const [ selectedItem ] = useStore(getSelectedItems);
-    const id = !selectedItem ? '' : selectedItem.id;
+    const selectedItems = useStore(getSelection);
+    const id = (!selectedItems || selectedItems.selection.size != 1) ? '' : selectedItems.selectedItems[0].id;
     const [newId, setNewId] = useState<string>(id);
     const [isUpdate, setIsUpdate] = useState<boolean>(false);
     const [messageApi, contextHolder] = message.useMessage();
@@ -43,7 +43,7 @@ export const IdHeader = () => {
         cancelUpdateId();
     }, [id]);
 
-    if (!selectedItem) return <></>;
+    if (!selectedItems || selectedItems.selection.size != 1) return <></>;
     return (
         <>
             {contextHolder}
