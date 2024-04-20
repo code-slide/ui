@@ -9,16 +9,16 @@
 import Prism from 'prismjs';
 import { useEffect, useState } from 'react';
 import { getDiagram, useStore, changeScript } from "@app/wireframes/model";
-import { useDispatch } from "react-redux";
 import { default as CodeEditor } from 'react-simple-code-editor';
 import { vogues, texts } from '@app/const';
+import { useAppDispatch } from '@app/store';
 
 import 'prismjs/components/prism-python';
 import 'prismjs/themes/prism.css';
 import './styles/AnimationView.scss';
 
 export const AnimationView = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const diagram = useStore(getDiagram);
     const animation = useStore(s => s.ui.selectedAnimation);
     const isFooter = useStore(s => s.ui.footerSize) == vogues.common.previewHeight ? 1 : 0;

@@ -12,18 +12,14 @@ import { Color, ColorPalette, Types } from '@app/core/utils';
 import { texts } from '@app/const';
 import { addDiagram, addShape, changeColor, changeColors, changeItemsAppearance, pasteItems, removeDiagram, removeItems } from './actions';
 import { AssetsStateInStore } from './assets-state';
-import { Configurable } from './configurables';
 import { Diagram } from './diagram';
-import { DiagramItem } from './diagram-item';
 import { DiagramItemSet } from './diagram-item-set';
 import { EditorState, EditorStateInStore } from './editor-state';
 import { LoadingStateInStore } from './loading-state';
 import { UIStateInStore } from './ui-state';
 import { UndoableState } from './undoable-state';
 
-const EMPTY_STRING_ARRAY: string[] = [];
-const EMPTY_ITEMS_ARRAY: DiagramItem[] = [];
-const EMPTY_CONFIGURABLES: Configurable[] = [];
+const EMPTY_SELECTION_SET = DiagramItemSet.EMPTY;
 
 export const getDiagramId = (state: EditorStateInStore) => state.editor.present.selectedDiagramId;
 export const getDiagrams = (state: EditorStateInStore) => state.editor.present.diagrams;
@@ -93,44 +89,9 @@ export const getMasterDiagram = createSelector(
     (diagrams, diagram) => diagrams.get(diagram?.master!),
 );
 
-export const getSelectionSet = createSelector(
+export const getSelection = createSelector(
     getDiagram,
-    diagram => (diagram ? DiagramItemSet.createFromDiagram(diagram.selectedIds.values, diagram) : null),
-);
-
-export const getSelectedIds = createSelector(
-    getDiagram,
-    diagram => diagram?.selectedIds.values || EMPTY_STRING_ARRAY,
-);
-
-export const getSelectedItemsWithLocked = createSelector(
-    getDiagram,
-    diagram => diagram?.selectedIds.values.map(i => diagram!.items.get(i)).filter(x => !!x) as DiagramItem[] || EMPTY_ITEMS_ARRAY,
-);
-
-export const getSelectedItems = createSelector(
-    getSelectedItemsWithLocked,
-    items => items.filter(x => !x.isLocked),
-);
-
-export const getSelectedGroups = createSelector(
-    getSelectedItems,
-    items => items.filter(i => i.type === 'Group'),
-);
-
-export const getSelectedItemWithLocked = createSelector(
-    getSelectedItemsWithLocked,
-    items => (items.length === 1 ? items[0] : null),
-);
-
-export const getSelectedShape = createSelector(
-    getSelectedItems,
-    items => (items.length === 1 && items[0].type === 'Shape' ? items[0] : null),
-);
-
-export const getSelectedConfigurables = createSelector(
-    getSelectedShape,
-    shape => (shape ? shape.configurables : EMPTY_CONFIGURABLES),
+    diagram => (diagram ? DiagramItemSet.createFromDiagram(diagram.selectedIds.values, diagram) : EMPTY_SELECTION_SET),
 );
 
 export const getColors = createSelector(
@@ -160,7 +121,7 @@ export const getColors = createSelector(
                     continue;
                 }
                 
-                for (const [key, value] of Object.entries(shape.appearance.raw)) {
+                for (const [key, value] of shape.appearance.entries) {
                     if (key.endsWith('COLOR')) {
                         addColor(value);
                     }

@@ -27,7 +27,7 @@ export type SnapResult = {
 };
 
 export type SnapLine = {
-    // The actual position  ofthe line.
+    // The actual position of the line.
     value: number;
 
     // The side.
@@ -67,7 +67,7 @@ type GridItem = {
     bottomIndex: number;
 
     // The bounds.
-    bound: Rect2;
+    aabb: Rect2;
 };
 
 export class SnapManager {
@@ -98,7 +98,7 @@ export class SnapManager {
         }
     }
 
-    public snapResizing(transform: Transform, delta: Vec2, snapMode: SnapMode, xMode = 1, yMode = 1): SnapResult {
+    public snapResizing(transform: Transform, delta: Vec2, snapMode: SnapMode, xMode = 1, yMode = 1, ignoreList: Record<string, any> = {}): SnapResult {
         const result: SnapResult = { delta };
 
         let dw = delta.x;
@@ -107,7 +107,7 @@ export class SnapManager {
         if (snapMode === 'Shapes' && transform.rotation.degree === 0) {
             const aabb = transform.aabb;
 
-            const { xLines, yLines } = this.getSnapLines(transform);
+            const { xLines, yLines } = this.getSnapLines(ignoreList);
 
             // Compute the new x and y-positions once.
             const l = -delta.x + aabb.left;
@@ -201,7 +201,7 @@ export class SnapManager {
         return result;
     }
 
-    public snapMoving(transform: Transform, delta: Vec2, snapMode: SnapMode): SnapResult {
+    public snapMoving(transform: Transform, delta: Vec2, snapMode: SnapMode, ignoreList: Record<string, any> = {}): SnapResult {
         const result: SnapResult = { delta };
 
         const aabb = transform.aabb;
@@ -210,7 +210,7 @@ export class SnapManager {
         let y = aabb.y + delta.y;
 
         if (snapMode === 'Shapes') {
-            const { xLines, yLines, grid } = this.getSnapLines(transform);
+            const { xLines, yLines, grid } = this.getSnapLines(ignoreList);
 
             // Compute the new x and y-positions once.
             const l = x;
@@ -237,7 +237,7 @@ export class SnapManager {
 
             for (const line of xLines) {
                 // Distance lines have a bounds that must be close.
-                if (line.gridItem?.bound && !isOverlapY(cy, aabb.height, line.gridItem?.bound)) {
+                if (line.gridItem?.aabb && !isOverlapY(cy, aabb.height, line.gridItem?.aabb)) {
                     continue;
                 }
 
@@ -274,7 +274,7 @@ export class SnapManager {
 
             for (const line of yLines) {
                 // Distance lines have a bounds that must be close.
-                if (line.gridItem?.bound && !isOverlapX(cx, aabb.width, line.gridItem?.bound)) {
+                if (line.gridItem?.aabb && !isOverlapX(cx, aabb.width, line.gridItem?.aabb)) {
                     continue;
                 }
 
@@ -308,7 +308,7 @@ export class SnapManager {
         return result;
     }
 
-    public getSnapLines(referenceTransform?: Transform) {
+    public getSnapLines(ignoreList: Record<string, any>) {
         if (this.xLines && this.yLines && this.grid) {
             return { xLines: this.xLines, yLines: this.yLines, grid: this.grid };
         }
@@ -318,7 +318,7 @@ export class SnapManager {
         const xLines: SnapLine[] = this.xLines = [];
         const yLines: SnapLine[] = this.yLines = [];
 
-        if (!currentDiagram || !currentView || !referenceTransform) {
+        if (!currentDiagram || !currentView) {
             // This should actually never happen, because we call prepare first.
             const grid = this.grid = [];
 
@@ -326,7 +326,7 @@ export class SnapManager {
         }
 
         // Compute the bounding boxes once.
-        const bounds = currentDiagram!.items.values.filter(x => x.transform !== referenceTransform).map(x => x.bounds(currentDiagram).aabb);
+        const bounds = Array.from(currentDiagram!.items.values).filter(x => !ignoreList[x.id]).map(x => x.bounds(currentDiagram).aabb);
 
         const grid = this.grid = computeGrid(bounds);
 
@@ -336,18 +336,18 @@ export class SnapManager {
         yLines.push({ value: 0 });
         yLines.push({ value: currentView.y });
 
-        for (const bound of bounds) {
-            xLines.push({ value: bound.left, side: 'Left' });
-            xLines.push({ value: bound.right, side: 'Right' });
-            xLines.push({ value: bound.cx, isCenter: true });
+        for (const aabb of bounds) {
+            xLines.push({ value: aabb.left, side: 'Left' });
+            xLines.push({ value: aabb.right, side: 'Right' });
+            xLines.push({ value: aabb.cx, isCenter: true });
 
-            yLines.push({ value: bound.top, side: 'Top' });
-            yLines.push({ value: bound.bottom, side: 'Bottom' });
-            yLines.push({ value: bound.cy, isCenter: true });
+            yLines.push({ value: aabb.top, side: 'Top' });
+            yLines.push({ value: aabb.bottom, side: 'Bottom' });
+            yLines.push({ value: aabb.cy, isCenter: true });
         }
 
         for (const gridItem of grid) {
-            const bound = gridItem.bound;
+            const bound = gridItem.aabb;
     
             if (gridItem.leftDistance !== Number.MAX_VALUE) {
                 xLines.push({ 
@@ -389,8 +389,8 @@ export class SnapManager {
         return { xLines, yLines, grid };
     }
 
-    public getDebugLines(referenceTransform: Transform) {
-        const { xLines, yLines } = this.getSnapLines(referenceTransform);
+    public getDebugLines(ignoreList: Record<string, any> = {}) {
+        const { xLines, yLines } = this.getSnapLines(ignoreList);
 
         if (this.grid) {
             for (const line of xLines) {
@@ -416,8 +416,8 @@ function enrichLine(line: SnapLine | undefined, grid: GridItem[]) {
     let current = line.gridItem;
 
     // Compute the vertical offsets once to save some compute time.
-    const x = current.bound.cx;
-    const y = current.bound.cy;
+    const x = current.aabb.cx;
+    const y = current.aabb.cy;
 
     switch (line.gridSide) {
         case 'Left': {
@@ -428,7 +428,7 @@ function enrichLine(line: SnapLine | undefined, grid: GridItem[]) {
 
             // Travel to the left while the right are the same.
             while (current) {
-                positions.push({ x: current.bound.left - distance, y });
+                positions.push({ x: current.aabb.left - distance, y });
 
                 if (!areSimilar(current.rightDistance, distance)) {
                     break;
@@ -447,7 +447,7 @@ function enrichLine(line: SnapLine | undefined, grid: GridItem[]) {
 
             // Travel to the left while the distances are the same.
             while (current) {
-                positions.push({ x: current.bound.right, y });
+                positions.push({ x: current.aabb.right, y });
 
                 if (!areSimilar(current.leftDistance, distance)) {
                     break;
@@ -467,7 +467,7 @@ function enrichLine(line: SnapLine | undefined, grid: GridItem[]) {
 
             // Travel to the bottom while the distances are the same.
             while (current) {
-                positions.push({ y: current.bound.top - distance, x });
+                positions.push({ y: current.aabb.top - distance, x });
 
                 if (!areSimilar(current.bottomDistance, distance)) {
                     break;
@@ -486,7 +486,7 @@ function enrichLine(line: SnapLine | undefined, grid: GridItem[]) {
 
             // Travel to the top while the distances are the same.
             while (current) {
-                positions.push({ y: current.bound.bottom, x });
+                positions.push({ y: current.aabb.bottom, x });
 
                 if (!areSimilar(current.topDistance, distance)) {
                     break;
@@ -507,10 +507,10 @@ function enrichLine(line: SnapLine | undefined, grid: GridItem[]) {
 function computeGrid(bounds: Rect2[]) {
     const grid: GridItem[] = [];
 
-    for (const bound of bounds) {
+    for (const aabb of bounds) {
         // Search for the minimum distance to the left or right.
         const gridItem: GridItem = {
-            bound,
+            aabb,
             bottomDistance: Number.MAX_VALUE,
             bottomIndex: -1,
             leftDistance: Number.MAX_VALUE,
@@ -525,12 +525,12 @@ function computeGrid(bounds: Rect2[]) {
         for (const other of bounds) {
             j++;
 
-            if (other === bound) {
+            if (other === aabb) {
                 continue;
             }
 
-            if (isOverlapY(other.cy, other.height, bound)) {
-                const dl = bound.left - other.right;
+            if (isOverlapY(other.cy, other.height, aabb)) {
+                const dl = aabb.left - other.right;
 
                 // If the distance to the left is positive, the other element is on the left side.
                 if (dl > 0 && dl < gridItem.leftDistance) {
@@ -538,7 +538,7 @@ function computeGrid(bounds: Rect2[]) {
                     gridItem.leftIndex = j;
                 }
 
-                const dr = other.left - bound.right;
+                const dr = other.left - aabb.right;
 
                 // If the distance to the right is positive, the other element is on the right side.
                 if (dr > 0 && dr < gridItem.rightDistance) {
@@ -547,8 +547,8 @@ function computeGrid(bounds: Rect2[]) {
                 }
             }
 
-            if (isOverlapX(other.cx, other.width, bound)) {
-                const dt = bound.top - other.bottom;
+            if (isOverlapX(other.cx, other.width, aabb)) {
+                const dt = aabb.top - other.bottom;
 
                 // If the distance to the right is top, the other element is on the top side.
                 if (dt > 0 && dt < gridItem.topDistance) {
@@ -556,7 +556,7 @@ function computeGrid(bounds: Rect2[]) {
                     gridItem.topIndex = j;
                 }
 
-                const db = other.top - bound.bottom;
+                const db = other.top - aabb.bottom;
 
                 // If the distance to the right is bottom, the other element is on the bottom side.
                 if (db > 0 && db < gridItem.bottomDistance) {

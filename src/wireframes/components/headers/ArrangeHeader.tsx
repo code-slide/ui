@@ -7,14 +7,14 @@
 */
 
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@app/store';
 import { Shortcut, useEventCallback } from '@app/core';
 import { calculateSelection, getDiagram, selectItems, useStore } from '@app/wireframes/model';
 import { keys } from '@app/const';
 import { useRemove } from '../actions';
 
 export const ArrangeHeader = React.memo(() => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const forRemove = useRemove();
     const selectedDiagram = useStore(getDiagram);
 

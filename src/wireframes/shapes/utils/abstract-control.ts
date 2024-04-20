@@ -8,7 +8,7 @@
 
 import * as svg from '@svgdotjs/svg.js';
 import { Rect2, SVGHelper } from '@app/core';
-import { ConfigurableFactory, Constraint, ConstraintFactory, RenderContext, ShapePlugin, Size } from '@app/wireframes/interface';
+import { ConfigurableFactory, Constraint, ConstraintFactory, RenderContext, ShapePlugin } from '@app/wireframes/interface';
 import { ColorConfigurable, DiagramItem, MinSizeConstraint, NumberConfigurable, Renderer, SelectionConfigurable, SizeConstraint, SliderConfigurable, TextConfigurable, TextHeightConstraint, ToggleConfigurable } from '@app/wireframes/model';
 import { SVGRenderer2 } from './svg-renderer2';
 import { TextSizeConstraint } from './text-size-contraint';
@@ -97,11 +97,13 @@ export class AbstractControl implements Renderer {
     }
 
     public render(shape: DiagramItem, existing: svg.G | undefined, options?: { debug?: boolean; noOpacity?: boolean; noTransform?: boolean }): any {
+        const localRect = new Rect2(0, 0, shape.transform.size.x, shape.transform.size.y);
+
+        // Reuse a global context to make the code easier.
         GLOBAL_CONTEXT.shape = shape;
-        GLOBAL_CONTEXT.rect = new Rect2(0, 0, shape.transform.size.x, shape.transform.size.y);
+        GLOBAL_CONTEXT.rect = localRect;
 
         const container = SVGRenderer2.INSTANCE.getContainer();
-        const index = (options?.debug) ? 2 : 1;
 
         // Use full color codes here to avoid the conversion in svg.js
         if (!existing) {
@@ -113,11 +115,27 @@ export class AbstractControl implements Renderer {
             }
         }
 
-        for (let i = 0; i < index; i++) {
-            SVGHelper.transformByRect(existing.get(i), GLOBAL_CONTEXT.rect);
+        // Calculate a special selection rect, that is slightly bigger than the bounds to make selection easier.
+        let selectionRect = GLOBAL_CONTEXT.rect;
+
+        const diffW = Math.max(0, MIN_DIMENSIONS - selectionRect.width);
+        const diffH = Math.max(0, MIN_DIMENSIONS - selectionRect.height);
+
+        if (diffW > 0 || diffH > 0) {
+            selectionRect = selectionRect.inflate(diffW * 0.5, diffH * 0.5);
         }
 
-        SVGRenderer2.INSTANCE.setContainer(existing, index);
+        SVGHelper.transformByRect(existing.get(0), selectionRect);
+
+        // The index of the main element that holds the reference.
+        let mainIndex = 1;
+
+        if (options?.debug) {
+            SVGHelper.transformByRect(existing.get(1), localRect);
+            mainIndex++;
+        }
+
+        SVGRenderer2.INSTANCE.setContainer(existing, mainIndex);
 
         this.shapePlugin.render(GLOBAL_CONTEXT);
 
@@ -146,112 +164,6 @@ export class AbstractControl implements Renderer {
     }
 }
 
-export class AbstractControlCells implements Renderer {
-    constructor(
-        private readonly shapePlugin: ShapePlugin[],
-    ) {
-    }
-
-    public identifier() {
-        return this.shapePlugin[0].identifier();
-    }
-
-    public plugin() {
-        return this.shapePlugin[0];
-    }
-
-    public defaultAppearance() {
-        return this.shapePlugin[0].defaultAppearance?.();
-    }
-
-    public setContext(context: any): Renderer {
-        SVGRenderer2.INSTANCE.setContainer(context);
-        return this;
-    }
-
-    public createDefaultShape() {
-        const appearance = this.shapePlugin[0].defaultAppearance();
-        const constraint = this.shapePlugin[0].constraint?.(DefaultConstraintFactory.INSTANCE);
-        const configurables = this.shapePlugin[0].configurables?.(DefaultConfigurableFactory.INSTANCE);
-        const renderer = this.identifier();
-        const size: Size = {
-            x: this.shapePlugin[0].defaultSize().x * 2,
-            y: this.shapePlugin[0].defaultSize().y,
-        };
-
-        return { renderer, size, appearance, configurables, constraint };
-    }
-
-    public render(shape: DiagramItem, existing: svg.G | undefined, options?: { debug?: boolean; noOpacity?: boolean; noTransform?: boolean }): any {
-        const numShapePlugin = this.shapePlugin.length;
-        const index = (options?.debug) ? 2 : 1;
-        const container = SVGRenderer2.INSTANCE.getContainer();
-        GLOBAL_CONTEXT.shape = shape;
-        
-        // Use full color codes here to avoid the conversion in svg.js
-        if (!existing) {
-            existing = new svg.G();
-            existing.add(new svg.Rect().fill('#ffffff').opacity(0.001));
-
-            if (options?.debug) {
-                existing.rect().fill('#ffffff').stroke({ color: '#ff0000' });
-            }
-
-            for (let i = 0; i < this.shapePlugin.length; i++) {
-                var subExisting = new svg.G();
-                subExisting.add(new svg.Rect().fill('#ffffff').opacity(0.001));
-
-                if (options?.debug) {
-                    subExisting.rect().fill('#ffffff').stroke({ color: '#ff0000' });
-                }
-                
-                SVGRenderer2.INSTANCE.setContainer(subExisting, index);
-
-                const shapePlugin = this.shapePlugin[i];
-                const width = shape.transform.size.x / numShapePlugin;
-
-                GLOBAL_CONTEXT.rect = new Rect2(i * width, 0, width, shape.transform.size.y);
-                shapePlugin.render(GLOBAL_CONTEXT);
-
-                for (let i = 0; i < index; i++) {
-                    SVGHelper.transformByRect(subExisting.get(i), GLOBAL_CONTEXT.rect);
-                }
-
-                if (!options?.noTransform) {
-                    SVGHelper.transformBy(subExisting, {
-                        x: i * width,
-                        w: width,
-                    });
-                }
-                
-                existing.add(subExisting);
-            }
-        }
-
-        GLOBAL_CONTEXT.rect = new Rect2(0, 0, shape.transform.size.x, shape.transform.size.y);
-        for (let i = 0; i < index; i++) {
-            SVGHelper.transformByRect(existing.get(i), GLOBAL_CONTEXT.rect);
-        }
-
-        if (!options?.noTransform) {
-            const to = shape.transform;
-
-            SVGHelper.transformBy(existing, {
-                x: to.position.x - 0.5 * to.size.x,
-                y: to.position.y - 0.5 * to.size.y,
-                w: to.size.x,
-                h: to.size.y,
-                rx: to.position.x,
-                ry: to.position.y,
-                rotation: to.rotation.degree,
-            });
-        }
-
-        SVGRenderer2.INSTANCE.cleanupAll();
-        SVGRenderer2.INSTANCE.setContainer(container);
-
-        return existing;
-    }
-}
+const MIN_DIMENSIONS = 10;
 
 type Writeable<T> = { -readonly [P in keyof T]: T[P] };

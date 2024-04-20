@@ -9,7 +9,7 @@
 import * as React from 'react';
 import Prism from 'prismjs';
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@app/store';
 import { default as RevealEditor } from 'react-simple-code-editor';
 import { changeRevealConfig, getEditor, useStore } from '@app/wireframes/model';
 
@@ -18,7 +18,7 @@ import { Button, Space, message } from 'antd';
 import { vogues } from '@app/const';
 
 export const PresentSetting = React.memo(() => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const editor = useStore(getEditor);
     const [revealScr, setRevealScr] = useState('');
     const [isScrChange, setIsScrChange] = useState(false);

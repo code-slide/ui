@@ -7,7 +7,7 @@
 */
 
 import { createAction, createAsyncThunk, createReducer, Middleware } from '@reduxjs/toolkit';
-import { push } from 'connected-react-router';
+import { History } from 'history';
 import { saveAs } from 'file-saver';
 import { AnyAction, Reducer } from 'redux';
 import { texts } from '@app/const';
@@ -52,7 +52,7 @@ export const downloadDiagramToFile =
         saveAs(bodyBlob, 'diagram.json');
     });
 
-export function loadingMiddleware(): Middleware {
+export function loadingMiddleware(history: History): Middleware {
     const middleware: Middleware = store => next => action => {        
         if (loadDiagramFromServer.pending.match(action) ||  loadDiagramFromFile.pending.match(action)) {
             store.dispatch(showToast(texts.common.loadingDiagram, 'loading', action.meta.requestId));
@@ -63,11 +63,11 @@ export function loadingMiddleware(): Middleware {
 
             if (newDiagram.match(action) ) {
                 if (action.payload.navigate) {
-                    store.dispatch(push(''));
+                    history.push('');
                 }
             } else if (loadDiagramFromServer.fulfilled.match(action)) {
                 if (action.meta.arg.navigate) {
-                    store.dispatch(push(action.payload.tokenToRead));
+                    history.push(action.payload.tokenToRead);
                 }
                 
                 store.dispatch(loadDiagramInternal(action.payload.stored, action.meta.requestId));

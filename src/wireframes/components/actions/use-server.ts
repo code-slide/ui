@@ -5,10 +5,10 @@ import * as svg from '@svgdotjs/svg.js';
 import { Color } from "@app/core/utils/color";
 import { shapes } from "@app/const";
 import { MessageInstance } from "antd/es/message/interface";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from '@app/store';
 
 export function useServer() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const diagrams = useStore(getFilteredDiagrams);
     const editor = useStore(getEditor);
 

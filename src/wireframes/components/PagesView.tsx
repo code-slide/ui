@@ -7,10 +7,10 @@
 */
 
 import { DragDropContext, Draggable, Droppable, DropResult } from '@hello-pangea/dnd';
-import { useDispatch } from 'react-redux';
 import { useEventCallback, Vec2 } from '@app/core';
 import { addDiagram, duplicateDiagram, getDiagramId, getFilteredDiagrams, moveDiagram, removeDiagram, selectDiagram, useStore } from '@app/wireframes/model';
 import { vogues } from '@app/const';
+import { useAppDispatch } from '@app/store';
 import { PageThumbnail, PageAdd, PageAction } from './menu';
 import './styles/PagesView.scss';
 
@@ -26,7 +26,7 @@ export const PagesView = (props: PagesViewProps) => {
     const { prevWidth, prevHeight } = props;
     const viewSize = new Vec2(prevWidth, prevHeight);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const diagramId = useStore(getDiagramId);
     const diagrams = useStore(getFilteredDiagrams);
     

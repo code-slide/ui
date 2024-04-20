@@ -76,7 +76,7 @@ describe('ItemsReducer', () => {
         const state_1 = EditorState.create().addDiagram(diagram);
         const state_2 = reducer(state_1, action);
 
-        const newShape = state_2.diagrams.get(diagram.id)!.items.get('1')!;
+        const newShape = state_2.diagrams.get(diagram.id)!.items.get(shape1.id)!;
 
         expect(newShape.name).toEqual('Name');
     });
@@ -87,7 +87,7 @@ describe('ItemsReducer', () => {
         const state_1 = EditorState.create().addDiagram(diagram);
         const state_2 = reducer(state_1, action);
 
-        const newShape = state_2.diagrams.get(diagram.id)!.items.get('1')!;
+        const newShape = state_2.diagrams.get(diagram.id)!.items.get(shape1.id)!;
 
         expect(newShape.isLocked).toBeTruthy();
     });
@@ -98,7 +98,7 @@ describe('ItemsReducer', () => {
         const state_1 = EditorState.create().addDiagram(diagram);
         const state_2 = reducer(state_1, action);
 
-        const newShape = state_2.diagrams.get(diagram.id)!.items.get('2')!;
+        const newShape = state_2.diagrams.get(diagram.id)!.items.get(shape2.id)!;
 
         expect(newShape.isLocked).toBeFalsy();
     });
@@ -209,7 +209,7 @@ describe('ItemsReducer', () => {
 
         const itemIds = calculateSelection([shape3], selectedDiagram, true, true);
 
-        expect(itemIds).toEqual([shape3.id, groupId]);
+        expect(itemIds).toEqual([groupId, shape3.id]);
     });
 
     it('should remove item from selection list', () => {

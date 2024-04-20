@@ -43,7 +43,7 @@ export const parseFrames = async (script: string) => {
     const response = await fetch(`${SERVER_URL}/parser`, {
         method: 'POST',
         headers: {
-            'Content-type': 'application/json; charset=UTF-8',
+            ['Content-Type']: 'application/json; charset=UTF-8',
         },
         body: JSON.stringify({
             script: script
@@ -61,7 +61,7 @@ export const compileSlides = async (fileName: string, title: string, size: numbe
     const response = await fetch(`${SERVER_URL}/compiler`, {
         method: 'POST',
         headers: {
-            'Content-type': 'application/json; charset=UTF-8',
+            ['Content-Type']: 'application/json; charset=UTF-8',
         },
         body: JSON.stringify({
             fileName: fileName,

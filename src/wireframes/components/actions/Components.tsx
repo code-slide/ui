@@ -8,9 +8,11 @@
 
 import { Button, Tooltip } from 'antd';
 import { ButtonProps } from 'antd/lib/button';
+import { MenuItemType } from 'antd/lib/menu/hooks/useItems';
 import * as React from 'react';
 import { isMac, Shortcut, Types } from '@app/core';
 import { UIAction } from './shared';
+import Icon from '@ant-design/icons';
 
 type ActionDisplayMode = 'Icon' | 'IconLabel' | 'Label';
 
@@ -103,6 +105,14 @@ const ButtonContent = ({ displayMode, label, icon }: { icon?: string | JSX.Eleme
     );
 };
 
+function buildIcon(icon: string | JSX.Element | undefined, displayMode?: ActionDisplayMode) {
+    if (displayMode === 'Label') {
+        return null;
+    }
+
+    return Types.isString(icon) ? (<Icon component={() => <i className={icon} />} />) : icon;
+}
+
 function buildTitle(shortcut: string | undefined, tooltip: string) {
     function getModKey(): string {
         // Mac users expect to use the command key for shortcuts rather than the control key
@@ -110,4 +120,23 @@ function buildTitle(shortcut: string | undefined, tooltip: string) {
     }
 
     return shortcut ? `${tooltip} (${shortcut.replace('MOD', getModKey())})` : tooltip;
+}
+
+export function buildMenuItem(action: UIAction, key: string) {
+    const {
+        disabled,
+        label,
+        onAction,
+        icon,
+    } = action;
+
+    const item: MenuItemType = {
+        key,
+        disabled,
+        label,
+        onClick: onAction,
+        icon: buildIcon(icon),
+    };
+
+    return item;
 }

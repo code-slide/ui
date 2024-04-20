@@ -10,8 +10,8 @@ import * as svg from '@svgdotjs/svg.js';
 import { vogues } from '@app/const';
 import { SnapLine, SnapResult, Transform } from '@app/wireframes/model';
 
-const MIN_VALUE = -1000;
-const MAX_VALUE = 1000;
+const MIN_VALUE = -10000;
+const MAX_VALUE = 10000;
 
 export class InteractionOverlays {
     private readonly lines: svg.Line[] = [];

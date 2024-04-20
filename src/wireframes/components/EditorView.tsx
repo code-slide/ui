@@ -10,12 +10,15 @@ import * as React from 'react';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import { findDOMNode } from 'react-dom';
-import { useDispatch } from 'react-redux';
+import { Dropdown } from 'antd';
+import { useAppDispatch } from '@app/store';
 import { loadImagesToClipboardItems, sizeInPx, useClipboard as useClipboardProvider, useEventCallback } from '@app/core';
-import { addShape, changeItemsAppearance, Diagram, getDiagram, getDiagramId, getEditor, getMasterDiagram, getSelectedItems, getSelectedItemsWithLocked, RendererService, selectItems, Transform, transformItems, useStore } from '@app/wireframes/model';
+import { addShape, changeItemsAppearance, Diagram, getDiagram, getDiagramId, getEditor, getMasterDiagram, getSelection, RendererService, selectItems, Transform, transformItems, useStore } from '@app/wireframes/model';
 import { Editor } from '@app/wireframes/renderer/Editor';
+import { useContextMenu } from './menu';
 import { DiagramRef, ItemsRef } from '../model/actions/utils';
 import { ShapeSource } from '../interface';
+
 import './styles/EditorView.scss';
 
 export interface EditorViewProps {
@@ -36,7 +39,7 @@ export const EditorView = (props: EditorViewProps) => {
 };
 
 export const EditorViewInner = ({ diagram, spacing }: EditorViewProps & { diagram: Diagram }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const editor = useStore(getEditor);
     const editorColor = editor.color;
     const editorSize = editor.size;
@@ -47,6 +50,8 @@ export const EditorViewInner = ({ diagram, spacing }: EditorViewProps & { diagra
     const state = useStore(s => s);
     const zoom = useStore(s => s.ui.zoom);
     const zoomedSize = editorSize.mul(zoom);
+    const [menuVisible, setMenuVisible] = React.useState(false);
+    const contextMenu = useContextMenu(menuVisible);
 
     const doChangeItemsAppearance = useEventCallback((diagram: DiagramRef, visuals: ItemsRef, key: string, value: any) => {
         dispatch(changeItemsAppearance(diagram, visuals, key, value));
@@ -159,23 +164,24 @@ export const EditorViewInner = ({ diagram, spacing }: EditorViewProps & { diagra
     const padding = sizeInPx(spacing);
 
     return (
-        <div className='editor-view' onClick={doSetPosition}>
-            <div className='editor-diagram' style={{ width: w, height: h, padding }} ref={renderRef} >
-                <Editor
-                    color={editorColor}
-                    diagram={diagram}
-                    masterDiagram={masterDiagram}
-                    onChangeItemsAppearance={doChangeItemsAppearance}
-                    onSelectItems={doSelectItems}
-                    onTransformItems={doTransformItems}
-                    selectedItems={getSelectedItems(state)}
-                    selectedItemsWithLocked={getSelectedItemsWithLocked(state)}
-                    viewSize={editor.size}
-                    zoom={zoom}
-                    zoomedSize={zoomedSize}
-                    isDefaultView={true}
-                />
+        <Dropdown menu={contextMenu} trigger={['contextMenu']} onOpenChange={setMenuVisible}>
+            <div className='editor-view' onClick={doSetPosition}>
+                <div className='editor-diagram' style={{ width: w, height: h, padding }} ref={renderRef} >
+                    <Editor
+                        color={editorColor}
+                        diagram={diagram}
+                        masterDiagram={masterDiagram}
+                        onChangeItemsAppearance={doChangeItemsAppearance}
+                        onSelectItems={doSelectItems}
+                        selectionSet={getSelection(state)}
+                        onTransformItems={doTransformItems}
+                        viewSize={editor.size}
+                        zoom={zoom}
+                        zoomedSize={zoomedSize}
+                        isDefaultView={true}
+                    />
+                </div>
             </div>
-        </div>
+        </Dropdown>
     );
 };

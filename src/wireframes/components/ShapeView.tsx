@@ -5,12 +5,12 @@
  * 8 Nov 2023
 */
 
-import { useDispatch } from 'react-redux';
 import { Button, Dropdown, Form, Input } from 'antd';
 import type { MenuProps } from 'antd';
 import { getDiagramId, useStore, addShape } from '@app/wireframes/model';
 import * as React from 'react';
 import { ArrowIcon, CircleIcon, FunctionIcon, ImageIcon, RectangleIcon, TableIcon, TextIcon, TriangleIcon, ShapesIcon, LinkIcon, HeadingIcon, SubHeadingIcon, ParagraphIcon, DiamondIcon, VectorIcon, LineUpIcon, BezierIcon } from '@app/icons/icon';
+import { useAppDispatch } from '@app/store';
 import './styles/ShapeView.scss';
 import { useState } from 'react';
 import classNames from 'classnames';
@@ -18,7 +18,7 @@ import { FormModal, ShapeModal } from './modal/FormModal';
 import { shapes } from '@app/const';
 
 export const ShapeView = React.memo(() => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const selectedDiagramId = useStore(getDiagramId);
     const [selectedCell, setSelectedCell] = useState(0);
     const [isShapeModal, setIsShapeModal] = useState<ShapeModal>('');

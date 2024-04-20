@@ -8,13 +8,13 @@
 
 import { Col, InputNumber, Row } from 'antd';
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@app/store';
 import { Color, ColorPicker, useEventCallback } from '@app/core';
 import { texts } from '@app/const';
 import { changeColor, changeSize, getColors, getEditor, useStore } from '@app/wireframes/model';
 
 export const DiagramSetting = React.memo(() => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const editor = useStore(getEditor);
     const editorSize = editor.size;
     const editorColor = editor.color;

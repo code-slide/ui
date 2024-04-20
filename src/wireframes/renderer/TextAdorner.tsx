@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { Keys, Vec2, sizeInPx } from '@app/core';
-import { Diagram, DiagramItem } from '@app/wireframes/model';
+import { Diagram, DiagramItem, DiagramItemSet } from '@app/wireframes/model';
 import { InteractionHandler, InteractionService, SvgEvent } from './interaction-service';
 import { getSelectedCell, getTableAttributes } from '../shapes/dependencies';
 import { texts, shapes } from '@app/const';
@@ -21,7 +21,7 @@ export interface TextAdornerProps {
     selectedDiagram: Diagram;
 
     // The selected items.
-    selectedItems: DiagramItem[];
+    selectionSet: DiagramItemSet;
 
     // The interaction service.
     interactionService: InteractionService;
@@ -50,7 +50,7 @@ export class TextAdorner extends React.PureComponent<TextAdornerProps> implement
     }
 
     public componentDidUpdate(prevProps: TextAdornerProps) {
-        if (this.props.selectedItems !== prevProps.selectedItems) {
+        if (this.props.selectionSet !== prevProps.selectionSet) {
             this.updateText();
         }
     }

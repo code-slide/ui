@@ -8,23 +8,22 @@
 
 import { ConfigProvider, Layout, Tour, TourProps } from 'antd';
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
 import { useRouteMatch } from 'react-router';
 import { ClipboardContainer } from '@app/core';
 import { EditorView, ShapeView, PagesView, HeaderView, AnimationView, ToolView } from '@app/wireframes/components';
-import { getSelectedItems, getSelectedShape, loadDiagramFromServer, newDiagram, setIsTourOpen, useStore } from '@app/wireframes/model';
+import { getSelection, loadDiagramFromServer, newDiagram, setIsTourOpen, useStore } from '@app/wireframes/model';
 import { vogues } from './const';
 import { CustomDragLayer } from './wireframes/components/CustomDragLayer';
 import { OverlayContainer } from './wireframes/contexts/OverlayContext';
 import { useEffect, useRef } from 'react';
+import { useAppDispatch } from './store';
 
 export const App = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const route = useRouteMatch<{ token?: string }>();
     const routeToken = route.params.token || null;
     const routeTokenSnapshot = React.useRef(routeToken);
-    const selectedItem = useStore(getSelectedShape);
-    const selectedSet = useStore(getSelectedItems);
+    const selectedSet = useStore(getSelection);
     const sidebarWidth = useStore(s => s.ui.sidebarSize);
     const footerHeight = useStore(s => s.ui.footerSize);
     const applicationMode = useStore(s => s.ui.selectedMode);
@@ -40,15 +39,6 @@ export const App = () => {
             dispatch(newDiagram(false));
         }
     }, [dispatch]);
-
-    useEffect(() => {
-        const handleContextmenu = (e: MouseEvent) => { e.preventDefault() };
-        document.addEventListener('contextmenu', handleContextmenu);
-
-        return function cleanup() {
-            document.removeEventListener('contextmenu', handleContextmenu)
-        }
-    }, [])
 
     const margin = {
         tool: `${vogues.common.editorPad}px 0`,
@@ -128,7 +118,7 @@ export const App = () => {
                                 ref={tourRefs[3]}
                                 className='header-toolbar-left'
                                 style={{ margin: margin.tool }}>
-                                    <ToolView item={selectedItem} set={selectedSet} mode={applicationMode} />
+                                    <ToolView set={selectedSet} mode={applicationMode} />
                             </Layout.Header>
 
                             <Layout>

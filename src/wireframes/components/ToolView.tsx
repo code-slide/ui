@@ -1,10 +1,10 @@
-import { DiagramItem, setAnimation } from '@app/wireframes/model';
+import { DiagramItem, DiagramItemSet, setAnimation } from '@app/wireframes/model';
 import { ClipboardTool } from './tools/ClipboardTool';
 import { TableTool } from './tools/TableTool';
 import './styles/ToolView.scss';
 import { AlignmentTool, GraphicTool, HistoryTool, LineTool, OrderingTool, TextTool, VisualTool, ZoomTool } from './tools';
 import { Segmented } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@app/store';
 import { SegmentedValue } from "antd/es/segmented";
 import { shapes } from '@app/const';
 import { ModeType } from '../interface';
@@ -13,16 +13,17 @@ export interface ToolViewProps {
     // Application's mode
     mode: ModeType;
 
-    // Item
-    item: DiagramItem | null;
-
     // Group
-    set: DiagramItem[] | null;
+    set: DiagramItemSet | null;
 }
 
 export const ToolView = (props: ToolViewProps) => {
-    const { item, set } = props;
-    const dispatch = useDispatch();
+    const { set } = props;
+    const dispatch = useAppDispatch();
+
+    const item = set?.selectedItems[0];
+    const isMultiItems = set != null && set.selection.size > 1;
+    const isSingleItem = !(!item) && item != null;
 
     const MoreTools = (props: {item: DiagramItem}) => {
         const renderer = props.item.renderer;
@@ -91,10 +92,10 @@ export const ToolView = (props: ToolViewProps) => {
                     <span className='menu-separator' />
                     <ZoomTool />
                     <span className='menu-separator' />
-                    <ClipboardTool canCopy={(set != null && set.length > 1) || item != null} />
-                    { (item != null) && <MoreTools item={item} /> }
-                    { (set != null && set.length > 1) && <AlignmentTool /> }
-                    { (item != null) && <OrderingTool /> }
+                    <ClipboardTool canCopy={isSingleItem || isMultiItems} />
+                    { isSingleItem && <MoreTools item={item} /> }
+                    { isMultiItems && <AlignmentTool /> }
+                    { isSingleItem && <OrderingTool /> }
                 </div>
             </div>
 

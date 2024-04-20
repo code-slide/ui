@@ -7,26 +7,26 @@
 */
 
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@app/store';
 import { IDHelper } from '@app/core';
 import { useEventCallback } from '@app/core';
 import { texts } from '@app/const';
-import { getDiagram, getSelectedGroups, getSelectedItems, groupItems, ungroupItems, useStore } from '@app/wireframes/model';
+import { getDiagram, getSelection, groupItems, ungroupItems, useStore } from '@app/wireframes/model';
 import { keys } from '@app/const';
 import { UIAction } from './shared';
 
 export function useGrouping() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const selectedDiagram = useStore(getDiagram);
     const selectedDiagramId = selectedDiagram?.id;
-    const selectedGroups = useStore(getSelectedGroups);
-    const selectedItems = useStore(getSelectedItems);
-    const canGroup = selectedItems.length > 1;
+    const selectedItems = useStore(getSelection);
+    const selectedGroups = React.useMemo(() => selectedItems.selectedItems.filter(x => x.type === 'Group'), [selectedItems]);
+    const canGroup = selectedItems.selectedItems.length > 1;
     const canUngroup = selectedGroups.length > 0;
 
     const doGroup = useEventCallback(() => {
         if (selectedDiagramId) {
-            dispatch(groupItems(selectedDiagramId, selectedItems, IDHelper.nextId(selectedDiagram, 'Group').id));
+            dispatch(groupItems(selectedDiagramId, selectedItems.selectedItems, IDHelper.nextId(selectedDiagram, 'Group').id));
         }
     });
 

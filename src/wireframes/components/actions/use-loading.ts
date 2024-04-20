@@ -7,7 +7,7 @@
 */
 
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@app/store';
 import { useEventCallback, useOpenFile } from '@app/core';
 import { texts } from '@app/const';
 import { downloadDiagramToFile, getDiagrams, loadDiagramFromFile, newDiagram, useStore } from '@app/wireframes/model';
@@ -15,7 +15,7 @@ import { keys } from '@app/const';
 import { UIAction } from './shared';
 
 export function useLoading() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const diagrams = useStore(getDiagrams);
 
     const canSave = React.useMemo(() => {

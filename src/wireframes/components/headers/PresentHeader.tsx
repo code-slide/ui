@@ -11,10 +11,8 @@ import { Button, message } from "antd";
 import * as React from "react";
 import { useState } from "react";
 import { useServer } from "../actions";
-import { useDispatch } from "react-redux";
 
 export const PresentHeader = React.memo(() => {
-    const dispatch = useDispatch();
     const forServer = useServer();
     const [messageApi, contextHolder] = message.useMessage();
     const [loading, setLoading] = useState<boolean>(false);
@@ -28,7 +26,7 @@ export const PresentHeader = React.memo(() => {
                 onClick={() => {
                     setLoading(true);
                     try {
-                        dispatch(forServer.slide(messageApi, messageKey));
+                        forServer.slide(messageApi, messageKey);
                     } finally {
                         setLoading(false)
                     }
