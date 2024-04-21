@@ -51,7 +51,7 @@ export const App = () => {
     const walkthroughTour: TourProps['steps'] = [
         {
             title: 'Step 1: Starting Your Project',
-            description: 'Start a fresh project, open an existing one, or save your work to your local machine. The documentation for coding syntax is also here.',
+            description: 'Start a fresh project, open an existing one, or save your work to your local machine. You can also click here to see the documentation for coding syntax.',
             target: () => tourRefs[0].current,
         },
         {
@@ -66,7 +66,7 @@ export const App = () => {
         },
         {
             title: 'Step 4: Modifying Appearance',
-            description: 'Edit your objects\'s appearance, including color, font size, stroke, and more, to match your vision.',
+            description: 'Edit your objects\'s appearance such as color, font size, and stroke.',
             target: () => tourRefs[3].current,
         },
         {

@@ -105,7 +105,7 @@ export const texts = {
         ungroupTooltip: 'Ungroup Items',
         unsaved: 'unsaved',
         visual: 'Visual',
-        walkthrough: 'Walkthrough',
+        walkthrough: 'Tutorial',
         width: 'Width',
         zoomIn: 'Zoom In',
         zoomOut: 'Zoom Out',
