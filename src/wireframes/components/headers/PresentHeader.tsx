@@ -25,11 +25,9 @@ export const PresentHeader = React.memo(() => {
                 icon={<FundProjectionScreenOutlined />} 
                 onClick={() => {
                     setLoading(true);
-                    try {
-                        forServer.slide(messageApi, messageKey);
-                    } finally {
-                        setLoading(false)
-                    }
+                    forServer
+                        .slide(messageApi, messageKey)
+                        .finally(() => setLoading(false));
                 }} 
                 className="header-cta-right" 
                 type="text" shape='round' 

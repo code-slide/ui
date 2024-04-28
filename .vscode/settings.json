@@ -13,6 +13,7 @@
         "**/artifacts": true,
         "**/dist": true,
         "**/storybook-static": true,
+        "**/coverage": true,
         "**/logs": true,
         "**/out": true,
         "**/obj": true,
@@ -24,6 +25,7 @@
         "**/*.user": true,
         "**/*.xproj": true,
         "**/*.gitattributes": true,
+        "**/*.storybook": true,
         ".vs:": true,
         ".vscode:": true
     }

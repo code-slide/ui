@@ -42,12 +42,12 @@ export function useServer() {
         return { item: item, id: id };
     }
     
-    const getSlides = () => {
+    const getSlides = (allFrames: Map<string, string[][]>) => {        
         let frame3D: string[][][] = new Array(diagrams.length);
-        
+
         // Get frames
         diagrams.map((diagram, i) => {
-            const frames = diagram.frames ?? [];
+            const frames = allFrames.get(diagram.id) ?? [];
             frame3D[i] = [];
     
             frames.map((frame, j) => {
@@ -85,29 +85,34 @@ export function useServer() {
     }
     
     const fetchParser = async () => {
+        let frames: Map<string, string[][]> = new Map();
+
         for (let diagram of diagrams) {
             const script = diagram.script;
             if (!script) continue;
     
-            const frames = await parseFrames(script);
-            dispatch(changeFrames(diagram.id, frames));
+            const frame = await parseFrames(script);
+            frames.set(diagram.id, frame);
+            dispatch(changeFrames(diagram.id, frame));
         }
+
+        return frames;
     }
     
-    const fetchCompiler = async () => {
-        const { fileName, title, size, backgroundColor, config, frame } = getSlides();
+    const fetchCompiler = async (frames: Map<string, string[][]>) => {
+        const { fileName, title, size, backgroundColor, config, frame } = getSlides(frames);
     
         const linkPresentation = await compileSlides(fileName, title, size, backgroundColor, config, frame);
             
         return linkPresentation;
     }
     
-    const fetchApi = () => {
+    const fetchApi = async () => {
         // Fetch frames from parser
-        fetchParser();
-    
+        const frames = await fetchParser();
+
         // Fetch presentation from compiler
-        const links = fetchCompiler();
+        const links = await fetchCompiler(frames);
         return links;
     }
     
@@ -120,14 +125,16 @@ export function useServer() {
             window.open(linkPdf, '_blank');
         } catch (err) {
             messageApi.error(`${err}`);
-        } finally {
-            messageApi.open({
-                key: messageKey,
-                type: 'success',
-                content: `Preparing completed. Your presentation will be opened in a new tab.`,
-                duration: 1,
-            });
-        }
+            return;
+        } 
+
+        messageApi.open({
+            key: messageKey,
+            type: 'success',
+            content: `Preparing completed. Your presentation will be opened in a new tab.`,
+            duration: 1,
+        });
+        return;
     }
     
     const fetchSlide = async (messageApi: MessageInstance, messageKey: string) => {
@@ -138,14 +145,16 @@ export function useServer() {
             window.open(linkSlide, '_blank');
         } catch (err) {
             messageApi.error(`${err}`);
-        } finally {
-            messageApi.open({
-                key: messageKey,
-                type: 'success',
-                content: `Preparing completed. Your presentation will be opened in a new tab.`,
-                duration: 1,
-            });
+            return;
         }
+
+        messageApi.open({
+            key: messageKey,
+            type: 'success',
+            content: `Preparing completed. Your presentation will be opened in a new tab.`,
+            duration: 1,
+        });
+        return;
     }
 
     return { slide: fetchSlide, pdf: fetchPdf };

@@ -7,11 +7,9 @@
 */
 
 import { ConfigProvider, Layout, Tour, TourProps } from 'antd';
-import * as React from 'react';
-import { useRouteMatch } from 'react-router';
 import { ClipboardContainer } from '@app/core';
 import { EditorView, ShapeView, PagesView, HeaderView, AnimationView, ToolView } from '@app/wireframes/components';
-import { getSelection, loadDiagramFromServer, newDiagram, setIsTourOpen, useStore } from '@app/wireframes/model';
+import { getSelection, newDiagram, setIsTourInit, setIsTourOpen, useStore } from '@app/wireframes/model';
 import { vogues } from './const';
 import { CustomDragLayer } from './wireframes/components/CustomDragLayer';
 import { OverlayContainer } from './wireframes/contexts/OverlayContext';
@@ -20,24 +18,17 @@ import { useAppDispatch } from './store';
 
 export const App = () => {
     const dispatch = useAppDispatch();
-    const route = useRouteMatch<{ token?: string }>();
-    const routeToken = route.params.token || null;
-    const routeTokenSnapshot = React.useRef(routeToken);
     const selectedSet = useStore(getSelection);
     const sidebarWidth = useStore(s => s.ui.sidebarSize);
     const footerHeight = useStore(s => s.ui.footerSize);
     const applicationMode = useStore(s => s.ui.selectedMode);
     const isTourOpen = useStore(s => s.ui.isTourOpen);
+    const isTourInit = useStore(s => s.ui.isTourInit);
     const tourRefs = Array(7).fill(0).map(() => useRef(null));
 
     useEffect(() => {
-        const token = routeTokenSnapshot.current;
-
-        if (token && token.length > 0) {
-            dispatch(loadDiagramFromServer({ tokenToRead: token, navigate: false }));
-        } else {
-            dispatch(newDiagram(false));
-        }
+        dispatch(newDiagram(false));
+        dispatch(setIsTourInit(false));
     }, [dispatch]);
 
     const margin = {
@@ -50,40 +41,49 @@ export const App = () => {
 
     const walkthroughTour: TourProps['steps'] = [
         {
-            title: 'Step 1: Starting Your Project',
-            description: 'Start a fresh project, open an existing one, or save your work to your local machine. The documentation for coding syntax is also here.',
+            title: 'Get started with a presentation',
+            description: 'Start a fresh presentation, open an existing one, or save your presentation to your local machine. You can also click here to see the documentation for coding syntax.',
             target: () => tourRefs[0].current,
         },
         {
-            title: 'Step 2: Designing Your Presentation',
-            description: 'Use the canvas to layout and customize your presentation\'s structure.',
+            title: 'Design Your Presentation',
+            description: 'Use the canvas to layout and customize your presentation\'s structure. Canvas is where you can add shapes, text, and images.',
             target: () => tourRefs[1].current,
         },
         {
-            title: 'Step 3: Adding Shapes',
+            title: 'Add Shapes',
             description: 'Add visual elements to your canvas by clicking on any shape.',
             target: () => tourRefs[2].current,
         },
         {
-            title: 'Step 4: Modifying Appearance',
-            description: 'Edit your objects\'s appearance, including color, font size, stroke, and more, to match your vision.',
+            title: 'Modify Appearance',
+            description: 'Edit your objects\'s appearance such as color, font size, and stroke.',
             target: () => tourRefs[3].current,
         },
         {
-            title: 'Step 5: Writing Code',
+            title: 'Write Code',
             description: 'Switch to coding mode to set object\'s occurrences. If you\'re stuck on syntax, the documentation is under the button at the top left corner.',
             target: () => tourRefs[4].current,
         },
         {
-            title: 'Step 6: Managing Pages',
+            title: 'Manage Pages',
             description: 'Add new pages and continue unfolding your presentation.',
             target: () => tourRefs[5].current,
         },
         {
-            title: 'Step 7: Launching Your Presentation',
-            description: 'Start your presentation. If you need to make changes, you can always come back and edit.',
+            title: 'Launch Your Presentation',
+            description: 'Start your presentation. If you need to make changes, you can always come back and edit. Enjoy!',
             target: () => tourRefs[6].current,
         },
+    ];
+
+    const firstTour: TourProps['steps'] = [
+        {
+            title: 'Welcome to CodeSlide',
+            description: 'CodeSlide is a tool for creating presentations with code. You can create slides with shapes, text, and images, and animate them with code. Let\'s get started!',
+            target: null,
+        },
+        ...walkthroughTour
     ];
 
     return (
@@ -152,7 +152,7 @@ export const App = () => {
                     <Tour
                         open={isTourOpen}
                         onClose={() => dispatch(setIsTourOpen(false))}
-                        steps={walkthroughTour}
+                        steps={isTourInit ? firstTour : walkthroughTour}
                     />
                     <CustomDragLayer />
                 </ClipboardContainer>

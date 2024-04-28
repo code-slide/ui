@@ -48,6 +48,11 @@ export const setAnimation =
         return { payload: { animation } };
     });
 
+export const setIsTourInit =
+    createAction('ui/isTourInit', (isInit: boolean) => {
+        return { payload: { isInit } };
+    });
+
 export const setIsTourOpen =
     createAction('ui/isTourOpen', (isOpen: boolean) => {
         return { payload: { isOpen } };
