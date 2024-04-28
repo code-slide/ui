@@ -128,6 +128,7 @@ export function useServer() {
                 duration: 1,
             });
         }
+        return;
     }
     
     const fetchSlide = async (messageApi: MessageInstance, messageKey: string) => {
@@ -138,14 +139,16 @@ export function useServer() {
             window.open(linkSlide, '_blank');
         } catch (err) {
             messageApi.error(`${err}`);
-        } finally {
-            messageApi.open({
-                key: messageKey,
-                type: 'success',
-                content: `Preparing completed. Your presentation will be opened in a new tab.`,
-                duration: 1,
-            });
+            return;
         }
+
+        messageApi.open({
+            key: messageKey,
+            type: 'success',
+            content: `Preparing completed. Your presentation will be opened in a new tab.`,
+            duration: 1,
+        });
+        return;
     }
 
     return { slide: fetchSlide, pdf: fetchPdf };
