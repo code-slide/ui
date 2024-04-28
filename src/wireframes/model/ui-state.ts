@@ -34,7 +34,10 @@ export interface UIState {
     // The color tab.
     selectedColor: string;
 
-    // The tour step.
+    // The tour init (first time).
+    isTourInit: boolean;
+
+    // The tour start.
     isTourOpen: boolean;
 
     // The filter for the diagram.
@@ -53,6 +56,7 @@ export const createInitialUIState: () => UIState = () => {
         selectedMode: 'design',
         selectedAnimation: 'script',
         sidebarSize: vogues.common.close,
-        isTourOpen: false,
+        isTourInit: true,
+        isTourOpen: true,
     };
 };

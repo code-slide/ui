@@ -27,18 +27,6 @@ const strToList = (str: string) => {
     return result;
 }
 
-export async function fetchDiagram(readToken: string) {
-    const response = await fetch(`${SERVER_URL}/store/${readToken}`);
-
-    if (!response.ok) {
-        throw Error('Failed to load diagram');
-    }
-
-    const stored = await response.json();
-
-    return stored;
-}
-
 export const parseFrames = async (script: string) => {
     const response = await fetch(`${SERVER_URL}/parser`, {
         method: 'POST',
