@@ -156,7 +156,7 @@ export const ShapeView = React.memo(() => {
                 align={{ offset: OFFSET_DROPDOWN }}
                 trigger={['click']}
             >
-                <Button className='item' type='text' >
+                <Button className='item' type='text' aria-label='Add Text'>
                     <TextIcon />
                 </Button>
             </Dropdown>
@@ -170,7 +170,7 @@ export const ShapeView = React.memo(() => {
                 align={{ offset: OFFSET_DROPDOWN }}
                 trigger={['click']}
             >
-                <Button className='item' type='text' >
+                <Button className='item' type='text' aria-label='Add table'>
                     <TableIcon />
                 </Button>
             </Dropdown>
@@ -184,7 +184,7 @@ export const ShapeView = React.memo(() => {
                 align={{ offset: OFFSET_DROPDOWN }}
                 trigger={['click']}
             >
-                <Button className='item' type='text' >
+                <Button className='item' type='text' aria-label='Add Shape'>
                     <ShapesIcon />
                 </Button>
             </Dropdown>
@@ -198,7 +198,7 @@ export const ShapeView = React.memo(() => {
                 align={{ offset: OFFSET_DROPDOWN }}
                 trigger={['click']}
             >
-                <Button className='item' type='text' >
+                <Button className='item' type='text' aria-label='Add Line'>
                     <LineUpIcon />
                 </Button>
             </Dropdown>
@@ -212,7 +212,7 @@ export const ShapeView = React.memo(() => {
                 align={{ offset: OFFSET_DROPDOWN }}
                 trigger={['click']}
             >
-                <Button className='item' type='text' >
+                <Button className='item' type='text' aria-label='Add Image'>
                     <ImageIcon />
                 </Button>
             </Dropdown>

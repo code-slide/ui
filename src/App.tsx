@@ -48,31 +48,37 @@ export const App = () => {
         {
             title: 'Design Your Presentation',
             description: 'Use the canvas to layout and customize your presentation\'s structure. Canvas is where you can add shapes, text, and images.',
+            placement: 'bottomRight',
             target: () => tourRefs[1].current,
         },
         {
             title: 'Add Shapes',
             description: 'Add visual elements to your canvas by clicking on any shape.',
+            placement: 'rightTop',
             target: () => tourRefs[2].current,
         },
         {
             title: 'Modify Appearance',
             description: 'Edit your objects\'s appearance such as color, font size, and stroke.',
+            placement: 'bottom',
             target: () => tourRefs[3].current,
         },
         {
             title: 'Write Code',
             description: 'Switch to coding mode to set object\'s occurrences. If you\'re stuck on syntax, the documentation is under the button at the top left corner.',
+            placement: 'bottomLeft',
             target: () => tourRefs[4].current,
         },
         {
             title: 'Manage Pages',
             description: 'Add new pages and continue unfolding your presentation.',
+            placement: 'top',
             target: () => tourRefs[5].current,
         },
         {
             title: 'Launch Your Presentation',
             description: 'Start your presentation. If you need to make changes, you can always come back and edit. Enjoy!',
+            placement: 'bottomLeft',
             target: () => tourRefs[6].current,
         },
     ];

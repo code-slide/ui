@@ -84,37 +84,55 @@ export const TableTool = React.memo(() => {
     return (
         <>
             <Tooltip mouseEnterDelay={1} title={ 'Add Column Left' }>
-                <Button type='text' className='tool-menu-item' onClick={ addColumnLeft }>
-                    <InsertRowLeftOutlined />
+                <Button 
+                    type='text' className='tool-menu-item' 
+                    aria-label='Add Column Left'
+                    onClick={ addColumnLeft }>
+                        <InsertRowLeftOutlined />
                 </Button>
             </Tooltip>
             
             <Tooltip mouseEnterDelay={1} title={ 'Add Column Right' }>
-                <Button type='text' className='tool-menu-item' onClick={ addColumnRight }>
-                    <InsertRowRightOutlined />
+                <Button 
+                    type='text' className='tool-menu-item' 
+                    aria-label='Add Column Right'
+                    onClick={ addColumnRight }>
+                        <InsertRowRightOutlined />
                 </Button>
             </Tooltip>     
             <Tooltip mouseEnterDelay={1} title={ 'Add Row Above' }>
-                <Button type='text' className='tool-menu-item' onClick={ addRowAbove }>
-                    <InsertRowAboveOutlined />
+                <Button 
+                    type='text' className='tool-menu-item' 
+                    aria-label='Add Row Above'
+                    onClick={ addRowAbove }>
+                        <InsertRowAboveOutlined />
                 </Button>
             </Tooltip>
             <Tooltip mouseEnterDelay={1} title={ 'Add Row Below' }>
-                <Button type='text' className='tool-menu-item' onClick={ addRowBelow }>
-                    <InsertRowBelowOutlined />
+                <Button 
+                    type='text' className='tool-menu-item' 
+                    aria-label='Add Row Below'
+                    onClick={ addRowBelow }>
+                        <InsertRowBelowOutlined />
                 </Button>
             </Tooltip>
 
             <span className='menu-separator' />
 
             <Tooltip mouseEnterDelay={1} title={ 'Delete Column' }>
-                <Button type='text' disabled={ !selectedItem?.text.includes(texts.common.tableDelimiterCol) } className='tool-menu-item' onClick={ removeColumn }>
-                    <DeleteColumnOutlined />
+                <Button 
+                    type='text' disabled={ !selectedItem?.text.includes(texts.common.tableDelimiterCol) } 
+                    aria-label='Delete Column'
+                    className='tool-menu-item' onClick={ removeColumn }>
+                        <DeleteColumnOutlined />
                 </Button>
             </Tooltip>
             <Tooltip mouseEnterDelay={1} title={ 'Delete Row' }>
-                <Button type='text' disabled={ !selectedItem?.text.includes(texts.common.tableDelimiterRow) } className='tool-menu-item' onClick={ removeRow }>
-                    <DeleteRowOutlined />
+                <Button 
+                    type='text' disabled={ !selectedItem?.text.includes(texts.common.tableDelimiterRow) } 
+                    aria-label='Delete Row'
+                    className='tool-menu-item' onClick={ removeRow }>
+                        <DeleteRowOutlined />
                 </Button>
             </Tooltip>
         </>

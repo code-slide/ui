@@ -249,6 +249,27 @@ tspan {
     margin-right: .5rem;
 }
 
+.ant-tour-next-btn {
+    background-color: $color-theme-blue-lightest; 
+    color: $color-text !important;
+    font-weight: 500;
+    box-shadow: none;
+
+    &:hover {
+        background-color: $color-border !important;
+    }
+}
+
+.ant-tour-prev-btn {
+    color: $color-text !important;
+    box-shadow: none;
+
+    &:hover {
+        background-color: $color-border !important;
+        border-color: $color-border !important;
+    }
+}
+
 //
 // > Properties
 //

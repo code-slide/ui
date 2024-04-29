@@ -47,7 +47,7 @@ export const ActionMenuButton = React.memo((props: ActionProps & ButtonProps) =>
     return (
         <>
             <Tooltip mouseEnterDelay={1} title={title}>
-                <Button {...other} type={type} className={'tool-menu-item'} disabled={disabled} onClick={onAction}>
+                <Button {...other} type={type} className={'tool-menu-item'} disabled={disabled} onClick={onAction} aria-label={tooltip}>
                     <ButtonContent icon={icon} label={label} displayMode={displayMode || 'Icon'} />
                 </Button>
             </Tooltip>

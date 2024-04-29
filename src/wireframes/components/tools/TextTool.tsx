@@ -84,6 +84,7 @@ export const TextTool = React.memo(() => {
             <Tooltip mouseEnterDelay={1} title={ `Align ${textAlignment.value}` }>
                 <Button
                     className='tool-menu-item'
+                    aria-label={`Align ${textAlignment.value}`}
                     type='text'
                     onClick={() => {
                         (textAlignment.value == 'left')

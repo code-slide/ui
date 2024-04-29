@@ -36,7 +36,7 @@ export const RecentItem = React.memo((props: RecentItemProps) => {
                 </Col>
 
                 <Col flex='none'>
-                    <Button onClick={() => onLoad(item)}>
+                    <Button aria-label='Download Presentation' onClick={() => onLoad(item)}>
                         <DownloadOutlined />
                     </Button>
                 </Col>

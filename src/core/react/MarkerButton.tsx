@@ -29,7 +29,7 @@ export const MarkerButton = () => {
     }, []);
     
     return (
-        <Button className='menu-item' onClick={() => widget?.capture('advanced')}>
+        <Button className='menu-item' aria-label='Marker' onClick={() => widget?.capture('advanced')}>
             <SmileOutlined />
         </Button>
     );

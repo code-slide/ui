@@ -140,6 +140,7 @@ export const ColorPicker = React.memo((props: ColorPickerProps) => {
             { (!icon)
                 ? <Button 
                     className='color-picker-circle tool-menu-item' type='text'
+                    aria-label='Select Color'
                     style={{ display: disabled ? 'none' : '' }}
                 >
                     <div className='color-picker-color'>
@@ -148,6 +149,7 @@ export const ColorPicker = React.memo((props: ColorPickerProps) => {
                 </Button>
                 : <Button 
                     className='color-picker-button tool-menu-item' type='text' 
+                    aria-label='Select Color'
                     icon={icon} style={{ fill: colorHex, display: disabled ? 'none' : '' }} 
                 />
             }

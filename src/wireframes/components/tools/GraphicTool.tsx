@@ -55,6 +55,7 @@ export const GraphicTool = React.memo(() => {
                     type='text'
                     icon={<IconOutline icon={AspectRatioIcon} />}
                     onClick={toggleAspectRatio}
+                    aria-label={texts.common.aspectRatio}
                 />
             </Tooltip>
             <SourceTool diagram={selectedDiagram} id={selectedItem.id} renderer={selectedItem.renderer} />
@@ -90,6 +91,7 @@ const SourceTool = (props: ChangeProps) => {
                     type='text'
                     icon={<IconOutline icon={attrs.icon} />}
                     onClick={() => setIsShapeModal(attrs.open)}
+                    aria-label={attrs.toolTip}
                 />
             </Tooltip>
             <FormModal
