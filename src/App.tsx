@@ -48,11 +48,10 @@ export const App = () => {
         {
             title: 'Design Your Presentation',
             description: 'Use the canvas to layout and customize your presentation\'s structure. Canvas is where you can add shapes, text, and images.',
-            placement: 'bottomRight',
             target: () => tourRefs[1].current,
         },
         {
-            title: 'Add Shapes',
+            title: 'Add Objects',
             description: 'Add visual elements to your canvas by clicking on any shape.',
             placement: 'rightTop',
             target: () => tourRefs[2].current,
@@ -76,7 +75,7 @@ export const App = () => {
             target: () => tourRefs[5].current,
         },
         {
-            title: 'Launch Your Presentation',
+            title: 'Launch Presentation',
             description: 'Start your presentation. If you need to make changes, you can always come back and edit. Enjoy!',
             placement: 'bottomLeft',
             target: () => tourRefs[6].current,
@@ -86,7 +85,8 @@ export const App = () => {
     const firstTour: TourProps['steps'] = [
         {
             title: 'Welcome to CodeSlide',
-            description: 'CodeSlide is a tool for creating presentations with code. You can create slides with shapes, text, and images, and animate them with code. Let\'s get started!',
+            description: 'CodeSlide is a tool for creating presentations with code. You can create slides with shapes, text, and images, and animate them with code.',
+            cover: <img src="https://imgur.com/XYeNUob.png" alt="CodeSlide Thumbnail" />,
             target: null,
         },
         ...walkthroughTour
