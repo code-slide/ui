@@ -104,5 +104,8 @@ export function ui(initialState: UIState): Reducer<UIState> {
         })
         .addCase(setIsTourOpen, (state, action) => {
             state.isTourOpen = action.payload.isOpen;
+        })
+        .addCase(setIsTourInit, (state, action) => {
+            state.isTourInit = action.payload.isInit;
         }));
 }
