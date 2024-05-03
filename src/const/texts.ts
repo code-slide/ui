@@ -22,6 +22,8 @@ export const texts = {
         background: 'Background Color',
         bringForwards: 'Bring Forwards',
         bringToFront: 'Bring to Front',
+        contactAuthor: 'Author',
+        contactEmail: 'Email',
         copy: 'Copy',
         copyTooltip: 'Copy Items',
         custom: 'Custom',
@@ -83,6 +85,7 @@ export const texts = {
         rename: 'Rename',
         renameTooltip: 'Rename presentation',
         removeTooltip: 'Delete selected items',
+        reportIssue: 'Report',
         saveDiagram: 'Download',
         saveDiagramToFileTooltip: 'Export to PDF',
         saveDiagramTooltip: 'Download',
@@ -104,10 +107,14 @@ export const texts = {
         ungroup: 'Ungroup',
         ungroupTooltip: 'Ungroup Items',
         unsaved: 'unsaved',
+        version: 'Version',
         visual: 'Visual',
         walkthrough: 'Tutorial',
         width: 'Width',
         zoomIn: 'Zoom In',
         zoomOut: 'Zoom Out',
+    },
+    vars: {
+        version: __APP_VERSION__,
     }
 };
