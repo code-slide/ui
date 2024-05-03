@@ -11,6 +11,7 @@ export default defineConfig({
 
     define: {
         __REACT_DEVTOOLS_GLOBAL_HOOK__: { isDisabled: true },
+        __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
     },
 
     test: {
