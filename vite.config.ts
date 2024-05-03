@@ -34,5 +34,9 @@ export default defineConfig({
             autoprefixer({}) // add options if needed
           ],
         }
-      }
+    },
+
+    define: {
+        __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
+    }
 });
