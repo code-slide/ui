@@ -69,7 +69,10 @@ export const VisualTool = React.memo(() => {
                     }}
                     trigger={['click']}
                 >
-                    <Button type='text' icon={<IconOutline icon={BorderWidthIcon} />} disabled={strokeThickness.empty} />
+                    <Button 
+                        type='text' aria-label='Set Stroke Thickness' 
+                        icon={<IconOutline icon={BorderWidthIcon} />} 
+                        disabled={strokeThickness.empty} />
                 </Dropdown>
             </Tooltip>
 

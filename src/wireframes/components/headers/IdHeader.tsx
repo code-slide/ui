@@ -56,6 +56,7 @@ export const IdHeader = () => {
                         <Button 
                             className='shape-cta'
                             type='text'
+                            aria-label='Update ID'
                             icon={<CheckOutlined />}
                             onClick={handleUpdateId} />
                         : <></>

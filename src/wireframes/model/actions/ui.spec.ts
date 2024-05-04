@@ -8,7 +8,7 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { filterDiagrams, selectColorTab, setAnimation, setFooterSize, setIsTourOpen, setMode, setSidebarSize, setZoom, showToast, ui, UIState } from '@app/wireframes/model';
+import { filterDiagrams, selectColorTab, setAnimation, setFooterSize, setIsTourInit, setIsTourOpen, setMode, setSidebarSize, setZoom, showToast, ui, UIState } from '@app/wireframes/model';
 
 describe('UIReducer', () => {
     const state: UIState = {} as any;
@@ -69,6 +69,14 @@ describe('UIReducer', () => {
 
         expect(state_1.selectedAnimation).toEqual('output');
         expect(state_2.selectedAnimation).toEqual('script');
+    });
+
+    it('should init tour', () => {
+        const state_1 = reducer(state, setIsTourInit(true));
+        const state_2 = reducer(state_1, setIsTourInit(false));
+
+        expect(state_1.isTourInit).toBeTruthy();
+        expect(state_2.isTourInit).toBeFalsy();
     });
 
     it('should toggle tour', () => {

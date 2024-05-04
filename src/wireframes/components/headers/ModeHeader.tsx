@@ -42,6 +42,7 @@ export const ModeHeader = React.memo(() => {
                 <Tooltip title={`${isPageOn ? 'Hide' : 'Show'} Pages Panel`} >
                     <Button
                         type="text" shape="circle"
+                        aria-label={`${isPageOn ? 'Hide' : 'Show'} Pages Panel`}
                         icon={<IconOutline icon={PageIcon} />}
                         style={{ backgroundColor: isPageOn ? vogues.color.white : ''}}
                         onClick={togglePagePanel}
@@ -51,6 +52,7 @@ export const ModeHeader = React.memo(() => {
                     <Button
                         type="text" shape="circle"
                         icon={<IconOutline icon={AnimationIcon} />}
+                        aria-label={`Open ${isAnimationOn ? 'Animation' : 'Design'} Mode`}
                         style={{ backgroundColor: isAnimationOn ? vogues.color.white : ''}}
                         onClick={toggleAnimationPanel}
                     />

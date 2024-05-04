@@ -12,6 +12,7 @@ export const keys = {
         group: 'MOD + G',
         redo: 'MOD + Y',
         save: 'MOD + S',
+        download: 'MOD + SHIFT + S',
         selectAll: 'MOD + A',
         undo: 'MOD + Z',
         ungroup: 'MOD + SHIFT + G',

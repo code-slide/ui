@@ -32,6 +32,7 @@ export const LineTool = React.memo((props: {lineType: LineEdge}) => {
             <Tooltip mouseEnterDelay={1} title={ 'Line Start' }>
                 <Button 
                     type='text' disabled={lineStart.empty} 
+                    aria-label='Set Line Start'
                     icon={
                         lineStart.value == 'None'
                         ? <IconOutline icon={LineStartNoneIcon} />
@@ -52,6 +53,7 @@ export const LineTool = React.memo((props: {lineType: LineEdge}) => {
             <Tooltip mouseEnterDelay={1} title={ 'Line End' }>
                 <Button 
                     type='text' disabled={lineEnd.empty} 
+                    aria-label='Set Line End'
                     icon={
                         lineEnd.value == 'None'
                         ? <IconOutline icon={LineEndNoneIcon} />
@@ -72,6 +74,7 @@ export const LineTool = React.memo((props: {lineType: LineEdge}) => {
             <Tooltip mouseEnterDelay={1} title={ 'Line Direction' }>
                 <Button 
                     type='text' disabled={linePivot.empty}
+                    aria-label='Set Line Direction'
                     style= {{ display: props.lineType == 'Quadratic' ? 'none' : '' }} 
                     icon={
                         linePivot.value == 'Top'
@@ -89,6 +92,7 @@ export const LineTool = React.memo((props: {lineType: LineEdge}) => {
             <Tooltip mouseEnterDelay={1} title={ 'Curve Direction' }>
                 <Button 
                     type='text' disabled={lineCurve.empty} 
+                    aria-label='Set Curve Direction'
                     style= {{ display: props.lineType == 'Linear' ? 'none' : '' }} 
                     icon={
                         lineCurve.value == 'Down' && linePivot.value == 'Bottom'

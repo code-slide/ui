@@ -10,7 +10,7 @@ import * as React from 'react';
 import { useAppDispatch } from '@app/store';
 import { useEventCallback, useOpenFile } from '@app/core';
 import { texts } from '@app/const';
-import { downloadDiagramToFile, getDiagrams, loadDiagramFromFile, newDiagram, useStore } from '@app/wireframes/model';
+import { downloadDiagramToFile, getDiagrams, loadDiagramFromFile, newDiagram, saveDiagramTemp, useStore } from '@app/wireframes/model';
 import { keys } from '@app/const';
 import { UIAction } from './shared';
 
@@ -39,6 +39,10 @@ export function useLoading() {
         dispatch(downloadDiagramToFile());
     });
 
+    const doSave = useEventCallback(() => {
+        dispatch(saveDiagramTemp());
+    });
+
     const newDiagramAction: UIAction = React.useMemo(() => ({
         disabled: false,
         icon: 'icon-new',
@@ -48,14 +52,23 @@ export function useLoading() {
         onAction: doNew,
     }), [doNew]);
 
-    const downloadDiagram: UIAction = React.useMemo(() => ({
+    const downloadDiagramAction: UIAction = React.useMemo(() => ({
         disabled: !canSave,
         icon: 'icon-floppy-o',
         label: texts.common.saveDiagramTooltip,
-        shortcut: keys.common.save,
+        shortcut: keys.common.download,
         tooltip: texts.common.saveDiagramTooltip,
         onAction: doDownload,
     }), [doDownload, canSave]);
+
+    const saveDiagramAction: UIAction = React.useMemo(() => ({
+        disabled: !canSave,
+        icon: 'icon-floppy-o',
+        label: texts.common.saveDiagramTempTooltip,
+        shortcut: keys.common.save,
+        tooltip: texts.common.saveDiagramTempTooltip,
+        onAction: doSave,
+    }), [doSave, canSave]);
 
     const openDiagramAction: UIAction = React.useMemo(() => ({
         disabled: false,
@@ -65,5 +78,5 @@ export function useLoading() {
         onAction: openHandler,
     }), [openHandler]);
 
-    return { newDiagram: newDiagramAction, openDiagramAction, downloadDiagram };
+    return { newDiagram: newDiagramAction, openDiagramAction, downloadDiagram: downloadDiagramAction, saveDiagram: saveDiagramAction };
 }

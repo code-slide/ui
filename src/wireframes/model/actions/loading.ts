@@ -10,7 +10,7 @@ import { createAction, createAsyncThunk, createReducer, Middleware } from '@redu
 import { saveAs } from 'file-saver';
 import { AnyAction, Reducer } from 'redux';
 import { texts } from '@app/const';
-import { EditorState, EditorStateInStore, LoadingState, Serializer, UndoableState } from './../internal';
+import { EditorState, EditorStateInStore, LoadingState, LoadingStateInStore, saveRecentDiagrams, Serializer, UndoableState } from './../internal';
 import { addDiagram, selectDiagram } from './diagrams';
 import { selectItems } from './items';
 import { migrateOldAction } from './obsolete';
@@ -33,6 +33,13 @@ export const loadDiagramInternal =
         return { payload: { stored, requestId } };
     });
 
+export const saveDiagramTemp = 
+    createAsyncThunk('diagram/save/server', async (_, thunkAPI) => {
+        const state = thunkAPI.getState() as LoadingStateInStore;
+
+        saveRecentDiagrams(state.loading.recentDiagrams);
+    });
+
 export const downloadDiagramToFile = 
     createAsyncThunk('diagram/save/file', async (_, thunkAPI) => {
         const state = thunkAPI.getState() as EditorStateInStore;
@@ -47,6 +54,8 @@ export function loadingMiddleware(): Middleware {
     const middleware: Middleware = store => next => action => {        
         if (loadDiagramFromFile.pending.match(action)) {
             store.dispatch(showToast(texts.common.loadingDiagram, 'loading', action.meta.requestId));
+        } else if ( downloadDiagramToFile.pending.match(action) || saveDiagramTemp.pending.match(action)) {
+            store.dispatch(showToast(texts.common.savingDiagram, 'loading', action.meta.requestId));
         }
 
         try {
@@ -54,10 +63,14 @@ export function loadingMiddleware(): Middleware {
 
             if (loadDiagramFromFile.fulfilled.match(action)) {
                 store.dispatch(loadDiagramInternal(action.payload.stored, action.meta.requestId));
+            } else if (loadDiagramFromFile.rejected.match(action)) {
+                store.dispatch(showToast(texts.common.loadingDiagramFailed, 'error', action.meta.requestId));
             } else if (loadDiagramInternal.match(action)) {
                 store.dispatch(showToast(texts.common.loadingDiagramDone, 'success', action.payload.requestId));
-            } else if (downloadDiagramToFile.fulfilled.match(action)) {
+            } else if (downloadDiagramToFile.fulfilled.match(action) || saveDiagramTemp.fulfilled.match(action)) {
                 store.dispatch(showToast(texts.common.savingDiagramDone, 'success', action.meta.requestId));
+            } else if (downloadDiagramToFile.fulfilled.match(action) || saveDiagramTemp.fulfilled.match(action)) {
+                store.dispatch(showToast(texts.common.savingDiagramFailed, 'error', action.meta.requestId));
             }
 
             return result;

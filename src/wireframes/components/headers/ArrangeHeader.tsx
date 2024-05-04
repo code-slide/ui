@@ -11,12 +11,15 @@ import { useAppDispatch } from '@app/store';
 import { Shortcut, useEventCallback } from '@app/core';
 import { calculateSelection, getDiagram, selectItems, useStore } from '@app/wireframes/model';
 import { keys } from '@app/const';
-import { useRemove } from '../actions';
+import { useLoading, useRemove } from '../actions';
 
 export const ArrangeHeader = React.memo(() => {
     const dispatch = useAppDispatch();
     const forRemove = useRemove();
+    const forLoading = useLoading();
     const selectedDiagram = useStore(getDiagram);
+    const saveDiagram = forLoading.saveDiagram;
+    const downloadDiagram = forLoading.downloadDiagram;
 
     const doSelectAll = useEventCallback(() => {
         if (selectedDiagram) {
@@ -38,6 +41,10 @@ export const ArrangeHeader = React.memo(() => {
             }
 
             <Shortcut disabled={!selectedDiagram} onPressed={doSelectAll} keys={keys.common.selectAll} />
+
+            <Shortcut disabled={saveDiagram.disabled} onPressed={saveDiagram.onAction} keys={saveDiagram.shortcut ?? keys.common.save} />
+
+            <Shortcut disabled={downloadDiagram.disabled} onPressed={downloadDiagram.onAction} keys={downloadDiagram.shortcut ?? keys.common.download} />
         </>
     );
 });
