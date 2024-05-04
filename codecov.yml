@@ -1,3 +1,4 @@
 ignore:
   - "**/snap-manager.ts"
   - "**/shapes/**/*.ts"
+  - "**/loading.ts"
