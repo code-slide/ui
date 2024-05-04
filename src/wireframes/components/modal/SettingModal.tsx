@@ -8,12 +8,12 @@
 
 
 import { Modal, Layout, Segmented, Divider } from 'antd';
-import { ColorSetting, DiagramSetting, PresentSetting } from '../settings';
+import { AboutSetting, ColorSetting, DiagramSetting, PresentSetting } from '../settings';
 import { texts } from '@app/const';
 import { SegmentedOptions } from 'antd/es/segmented';
 import { useState } from 'react';
 
-type SettingMode = 'diagram' | 'palette' | 'presentation';
+type SettingMode = 'about' | 'diagram' | 'palette' | 'presentation';
 type SettingModalProps = {
     // Modal title
     title: string;
@@ -27,9 +27,13 @@ type SettingModalProps = {
 
 export const SettingModal: React.FC<SettingModalProps> = (props: SettingModalProps) => {
     const { title, open, onCancel } = props;
-    const [value, setValue] = useState<SettingMode>('diagram');
+    const [value, setValue] = useState<SettingMode>('about');
 
     const settings: SegmentedOptions<SettingMode> = [
+        {
+            value: 'about',
+            label: texts.common.about,
+        },
         {
             value: 'diagram',
             label: texts.common.diagram,
@@ -47,6 +51,8 @@ export const SettingModal: React.FC<SettingModalProps> = (props: SettingModalPro
     const SettingMenu = () => {
         switch (value) {
             default:
+            case 'about':
+                return <AboutSetting />;
             case 'diagram':
                 return <DiagramSetting />;
             case 'palette':

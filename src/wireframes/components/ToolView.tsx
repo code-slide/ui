@@ -28,49 +28,61 @@ export const ToolView = (props: ToolViewProps) => {
     const MoreTools = (props: {item: DiagramItem}) => {
         const renderer = props.item.renderer;
 
-        if (renderer == shapes.id.table) {
-            return (
-                <>
-                    <span className='menu-separator' />
-                    <TextTool />
-                    <span className='menu-separator' />
-                    <VisualTool />
-                    <span className='menu-separator' />
-                    <TableTool />
-                </>
-            )
-        } else if (renderer == shapes.id.image || renderer == shapes.id.graphic) {
-            return (
-                <>
-                    <span className='menu-separator' />
-                    <GraphicTool />
-                </>
-            )
-        } else if (renderer == shapes.id.textbox || renderer == shapes.id.equation) {
-            return (
-                <>
-                    <span className='menu-separator' />
-                    <TextTool />
-                </>
-            )
-        } else if (renderer == shapes.id.line) {
-            return (
-                <>
-                    <span className='menu-separator' />
-                    <TextTool />
-                    <span className='menu-separator' />
-                    <VisualTool />
-                    <span className='menu-separator' />
-                    <LineTool lineType={props.item.appearance.get(shapes.key.lineType)}  />
-                </>
-            )
-        } else {
-            return (
-                <>
-                    <span className='menu-separator' />
-                    <VisualTool />
-                </>
-            )
+        switch (renderer) {
+            case shapes.id.table:
+                return (
+                    <>
+                        <span className='menu-separator' />
+                        <TextTool />
+                        <span className='menu-separator' />
+                        <VisualTool />
+                        <span className='menu-separator' />
+                        <TableTool />
+                    </>
+                );
+            case shapes.id.image:
+            case shapes.id.graphic:
+                return (
+                    <>
+                        <span className='menu-separator' />
+                        <GraphicTool />
+                    </>
+                );
+            case shapes.id.textbox:
+            case shapes.id.equation:
+                return (
+                    <>
+                        <span className='menu-separator' />
+                        <TextTool />
+                    </>
+                );
+            case shapes.id.line:
+                return (
+                    <>
+                        <span className='menu-separator' />
+                        <TextTool />
+                        <span className='menu-separator' />
+                        <VisualTool />
+                        <span className='menu-separator' />
+                        <LineTool lineType={props.item.appearance.get(shapes.key.lineType)} />
+                    </>
+                );
+            case shapes.id.shape:
+                return (
+                    <>
+                        <span className='menu-separator' />
+                        <TextTool />
+                        <span className='menu-separator' />
+                        <VisualTool />
+                    </>
+                );
+            default:
+                return (
+                    <>
+                        <span className='menu-separator' />
+                        <VisualTool />
+                    </>
+                );
         }
     }
 
