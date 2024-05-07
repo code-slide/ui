@@ -49,6 +49,7 @@ export const App = () => {
             title: 'Design Your Presentation',
             description: 'Use the canvas to layout and customize your presentation\'s structure. Canvas is where you can add shapes, text, and images.',
             target: () => tourRefs[1].current,
+            placement: 'right',
         },
         {
             title: 'Add Objects',
@@ -64,8 +65,12 @@ export const App = () => {
         },
         {
             title: 'Write Code',
-            description: 'Switch to coding mode to set object\'s occurrences. If you\'re stuck on syntax, the documentation is under the button at the top left corner.',
-            placement: 'bottomLeft',
+            description: (
+                <p style={{ margin: 0 }}>
+                    Write syntaxes and Python codes to animate your presentation. If you're stuck on syntax, navigate to our documentation at <a href="https://github.com/code-slide/ui/wiki">GitHub Wiki</a>.
+                </p>
+            ),
+            placement: 'left',
             target: () => tourRefs[4].current,
         },
         {
@@ -116,7 +121,7 @@ export const App = () => {
                 <ClipboardContainer>
                     <Layout className='screen-mode'>
                         <Layout.Header>
-                            <HeaderView refs={[tourRefs[0], tourRefs[4], tourRefs[6]]}  />
+                            <HeaderView refs={[tourRefs[0], tourRefs[6]]}  />
                         </Layout.Header>
 
                         <Layout className='content' style={{ padding: margin.editor }}>
@@ -141,6 +146,7 @@ export const App = () => {
                                 </Layout>
 
                                 <Layout.Sider
+                                    ref={tourRefs[4]}
                                     width={vogues.common.sidebarCode} className='sidebar-right'
                                     style={{ display: sidebarWidth == 0 ? 'none' : '', margin: margin.sideRight }}
                                 >

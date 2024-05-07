@@ -69,11 +69,9 @@ export const HeaderView  = React.memo((props: HeaderViewProps) => {
             </div>
 
             <span style={{ float: 'right' }}>
-                <span ref={props.refs[1]}>
-                    <ModeHeader />
-                </span>
+                <ModeHeader />
                 <span className='menu-separator' />
-                <span ref={props.refs[2]}>
+                <span ref={props.refs[1]}>
                     <PresentHeader />
                 </span>
             </span>
