@@ -55,7 +55,7 @@ export const createInitialUIState: () => UIState = () => {
         selectedColor: 'palette',
         selectedMode: 'design',
         selectedAnimation: 'script',
-        sidebarSize: vogues.common.sidebarCode,
+        sidebarSize: vogues.common.close,
         isTourInit: true,
         isTourOpen: true,
     };
