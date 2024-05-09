@@ -59,6 +59,7 @@ export const AnimationView = () => {
         return (
             <div className='code-editor' style={{ maxHeight: viewHeight }}>
                 <CodeEditor
+                    placeholder='Write animation scripts here...'
                     value={selectedScript}
                     onValueChange={code => dispatch(changeScript(diagram.id, code))}
                     highlight={code => Prism.highlight(code, Prism.languages.py, 'python')}

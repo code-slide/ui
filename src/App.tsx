@@ -9,7 +9,7 @@
 import { ConfigProvider, Layout, Tour, TourProps } from 'antd';
 import { ClipboardContainer } from '@app/core';
 import { EditorView, ShapeView, PagesView, HeaderView, AnimationView, ToolView } from '@app/wireframes/components';
-import { getSelection, newDiagram, setIsTourInit, setIsTourOpen, useStore } from '@app/wireframes/model';
+import { getSelection, newDiagram, setIsTourOpen, useStore } from '@app/wireframes/model';
 import { vogues } from './const';
 import { CustomDragLayer } from './wireframes/components/CustomDragLayer';
 import { OverlayContainer } from './wireframes/contexts/OverlayContext';
@@ -25,10 +25,11 @@ export const App = () => {
     const isTourOpen = useStore(s => s.ui.isTourOpen);
     const isTourInit = useStore(s => s.ui.isTourInit);
     const tourRefs = Array(7).fill(0).map(() => useRef(null));
+    const nullRef = useRef(null);
 
     useEffect(() => {
         dispatch(newDiagram(false));
-        dispatch(setIsTourInit(false));
+        // dispatch(setIsTourInit(false));
     }, [dispatch]);
 
     const margin = {
@@ -46,14 +47,14 @@ export const App = () => {
             target: () => tourRefs[0].current,
         },
         {
-            title: 'Design Your Presentation',
-            description: 'Use the canvas to layout and customize your presentation\'s structure. Canvas is where you can add shapes, text, and images.',
-            target: () => tourRefs[1].current,
-        },
-        {
             title: 'Add Objects',
             description: 'Add visual elements to your canvas by clicking on any shape.',
             placement: 'rightTop',
+            target: () => tourRefs[1].current,
+        },
+        {
+            title: 'Design Your Presentation',
+            description: 'Use the canvas to layout and customize your presentation\'s structure. Canvas is where you can add shapes, text, and images.',
             target: () => tourRefs[2].current,
         },
         {
@@ -64,8 +65,16 @@ export const App = () => {
         },
         {
             title: 'Write Code',
-            description: 'Switch to coding mode to set object\'s occurrences. If you\'re stuck on syntax, the documentation is under the button at the top left corner.',
-            placement: 'bottomLeft',
+            description: (
+                applicationMode == 'design'
+                    ? <p style={{ margin: 0 }}>
+                        Switch to coding mode to set object's occurrences. If you're stuck on syntax, navigate to our documentation at <a href="https://github.com/code-slide/ui/wiki">GitHub Wiki</a>
+                    </p>
+                    : <p style={{ margin: 0 }}>
+                        Write syntaxes and Python codes to animate your presentation. If you're stuck on syntax, navigate to our documentation at <a href="https://github.com/code-slide/ui/wiki">GitHub Wiki</a>.
+                    </p>
+            ),
+            placement: 'left',
             target: () => tourRefs[4].current,
         },
         {
@@ -86,7 +95,7 @@ export const App = () => {
         {
             title: 'Welcome to CodeSlide',
             description: 'CodeSlide is a tool for creating presentations with code. You can create slides with shapes, text, and images, and animate them with code.',
-            cover: <img src="https://imgur.com/XYeNUob.png" alt="CodeSlide Thumbnail" />,
+            cover: <img src="../thumbnail.jpg" alt="CodeSlide Thumbnail" />,
             target: null,
         },
         ...walkthroughTour
@@ -116,7 +125,7 @@ export const App = () => {
                 <ClipboardContainer>
                     <Layout className='screen-mode'>
                         <Layout.Header>
-                            <HeaderView refs={[tourRefs[0], tourRefs[4], tourRefs[6]]}  />
+                            <HeaderView refs={[tourRefs[0], applicationMode == 'design' ? tourRefs[4] : nullRef, tourRefs[6]]}  />
                         </Layout.Header>
 
                         <Layout className='content' style={{ padding: margin.editor }}>
@@ -130,17 +139,18 @@ export const App = () => {
                             <Layout>
                                 <Layout style={{ margin: margin.sideMid }}>
                                     <Layout.Sider 
-                                        ref={tourRefs[2]}
+                                        ref={tourRefs[1]}
                                         width={vogues.common.sidebarShape} className='sidebar-shape'>
                                             <ShapeView />
                                     </Layout.Sider>
 
-                                    <Layout.Content ref={tourRefs[1]}>
+                                    <Layout.Content ref={tourRefs[2]}>
                                         <EditorView spacing={vogues.common.editorMargin} />
                                     </Layout.Content>
                                 </Layout>
 
                                 <Layout.Sider
+                                    ref={ applicationMode == 'animation' ? tourRefs[4] : nullRef }
                                     width={vogues.common.sidebarCode} className='sidebar-right'
                                     style={{ display: sidebarWidth == 0 ? 'none' : '', margin: margin.sideRight }}
                                 >
